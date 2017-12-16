@@ -18,7 +18,7 @@ const newsFeedRef = ref.child('NewsFeed');
 
 exports.getTwitterFeed = functions.https.onRequest((request, response) => {
     const client = new twitter(config.twitter);
-    const params = { screen_name: 'M_Dolphins', count: '2000' };
+    const params = { screen_name: 'M_Dolphins', count: '200' };
 
     client.get('statuses/user_timeline', params, (error, tweets) => {
         if (error) {
