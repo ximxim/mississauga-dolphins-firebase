@@ -6,6 +6,7 @@ const async = require('es5-async-await/async');
 const await = require('es5-async-await/await');
 
 const getTwitterFeed = require('./twitterFeed');
+const getFacebookFeed = require('./facebookFeed');
 const serviceAccount = require('./md-firebase-admin.json');
 
 admin.initializeApp({
@@ -23,6 +24,8 @@ exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     const twitterFeed = await(getTwitterFeed(config.twitter));
     const newTweetArray = _.map(twitterFeed, (element) => _.extend({}, element, { twitter: true }));
     await(newsFeedRef.set(newTweetArray));
+
+    const facebookFeed = await(getFacebookFeed(config.facebook));
 
     response.send(newTweetArray);
 }));
