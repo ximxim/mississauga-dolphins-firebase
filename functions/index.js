@@ -24,5 +24,5 @@ exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     const newTweetArray = _.map(twitterFeed, (element) => _.extend({}, element, { twitter: true }));
     await(newsFeedRef.set(newTweetArray));
 
-    response.send(twitterToFb);
+    response.send(newTweetArray);
 }));
