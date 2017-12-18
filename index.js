@@ -19,7 +19,7 @@ const db = admin.database();
 const ref = db.ref('/');
 const newsFeedRef = ref.child('NewsFeed');
 
-exports.getTwitterFeed = functions.https.onRequest(async((request, response) => {
+exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     const twitterFeed = await(getTwitterFeed(config.twitter));
     const newTweetArray = _.map(twitterFeed, (element) => _.extend({}, element, { twitter: true }));
     await(newsFeedRef.set(newTweetArray));
