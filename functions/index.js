@@ -13,7 +13,7 @@ admin.initializeApp({
     databaseURL: "https://mississauga-dolphins.firebaseio.com",
 });
 
-let config = process.env.PWD === '/user_code' ? functions.config() : localConfig();
+const config = process.env.PWD === '/user_code' ? functions.config() : localConfig();
 
 const db = admin.database();
 const ref = db.ref('/');
