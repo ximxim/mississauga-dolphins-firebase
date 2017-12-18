@@ -1,9 +1,12 @@
-const twitter = require("twitter");
 const functions = require('firebase-functions');
 const localConfig = require('./localConfig');
 const admin = require("firebase-admin");
-const serviceAccount = require('./md-firebase-admin.json');
 const _ = require('lodash');
+const async = require('es5-async-await/async');
+const await = require('es5-async-await/await');
+
+const getTwitterFeed = require('./twitterFeed');
+const serviceAccount = require('./md-firebase-admin.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -16,17 +19,10 @@ const db = admin.database();
 const ref = db.ref('/');
 const newsFeedRef = ref.child('NewsFeed');
 
-exports.getTwitterFeed = functions.https.onRequest((request, response) => {
-    const client = new twitter(config.twitter);
-    const params = { screen_name: 'M_Dolphins', count: '200' };
+exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
+    const twitterFeed = await(getTwitterFeed(config.twitter));
+    const newTweetArray = _.map(twitterFeed, (element) => _.extend({}, element, { twitter: true }));
+    await(newsFeedRef.set(newTweetArray));
 
-    client.get('statuses/user_timeline', params, (error, tweets) => {
-        if (error) {
-            response.send(error);
-        } else {
-            const newTweetArray = _.map(tweets, (element) => _.extend({}, element, { twitter: true }));
-            newsFeedRef.set(newTweetArray);
-            response.send(newTweetArray);
-        }
-    });
-});
+    response.send(twitterToFb);
+}));
