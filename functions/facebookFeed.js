@@ -4,10 +4,10 @@ const await = require('es5-async-await/await');
 const _ = require('lodash');
 
 module.exports = async((config) => {
-    const FbPageId = config.mdPageId;
+    const FbPageId = config.md_page_id;
 
     FB.options({ version: 'v2.11' });
-    FB.setAccessToken(config.accessToken);
+    FB.setAccessToken(config.access_token);
 
     return new Promise((resolve) => {
         const postsResponse = await(getPosts(FbPageId));
