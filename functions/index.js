@@ -21,11 +21,16 @@ const ref = db.ref('/');
 const newsFeedRef = ref.child('NewsFeed');
 
 exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
+    const newsFeed = [];
     const twitterFeed = await(getTwitterFeed(config.twitter));
-    const newTweetArray = _.map(twitterFeed, (element) => _.extend({}, element, { twitter: true }));
-    await(newsFeedRef.set(newTweetArray));
+    _.map(twitterFeed.data, (element) => newsFeed.push(element));
 
     const facebookFeed = await(getFacebookFeed(config.facebook));
+    _.map(facebookFeed.posts.data, (element) => newsFeed.push(element));
+    _.map(facebookFeed.photos.data, (element) => newsFeed.push(element));
+    _.map(facebookFeed.videos.data, (element) => newsFeed.push(element));
+    _.map(facebookFeed.events.data, (element) => newsFeed.push(element));
 
-    response.send(newTweetArray);
+    await(newsFeedRef.set(newsFeed));
+    response.send(newsFeed);
 }));
