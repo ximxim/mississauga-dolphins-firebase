@@ -7,7 +7,7 @@ const moment = require('moment');
 module.exports = async((config) => {
     const client = new twitter(config);
     const url = 'statuses/user_timeline';
-    const params = { screen_name: 'M_Dolphins', count: '200' };
+    const params = { screen_name: 'M_Dolphins', count: '10' };
 
     return new Promise((resolve) => {
         const twitterReponse = await(getTweets(client, url, params));

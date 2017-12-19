@@ -27,7 +27,7 @@ module.exports = async((config) => {
 const getPosts = (FbPageId) => {
     const postsQuery = {
         fields: ['id', 'created_time', 'message', 'story', 'attachments'],
-        limit: '100'
+        limit: '10'
     };
     return new Promise((resolve) =>
         FB.api(`${FbPageId}/posts`,
@@ -38,7 +38,7 @@ const getPosts = (FbPageId) => {
 const getPhotos = (FbPageId) => {
     const postsQuery = {
         fields: ['id', 'created_time', 'name', 'picture', 'images'],
-        limit: '100'
+        limit: '10'
     };
     return new Promise((resolve) =>
         FB.api(`${FbPageId}/photos`,
@@ -49,7 +49,7 @@ const getPhotos = (FbPageId) => {
 const getVideos = (FbPageId) => {
     const postsQuery = {
         fields: ['id', 'description', 'created_time', 'source', 'picture', 'title'],
-        limit: '100'
+        limit: '10'
     };
     return new Promise((resolve) =>
         FB.api(`${FbPageId}/videos`,
@@ -62,7 +62,7 @@ const getEvents = (FbPageId) => {
         fields: ['id', 'description', 'attending_count', 'can_guests_invite',
             'category,cover', 'place', 'end_time', 'start_time', 'declined_count',
             'noreply_count', 'name', 'is_canceled', 'updated_time'],
-        limit: '100'
+        limit: '10'
     };
     return new Promise((resolve) =>
         FB.api(`${FbPageId}/events`,
