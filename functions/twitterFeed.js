@@ -2,6 +2,7 @@ const twitter = require('twitter');
 const async = require('es5-async-await/async');
 const await = require('es5-async-await/await');
 const _ = require('lodash');
+const moment = require('moment');
 
 module.exports = async((config) => {
     const client = new twitter(config);
@@ -26,7 +27,7 @@ const pretifyData = (data, prefix) => {
     const TwitterData = _.map(
         data,
         (element) => _.extend({}, element,
-            { id: `${prefix}${element.id}`, twitter: true, date: element.created_at }
+            { id: `${prefix}${element.id}`, twitter: true, date: moment(element.created_at).format('LLL') }
         ));
     return { data: TwitterData };
 }
