@@ -2,6 +2,7 @@ const FB = require('fb');
 const async = require('es5-async-await/async');
 const await = require('es5-async-await/await');
 const _ = require('lodash');
+const moment = require('moment');
 
 module.exports = async((config) => {
     const FbPageId = config.md_page_id;
@@ -74,7 +75,7 @@ const pretifyData = (data, prefix) => {
     const FBData = _.map(
         data,
         (element) => _.extend({}, element,
-            { id: `fb${prefix}${element.id}`, facebook: true, date: element[dateOfItem] }
+            { id: `fb${prefix}${element.id}`, facebook: true, date: moment(element[dateOfItem]).format('LLL') }
         ));
     return { data: FBData };
 }
