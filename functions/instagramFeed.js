@@ -18,7 +18,7 @@ module.exports = async((config) => {
 
 const requestIntagram = (igUserId, baseUrl, accessToken) =>
     new Promise((resolve) =>
-        request(`${baseUrl}/users/${igUserId}/media/recent/?access_token=${accessToken}&count=10`,
+        request(`${baseUrl}/users/${igUserId}/media/recent/?access_token=${accessToken}&count=200`,
             (error, response, body) => (error) ? resolve(error) : resolve(body))
     );
 
@@ -29,8 +29,18 @@ const pretifyData = (data, prefix) => {
             {
                 id: `${prefix}${element.id}`,
                 instagram: true,
-                date: moment.unix(parseInt(element.created_time)).format('LLL')
+                key: element.id,
+                title: getTitle(element),
+                date: moment.unix(parseInt(element.created_time)).format()
             }
         ));
     return { data: instagramData };
+}
+
+const getTitle = (element) => {
+    let title = 'Untitled';
+    if (element.caption) {
+        title = element.caption.text;
+    }
+    return title;
 }

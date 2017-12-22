@@ -7,7 +7,7 @@ const moment = require('moment');
 module.exports = async((config) => {
     const client = new twitter(config);
     const url = 'statuses/user_timeline';
-    const params = { screen_name: 'M_Dolphins', count: '10' };
+    const params = { screen_name: 'M_Dolphins', count: '200' };
 
     return new Promise((resolve) => {
         const twitterReponse = await(getTweets(client, url, params));
@@ -27,7 +27,15 @@ const pretifyData = (data, prefix) => {
     const TwitterData = _.map(
         data,
         (element) => _.extend({}, element,
-            { id: `${prefix}${element.id}`, twitter: true, date: moment(element.created_at).format('LLL') }
+            {
+                id: `${prefix}${element.id}`,
+                twitter: true,
+                key: element.id,
+                title: getTitle(element),
+                date: moment(element.created_at).format()
+            }
         ));
     return { data: TwitterData };
 }
+
+const getTitle = (element) => element.text;
