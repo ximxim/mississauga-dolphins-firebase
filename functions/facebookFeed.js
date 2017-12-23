@@ -26,7 +26,7 @@ module.exports = async((config) => {
 
 const getPosts = (FbPageId) => {
     const postsQuery = {
-        fields: ['id', 'created_time', 'message', 'story', 'attachments'],
+        fields: ['id', 'created_time', 'message', 'story', 'attachments', 'source'],
         limit: '100'
     };
     return new Promise((resolve) =>
