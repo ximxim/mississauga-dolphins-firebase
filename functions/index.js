@@ -28,8 +28,8 @@ exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
 
     const facebookFeed = await(getFacebookFeed(config.facebook));
     _.map(facebookFeed.posts.data, (element) => newsFeed.push(element));
-    _.map(facebookFeed.photos.data, (element) => newsFeed.push(element));
-    _.map(facebookFeed.videos.data, (element) => newsFeed.push(element));
+    // _.map(facebookFeed.photos.data, (element) => newsFeed.push(element));
+    // _.map(facebookFeed.videos.data, (element) => newsFeed.push(element));
     _.map(facebookFeed.events.data, (element) => newsFeed.push(element));
 
     const instagramFeed = await(getInstagramFeed(config.instagram));

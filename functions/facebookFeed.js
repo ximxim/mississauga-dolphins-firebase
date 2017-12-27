@@ -13,14 +13,14 @@ module.exports = async((config) => {
     return new Promise((resolve) => {
         const postsResponse = await(getPosts(FbPageId));
         const posts = pretifyData(postsResponse.data, 'po');
-        const photosResponse = await(getPhotos(FbPageId));
-        const photos = pretifyData(photosResponse.data, 'ph');
-        const videosResponse = await(getVideos(FbPageId));
-        const videos = pretifyData(videosResponse.data, 'vi');
+        // const photosResponse = await(getPhotos(FbPageId));
+        // const photos = pretifyData(photosResponse.data, 'ph');
+        // const videosResponse = await(getVideos(FbPageId));
+        // const videos = pretifyData(videosResponse.data, 'vi');
         const eventsResponse = await(getEvents(FbPageId));
         const events = pretifyData(eventsResponse.data, 'ev');
 
-        return resolve({ posts, photos, videos, events });
+        return resolve({ posts, events });
     });
 });
 
@@ -95,6 +95,8 @@ const getTitle = (element) => {
         title = element.message;
     } else if (element.attachments) {
         title = element.attachments.data[0].title;
+    } else if (element.name) {
+        title = element.name;
     }
     return title;
 }
