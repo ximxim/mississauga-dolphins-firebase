@@ -8,6 +8,7 @@ const await = require('es5-async-await/await');
 const getTwitterFeed = require('./twitterFeed');
 const getFacebookFeed = require('./facebookFeed');
 const getInstagramFeed = require('./instagramFeed');
+const getFirebaseFeed = require('./firebaseFeed');
 const serviceAccount = require('./md-firebase-admin.json');
 
 admin.initializeApp({
@@ -22,19 +23,24 @@ const ref = db.ref('/');
 const newsFeedRef = ref.child('NewsFeed');
 
 exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
-    const newsFeed = [];
+    const currentFeed = await(getFirebaseFeed(newsFeedRef));
+    const newFeed = [];
     const twitterFeed = await(getTwitterFeed(config.twitter));
-    _.map(twitterFeed.data, (element) => newsFeed.push(element));
+    _.map(twitterFeed.data, (element) => newFeed.push(element));
 
     const facebookFeed = await(getFacebookFeed(config.facebook));
-    _.map(facebookFeed.posts.data, (element) => newsFeed.push(element));
-    // _.map(facebookFeed.photos.data, (element) => newsFeed.push(element));
-    // _.map(facebookFeed.videos.data, (element) => newsFeed.push(element));
-    _.map(facebookFeed.events.data, (element) => newsFeed.push(element));
+    _.map(facebookFeed.posts.data, (element) => newFeed.push(element));
+    // _.map(facebookFeed.photos.data, (element) => newFeed.push(element));
+    // _.map(facebookFeed.videos.data, (element) => newFeed.push(element));
+    _.map(facebookFeed.events.data, (element) => newFeed.push(element));
 
     const instagramFeed = await(getInstagramFeed(config.instagram));
-    _.map(instagramFeed.data, (element) => newsFeed.push(element));
+    _.map(instagramFeed.data, (element) => newFeed.push(element));
 
-    await(newsFeedRef.set(newsFeed));
-    response.send(newsFeed);
+    const difference = _.difference(_.keys(newFeed), _.keys(currentFeed));
+    const recentlyAdded = _.map(difference, (element) => newFeed[element]);
+    const mergedFeed = _.extend({}, newFeed, currentFeed);
+    await(newsFeedRef.set(mergedFeed));
+
+    response.send(recentlyAdded);
 }));
