@@ -59,4 +59,5 @@ typings/
 .env
 localConfig.js
 md-firebase-admin.json
+ngrok
 
