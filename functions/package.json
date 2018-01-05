@@ -6,12 +6,12 @@
     "shell": "firebase experimental:functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "ngrok": "./ngrok http -bind-tls=true localhost:8010"
   },
   "dependencies": {
     "@google-cloud/functions-emulator": "^1.0.0-alpha.28",
     "axios": "^0.17.1",
-    "body-parser": "^1.18.2",
     "es5-async-await": "^1.0.0",
     "fb": "^2.0.0",
     "firebase-admin": "^5.4.3",
