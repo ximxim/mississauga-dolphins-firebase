@@ -48,40 +48,47 @@ exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     // MERGE CURRENT FEED DATA WITH NEW FEED DATA
     const newFeedObject = _.keyBy(newFeed, 'id')
     const recentlyAdded = _.map(_.difference(_.keys(newFeedObject), _.keys(currentFeed)), (element) => newFeedObject[element]);
-
     _.map(newFeed, (item) => newsFeedRef.child(item.id).set(item));
 
     // POST ON SLACK HOW MANY ITEMS WERE ADDED
     await(slackMessages.syncCompletedMessage(recentlyAdded.length));
 
     // POST ON SLACK ALL THE NEW ITEMS
-    _.map(recentlyAdded, (element) => await(slackMessages.recentlyAddedItemMessage(element)));
+    _.map(recentlyAdded, (element) => await(slackMessages.newsFeedItemMessage(element, null, ['hide'])));
 }));
 
 exports.slackListener = functions.https.onRequest(async((request, response) => {
     const payload = JSON.parse(request.body.payload);
 
+    // ONLY ACCEPT MESSAGES FROM ADMIN CHANNEL OF COMPANY
     if (payload.team.id === config.slack.team.id
         && payload.team.domain === config.slack.team.domain
         && payload.channel.id === config.slack.channel.id) {
 
-
-        // FIGURE OUT THE ACTION
+        // ACTION THAT WAS TRIGGERED e.g. hide or show
         const actionTrigger = (_.isArray(payload.actions)) ? payload.actions[0].value : null;
+
+        // ATTACHMENT THAT MATCHES THE ACTION IN ORDER TO GET CALLBACK ID
         const attachment = _.filter(payload.original_message.attachments, (attachment) => {
             if (_.isArray(attachment.actions)) {
                 return _.map(attachment.actions, (action) => action.value === actionTrigger);
             }
         });
 
-        // SEND BACK A RESPONSE WITHOUT BUTTONS
-        const newMessage = payload.original_message;
-        newMessage.attachments = _.filter(newMessage.attachments, (attachment) => ! attachment.callback_id);
-        response.send(newMessage);
+        if (actionTrigger === 'hide' || actionTrigger === 'show') {
+            // SEND BACK A RESPONSE WITHOUT BUTTONS
+            const newMessage = payload.original_message;
+            newMessage.attachments = _.filter(newMessage.attachments, (attachment) => ! attachment.callback_id);
+            response.send(newMessage);
 
-        const itemReference = ref.child('NewsFeed/' + attachment[0].callback_id);
-        itemReference.update({ hidden: true });
-        const item = await(getFirebaseFeed(itemReference));
-        await(slackMessages.feedItemHiddenMessage(item, payload.response_url));
+            // UPDATE HIDDEN INDICATOR ON FIREBASE ITEM BASED ON ACTION
+            const itemReference = ref.child('NewsFeed/' + attachment[0].callback_id);
+            itemReference.update({ hidden: (actionTrigger === 'hide') });
+
+            // GET ITEM TO SEND BACK
+            const item = await(getFirebaseFeed(itemReference));
+            const buttons = actionTrigger === 'hide' ? ['show'] : ['hide'];
+            await(slackMessages.newsFeedItemMessage(item, payload.response_url, buttons));
+        }
     }
 }));

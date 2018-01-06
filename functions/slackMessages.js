@@ -28,17 +28,9 @@ SlackMessages.prototype.syncCompletedMessage = async((count) => {
     );
 });
 
-SlackMessages.prototype.recentlyAddedItemMessage = async((item) => {
-    let socialMedia;
-    if (item.instagram) {
-        socialMedia = 'Instagram'
-    } else if (item.facebook) {
-        socialMedia = 'Facebook'
-    } else if (item.twitter) {
-        socialMedia = 'Twitter'
-    } else {
-        socialMedia = 'Unknown'
-    }
+SlackMessages.prototype.newsFeedItemMessage = async((item, responseUrl, buttons) => {
+    const url = responseUrl ? responseUrl : slackConfig.admin_incoming_url;
+    const socialMedia = getSocialMedia(item);
 
     const slackMessage = {
         "username": "News Feed Alert",
@@ -53,74 +45,11 @@ SlackMessages.prototype.recentlyAddedItemMessage = async((item) => {
             },
             {
                 "fallback": "Unable to show render button. Please contact your admin.",
-                "title": "Would you like to hide this post?",
+                "title": "Choose an option to modify the news item",
                 "callback_id": item.id,
                 "color": "#3AA3E3",
                 "attachment_type": "default",
-                "actions": [
-                    {
-                        "name": "visibility",
-                        "text": "Hide post",
-                        "type": "button",
-                        "value": "hide",
-                        "confirm": {
-                            "title": "Are you sure?",
-                            "text": "The selected post will be hidden from the app newsFeed",
-                            "ok_text": "Yes",
-                            "dismiss_text": "No"
-                        }
-                    },
-                ]
-            }
-        ]
-    };
-
-    return new Promise((resolve) =>
-        request(
-            {
-                method: 'POST',
-                url: slackConfig.admin_incoming_url,
-                body: JSON.stringify(slackMessage)
-            },
-            (error, response, body) =>
-                (error) ? resolve(error) : resolve(body)
-        )
-    );
-});
-
-SlackMessages.prototype.feedItemHiddenMessage = async((item, url) => {
-    let socialMedia;
-    if (item.instagram) {
-        socialMedia = 'Instagram'
-    } else if (item.facebook) {
-        socialMedia = 'Facebook'
-    } else if (item.twitter) {
-        socialMedia = 'Twitter'
-    } else {
-        socialMedia = 'Unknown'
-    }
-
-    const slackMessage = {
-        "username": "News Feed Alert",
-        "icon_emoji": ":sparkle:",
-        "text": "Added an item from " + socialMedia,
-        "fallback": "Added an item from " + socialMedia,
-        "color": "#36a64f",
-        "attachments": [
-            {
-                "title": "Here is the post:",
-                "fields": getFields(item),
-            },
-            {
-                "fallback": "Unable to show render button. Please contact your admin.",
-                "actions": [
-                    {
-                        "name": "visibility",
-                        "text": "Show post",
-                        "type": "button",
-                        "value": "show",
-                    },
-                ]
+                "actions": getButtons(buttons),
             }
         ]
     };
@@ -145,5 +74,51 @@ const getFields = (item) =>
         }
         return { "title": index, "value": element, short: false }
     });
+
+const getButtons = (buttons) =>
+    _.map(buttons, (button) => {
+        if (button === 'hide') {
+            return hideButton();
+        } else if (button === 'show') {
+            return showButton();
+        }
+        return null;
+    });
+
+const hideButton = () => {
+    return {
+        "name": "visibility",
+        "text": "Hide post",
+        "type": "button",
+        "value": "hide",
+        "confirm": {
+            "title": "Are you sure?",
+            "text": "The selected post will be hidden from the app newsFeed",
+            "ok_text": "Yes",
+            "dismiss_text": "No"
+        }
+    }
+}
+
+const showButton = () => {
+    return {
+        "name": "visibility",
+        "text": "Show post",
+        "type": "button",
+        "value": "show",
+    };
+}
+
+const getSocialMedia = (item) => {
+    if (item.instagram) {
+        return 'Instagram'
+    } else if (item.facebook) {
+        return 'Facebook'
+    } else if (item.twitter) {
+        return 'Twitter'
+    } else {
+        return 'Unknown'
+    }
+}
 
 module.exports = SlackMessages;
