@@ -75,35 +75,32 @@ exports.slackListener = functions.https.onRequest(async((request, response) => {
             firebaseRequests.updateItemById('NewsFeed', attachment[0].callback_id, { hidden: (actionTrigger === 'hide') });
 
             // GET ITEM TO SEND BACK
-            const item = await(firebaseRequests.getItemByReference(itemReference));
-            const buttons = actionTrigger === 'hide' ? ['show'] : ['hide'];
-            await(slackMessages.newsFeedItemMessage(item, payload.response_url, buttons));
+            const item = await(firebaseRequests.getNewsFeedItemById(attachment[0].callback_id));
+            const button = actionTrigger === 'hide' ? ['show'] : ['hide'];
+            await(slackMessages.newsFeedItemMessage(item, payload.response_url, button));
         }
     }
 }));
 
 exports.recentFeed = functions.https.onRequest(async((request, response) => {
     // CHECK IF USER IS AUTHORIZED
-    console.log('authorizing');
     if (request.body.team_id === config.slack.team.id
         && request.body.team_domain === config.slack.team.domain) {
-        console.log('authorized');
 
-        const count = parseInt(request.body.text);
-        console.log('***** count *****', count);
+        const parsedCount = parseInt(request.body.text);
+        const count = isNaN(parsedCount) ? 20 : parsedCount;
 
-        if (isNaN(count) && request.body.text !== '') {
-            // PLEASE PROVIDE A NUMBER OR LEAVE THAT PARAMETER EMPTY
-            response.status(404);
+        if (isNaN(parsedCount) && request.body.text.length > 0) {
+            response.send('***** Please provide a number or leave that parameter empty *****');
         } else {
-            console.log('***** sending *****', count);
-            response.send({ text: 'sending 20 items your way!' });
-            const items = await(firebaseRequests.getNewsFeedByCount(20));
-            _.map(items, (item) => await(slackMessages.newsFeedItemMessage(item, request.body.response_url)));
+            response.send({ text: `***** sending ${count} items your way! *****` });
+            const items = await(firebaseRequests.getNewsFeedByCount(count));
+            _.map(items, (item) => {
+                const button = item.hidden ? ['show'] : ['hide'];
+                await(slackMessages.newsFeedItemMessage(item, null, button));
+            });
         }
-
     } else {
-        // ONLY USERS FROM MISSISSAUGA DOLPHINS ADMIN TEAM CAN RUN THIS COMMAND
-        response.status(400);
+        response.send('***** Only users from Mississauga Dolphins admin team can run this command *****');
     }
 }));

@@ -25,7 +25,6 @@ FirebaseRequests.prototype.getNewsFeed = async(() => {
 });
 
 FirebaseRequests.prototype.getNewsFeedByCount = async((count) => {
-    console.log('I see you want ', count);
     const newsFeedRef = ref.child('NewsFeed');
     return new Promise((resolve) =>
         newsFeedRef
@@ -37,9 +36,10 @@ FirebaseRequests.prototype.getNewsFeedByCount = async((count) => {
     );
 });
 
-FirebaseRequests.prototype.getItemByReference = async((reference) => {
+FirebaseRequests.prototype.getNewsFeedItemById = async((id) => {
+    const itemReference = ref.child(`NewsFeed/${id}`);
     return new Promise((resolve) =>
-        reference.once('value', (snapshot) => {
+        itemReference.once('value', (snapshot) => {
             resolve(snapshot.val());
         })
     );
