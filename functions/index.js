@@ -16,8 +16,8 @@ const firebaseRequests = new FirebaseRequests();
 
 exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     // RESPONSE SYNC STARTED
-    console.log('***** RESPONSE SEND TO SLACK ******');
-    response.send({ text: 'Started social media sync. Hold tight!' });
+    // console.log('***** RESPONSE SEND TO SLACK ******');
+    // response.send({ text: 'Started social media sync. Hold tight!' });
 
     // FETCH CURRENT FEED DATA
     console.log('***** FETCHING CURRENT FEED ******');
@@ -58,6 +58,7 @@ exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     // POST ON SLACK ALL THE NEW ITEMS
     _.map(recentlyAdded, (element) => await(slackMessages.newsFeedItemMessage(element, null, ['hide'])));
     console.log('***** ALL DONE ******');
+    response.send('All Done');
 }));
 
 exports.slackListener = functions.https.onRequest(async((request, response) => {
@@ -106,13 +107,13 @@ exports.recentFeed = functions.https.onRequest(async((request, response) => {
         if (isNaN(parsedCount) && request.body.text.length > 0) {
             response.send('***** Please provide a number or leave that parameter empty *****');
         } else {
-            response.send({ text: `***** sending ${count} items your way! *****` });
             const items = await(firebaseRequests.getNewsFeedByCount(count));
             _.map(items, (item) => {
                 const button = item.hidden ? ['show'] : ['hide'];
                 await(slackMessages.newsFeedItemMessage(item, null, button));
             });
         }
+        response.send({ text: `***** sent ${count} items your way! *****` });
     } else {
         response.send('***** Only users from Mississauga Dolphins admin team can run this command *****');
     }
