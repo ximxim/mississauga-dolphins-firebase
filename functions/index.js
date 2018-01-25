@@ -16,35 +16,48 @@ const firebaseRequests = new FirebaseRequests();
 
 exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     // RESPONSE SYNC STARTED
+    console.log('***** RESPONSE SEND TO SLACK ******');
     response.send({ text: 'Started social media sync. Hold tight!' });
 
     // FETCH CURRENT FEED DATA
+    console.log('***** FETCHING CURRENT FEED ******');
     const currentFeed = await(firebaseRequests.getNewsFeed());
     const newFeed = [];
+    console.log('***** FETCHED CURRENT FEED ******');
 
     // FETCH TWITTER FEED DATA
+    console.log('***** FETCHING TWITTER FEED ******');
     const twitterFeed = await(getTwitterFeed(config.twitter));
     _.map(twitterFeed.data, (element) => newFeed.push(element));
+    console.log('***** FETCHED TWITTER FEED ******');
 
     // FETCH FACEBOOK FEED DATA
+    console.log('***** FETCHING FACEBOOK FEED ******');
     const facebookFeed = await(getFacebookFeed(config.facebook));
     _.map(facebookFeed.posts.data, (element) => newFeed.push(element));
     _.map(facebookFeed.events.data, (element) => newFeed.push(element));
+    console.log('***** FETCHED FACEBOOK FEED ******');
 
     // FETCH INSTAGRAM FEED DATA
+    console.log('***** FETCHING INSTAGRAM FEED ******');
     const instagramFeed = await(getInstagramFeed(config.instagram));
     _.map(instagramFeed.data, (element) => newFeed.push(element));
+    console.log('***** FETCHED INSTAGRAM FEED ******');
 
     // MERGE CURRENT FEED DATA WITH NEW FEED DATA
+    console.log('***** MERGING CURRENT FEED ******');
     const newFeedObject = _.keyBy(newFeed, 'id')
     const recentlyAdded = _.map(_.difference(_.keys(newFeedObject), _.keys(currentFeed)), (element) => newFeedObject[element]);
-    _.map(newFeed, (item) => firebaseRequests.updateItemById('NewsFeed', item.id, item));
+    _.map(newFeed, (item) => (item) ? firebaseRequests.updateItemById('NewsFeed', item.id, item) : console.log(item));
+    console.log('***** MERGED CURRENT FEED ******');
 
     // POST ON SLACK HOW MANY ITEMS WERE ADDED
     await(slackMessages.syncCompletedMessage(recentlyAdded.length));
+    console.log('***** SENT COMPLETED MESSAGE TO SLACK ******');
 
     // POST ON SLACK ALL THE NEW ITEMS
     _.map(recentlyAdded, (element) => await(slackMessages.newsFeedItemMessage(element, null, ['hide'])));
+    console.log('***** ALL DONE ******');
 }));
 
 exports.slackListener = functions.https.onRequest(async((request, response) => {
