@@ -11,18 +11,27 @@ module.exports = async((config) => {
     FB.setAccessToken(config.access_token);
 
     return new Promise((resolve) => {
+        const user = await(getUserInformation(FbPageId));
         const postsResponse = await(getPosts(FbPageId));
-        const posts = pretifyData(postsResponse.data, 'po');
+        const posts = pretifyData(postsResponse.data, 'po', user);
         // const photosResponse = await(getPhotos(FbPageId));
         // const photos = pretifyData(photosResponse.data, 'ph');
         // const videosResponse = await(getVideos(FbPageId));
         // const videos = pretifyData(videosResponse.data, 'vi');
         const eventsResponse = await(getEvents(FbPageId));
-        const events = pretifyData(eventsResponse.data, 'ev');
+        const events = pretifyData(eventsResponse.data, 'ev', user);
 
         return resolve({ posts, events });
     });
 });
+
+const getUserInformation = (FbPageId) => {
+    const postsQuery = { fields: ['picture', 'name', 'username'] };
+    return new Promise((resolve) =>
+        FB.api(FbPageId,
+            postsQuery,
+            res => (! res || res.error) ? resolve(res.error) : resolve(res)))
+}
 
 const getPosts = (FbPageId) => {
     const postsQuery = {
@@ -70,7 +79,7 @@ const getEvents = (FbPageId) => {
             res => (! res || res.error) ? resolve(res.error) : resolve(res)))
 }
 
-const pretifyData = (data, prefix) => {
+const pretifyData = (data, prefix, user) => {
     const dateOfItem = (prefix === 'ev') ? 'updated_time' : 'created_time'
     const FBData = _.map(
         data,
@@ -80,7 +89,8 @@ const pretifyData = (data, prefix) => {
                 facebook: true,
                 key: element.id,
                 title: getTitle(element),
-                date: moment(element[dateOfItem]).format()
+                date: moment(element[dateOfItem]).format(),
+                user: user,
             }
         )
     );
