@@ -15,8 +15,8 @@ function FirebaseRequests() {
     ref = db.ref('/');
 };
 
-FirebaseRequests.prototype.getNewsFeed = async(() => {
-    const newsFeedRef = ref.child('NewsFeed');
+FirebaseRequests.prototype.getObjectByName = async((name) => {
+    const newsFeedRef = ref.child(name);
     return new Promise((resolve) =>
         newsFeedRef.once('value', (snapshot) => {
             resolve(snapshot.val());

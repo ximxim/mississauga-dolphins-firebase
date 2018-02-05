@@ -21,7 +21,7 @@ exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
 
     // FETCH CURRENT FEED DATA
     console.log('***** FETCHING CURRENT FEED ******');
-    const currentFeed = await(firebaseRequests.getNewsFeed());
+    const currentFeed = await(firebaseRequests.getObjectByName('NewsFeed'));
     const newFeed = [];
     console.log('***** FETCHED CURRENT FEED ******');
 
@@ -36,6 +36,7 @@ exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     const facebookFeed = await(getFacebookFeed(config.facebook));
     _.map(facebookFeed.posts.data, (element) => newFeed.push(element));
     _.map(facebookFeed.events.data, (element) => newFeed.push(element));
+    _.map(facebookFeed.events.data, (item) => (item) ? firebaseRequests.updateItemById('Events', item.id, item) : console.log(item));
     console.log('***** FETCHED FACEBOOK FEED ******');
 
     // FETCH INSTAGRAM FEED DATA
