@@ -35,7 +35,6 @@ exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     console.log('***** FETCHING FACEBOOK FEED ******');
     const facebookFeed = await(getFacebookFeed(config.facebook));
     _.map(facebookFeed.posts.data, (element) => newFeed.push(element));
-    _.map(facebookFeed.events.data, (element) => newFeed.push(element));
     _.map(facebookFeed.events.data, (item) => (item) ? firebaseRequests.updateItemById('Events', item.id, item) : console.log(item));
     console.log('***** FETCHED FACEBOOK FEED ******');
 
