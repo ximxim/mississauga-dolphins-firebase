@@ -140,8 +140,10 @@ const getFacebookUrls = (item) => {
         urls += `<${item.source} |Facebook Video>  \n`;
     }
     if (item.attachments) {
-        _.map(item.attachments.data, ({ media }) => {
-            urls += media.image ? `<${media.image.src} |Facebook Attachment>  \n` : '';
+        _.map(item.attachments.data, (attachment) => {
+            if (attachment.type !== 'album') {
+                urls += attachment.media.image ? `<${attachment.media.image.src} |Facebook Attachment>  \n` : '';
+            }
         });
     }
 
