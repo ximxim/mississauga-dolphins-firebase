@@ -10,11 +10,23 @@ module.exports = async((config) => {
     const params = { screen_name: 'M_Dolphins', count: '200' };
 
     return new Promise((resolve) => {
-        const twitterReponse = await(getTweets(client, url, params));
-        const tweets = pretifyData(twitterReponse, 't');
+        const twitterResponse = await(getTweets(client, url, params));
+        const filteredResponse = excludeItems(twitterResponse);
+        const tweets = pretifyData(filteredResponse, 't');
         return resolve(tweets);
     });
 });
+
+const excludeItems = (data) => {
+    return _.filter(data, (element) => {
+        return ! element.is_quote_status
+            && element.in_reply_to_user_id === null
+            && element.in_reply_to_user_id_str === null
+            && element.in_reply_to_screen_name === null
+            && element.in_reply_to_status_id === null
+            && element.in_reply_to_status_id_str === null;
+    });
+}
 
 const getTweets = (client, url, params) =>
     new Promise((resolve) =>

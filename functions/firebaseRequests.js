@@ -1,4 +1,6 @@
 const async = require('es5-async-await/async');
+const _ = require('lodash');
+const await = require('es5-async-await/await');
 const serviceAccount = require('./md-firebase-admin.json');
 const admin = require("firebase-admin");
 
@@ -49,6 +51,18 @@ FirebaseRequests.prototype.updateItemById = async((reference, id, item) => {
     if (reference && id && item) {
         ref.child(reference).child(id).update(item);
     }
+});
+
+FirebaseRequests.prototype.removeNewsFeedItemsByIdPrefix = async((prefix) => {
+    const newsFeedRef = ref.child('NewsFeed');
+    const newsFeed = await(new Promise((resolve) => newsFeedRef.once('value', (snapshot) => resolve(snapshot.val()))));
+    _.map(newsFeed, (item) => (item.id.indexOf(prefix) > - 1) ? delete newsFeed[item.id] : null)
+    return new Promise((resolve) => newsFeedRef.set(newsFeed, () => resolve()));
+});
+
+FirebaseRequests.prototype.removeByRef = async((r) => {
+    const reference = ref.child(r);
+    return reference.remove();
 });
 
 module.exports = FirebaseRequests;
