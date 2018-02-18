@@ -60,7 +60,7 @@ exports.getNewsFeed = functions.https.onRequest(async((request, response) => {
     console.log('***** SENT COMPLETED MESSAGE TO SLACK ******');
 
     // POST ON SLACK ALL THE NEW ITEMS
-    // _.map(recentlyAdded, (element) => await(slackMessages.newsFeedItemMessage(element, null, ['hide'])));
+    _.map(recentlyAdded, (element) => await(slackMessages.newsFeedItemMessage(element, null, ['hide'])));
 
     // RESPONSE
     console.log('***** ALL DONE ******');
