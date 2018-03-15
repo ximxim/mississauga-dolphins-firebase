@@ -124,3 +124,13 @@ exports.recentFeed = functions.https.onRequest(async((request, response) => {
         response.send('***** Only users from Mississauga Dolphins admin team can run this command *****');
     }
 }));
+
+exports.cheers = functions.https.onRequest(async((request, response) => {
+    const { id, type, applause } = request.query;
+    if (type && id && applause) {
+        firebaseRequests.updateItemById(type, id, { applause });
+        response.send(200);
+    } else {
+        response.send(403);
+    }
+}));
