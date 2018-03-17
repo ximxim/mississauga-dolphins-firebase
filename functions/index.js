@@ -129,7 +129,8 @@ exports.cheers = functions.https.onRequest(async((request, response) => {
     const { id, type, applause } = request.query;
     if (type && id && applause) {
         firebaseRequests.updateItemById(type, id, { applause });
-        response.send(200);
+        const item = await(firebaseRequests.getNewsFeedItemById(id));
+        response.send(item);
     } else {
         response.send(403);
     }
