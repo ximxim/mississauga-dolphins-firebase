@@ -132,6 +132,7 @@ exports.cheers = functions.https.onRequest(async((request, response) => {
         const item = await(firebaseRequests.getNewsFeedItemById(id));
         response.send(item);
     } else {
+        console.log(id, type, applause);
         response.send(403);
     }
 }));
