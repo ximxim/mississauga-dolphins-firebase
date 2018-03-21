@@ -132,7 +132,17 @@ exports.cheers = functions.https.onRequest(async((request, response) => {
         const item = await(firebaseRequests.getNewsFeedItemById(id));
         response.send(item);
     } else {
-        console.log(id, type, applause);
+        response.send(403);
+    }
+}));
+
+exports.view = functions.https.onRequest(async((request, response) => {
+    const { id, type, views } = request.query;
+    if (type && id && views) {
+        firebaseRequests.updateItemById(type, id, { views });
+        const item = await(firebaseRequests.getNewsFeedItemById(id));
+        response.send(item);
+    } else {
         response.send(403);
     }
 }));
