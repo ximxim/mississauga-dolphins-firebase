@@ -18,7 +18,7 @@ module.exports = async((config) => {
 
 const requestIntagram = (igUserId, baseUrl, accessToken) =>
     new Promise((resolve) =>
-        request(`${baseUrl}/users/${igUserId}/media/recent/?access_token=${accessToken}&count=200`,
+        request(`${baseUrl}/users/self/media/recent/?access_token=${accessToken}&count=200`,
             (error, response, body) => (error) ? resolve(error) : resolve(body))
     );
 
