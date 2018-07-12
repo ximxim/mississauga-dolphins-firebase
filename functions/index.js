@@ -220,7 +220,9 @@ exports.registerPushDevice = functions.https.onRequest(
             token
         } = request.query;
         if (token) {
-            firebaseRequests.addItemByNode('Users', request.query);
+            firebaseRequests.addItemByNode('Users', {
+                [deviceId]: request.query
+            });
             response.send(200);
         } else {
             response.send(403);
