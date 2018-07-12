@@ -219,7 +219,7 @@ exports.registerPushDevice = functions.https.onRequest(
             deviceYearClass,
             token
         } = request.query;
-        if (token && type) {
+        if (token) {
             firebaseRequests.addItemByNode('Users', request.query);
             response.send(200);
         } else {
