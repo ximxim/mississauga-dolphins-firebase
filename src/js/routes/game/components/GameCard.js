@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Input, Button, Table, Label } from 'reactstrap';
 import { toast } from 'react-toastify';
-import Autosuggest from 'react-autosuggest';
 
 import PlayersSuggestInput from './PlayersSuggestInput';
-import styles from './styles';
 import ENV from '../../../../env';
 
 class GameCard extends Component {

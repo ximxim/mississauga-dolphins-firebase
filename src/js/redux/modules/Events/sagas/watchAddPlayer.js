@@ -16,7 +16,7 @@ function addPlayer({ players, id }) {
 export function* handleAddPlayer({ payload }) {
     const { eventId, playerId } = payload;
     const players = yield select(getEventPlayers, eventId);
-    const isNew = !players.find(id => id == playerId);
+    const isNew = !players.find(id => id === playerId);
 
     if (isNew) {
         players.push(playerId);

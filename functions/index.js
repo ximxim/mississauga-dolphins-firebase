@@ -41,6 +41,7 @@ exports.getNewsFeed = functions.https.onRequest(
         console.log('***** FETCHING FACEBOOK FEED ******');
         const facebookFeed = await(getFacebookFeed(config.facebook));
         _.map(facebookFeed.posts.data, element => newFeed.push(element));
+<<<<<<< HEAD
         _.map(facebookFeed.events.data, item => {
             if (item) {
                 firebaseRequests.updateItemById('Events', item.id, item);
@@ -149,6 +150,115 @@ exports.slackListener = functions.https.onRequest(
             }
         }
     })
+=======
+        _.map(
+            facebookFeed.events.data,
+            item =>
+                item
+                    ? firebaseRequests.updateItemById('Events', item.id, item)
+                    : console.log(item),
+        );
+        console.log('***** FETCHED FACEBOOK FEED ******');
+
+        // FETCH INSTAGRAM FEED DATA
+        console.log('***** FETCHING INSTAGRAM FEED ******');
+        const instagramFeed = await(getInstagramFeed(config.instagram));
+        _.map(instagramFeed.data, element => newFeed.push(element));
+        console.log('***** FETCHED INSTAGRAM FEED ******');
+
+        // MERGE CURRENT FEED DATA WITH NEW FEED DATA
+        console.log('***** MERGING CURRENT FEED ******');
+        const newFeedObject = _.keyBy(newFeed, 'id');
+        const recentlyAdded = _.map(
+            _.difference(_.keys(newFeedObject), _.keys(currentFeed)),
+            element => newFeedObject[element],
+        );
+        _.map(
+            newFeed,
+            item =>
+                item
+                    ? firebaseRequests.updateItemById('NewsFeed', item.id, item)
+                    : console.log(item),
+        );
+        console.log('***** MERGED CURRENT FEED ******');
+
+        // POST ON SLACK HOW MANY ITEMS WERE ADDED
+        await(slackMessages.syncCompletedMessage(recentlyAdded.length));
+        console.log('***** SENT COMPLETED MESSAGE TO SLACK ******');
+
+        // POST ON SLACK ALL THE NEW ITEMS
+        _.map(recentlyAdded, element =>
+            await(slackMessages.newsFeedItemMessage(element, null, ['hide'])),
+        );
+
+        // RESPONSE
+        console.log('***** ALL DONE ******');
+        response.send('All Done');
+    }),
+);
+
+exports.slackListener = functions.https.onRequest(
+    async((request, response) => {
+        const payload = JSON.parse(request.body.payload);
+
+        // ONLY ACCEPT MESSAGES FROM ADMIN CHANNEL OF COMPANY
+        if (
+            payload.team.id === config.slack.team.id &&
+            payload.team.domain === config.slack.team.domain &&
+            payload.channel.id === config.slack.channel.id
+        ) {
+            // ACTION THAT WAS TRIGGERED e.g. hide or show
+            const actionTrigger = _.isArray(payload.actions)
+                ? payload.actions[0].value
+                : null;
+
+            // ATTACHMENT THAT MATCHES THE ACTION IN ORDER TO GET CALLBACK ID
+            const attachment = _.filter(
+                payload.original_message.attachments,
+                attachment => {
+                    if (_.isArray(attachment.actions)) {
+                        return _.map(
+                            attachment.actions,
+                            action => action.value === actionTrigger,
+                        );
+                    }
+                },
+            );
+
+            if (actionTrigger === 'hide' || actionTrigger === 'show') {
+                // SEND BACK A RESPONSE WITHOUT BUTTONS
+                const newMessage = payload.original_message;
+                newMessage.attachments = _.filter(
+                    newMessage.attachments,
+                    attachment => !attachment.callback_id,
+                );
+                response.send(newMessage);
+
+                // UPDATE HIDDEN INDICATOR ON FIREBASE ITEM BASED ON ACTION
+                firebaseRequests.updateItemById(
+                    'NewsFeed',
+                    attachment[0].callback_id,
+                    { hidden: actionTrigger === 'hide' },
+                );
+
+                // GET ITEM TO SEND BACK
+                const item = await(
+                    firebaseRequests.getNewsFeedItemById(
+                        attachment[0].callback_id,
+                    ),
+                );
+                const button = actionTrigger === 'hide' ? ['show'] : ['hide'];
+                await(
+                    slackMessages.newsFeedItemMessage(
+                        item,
+                        payload.response_url,
+                        button,
+                    ),
+                );
+            }
+        }
+    }),
+>>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
 );
 
 exports.recentFeed = functions.https.onRequest(
@@ -163,18 +273,27 @@ exports.recentFeed = functions.https.onRequest(
 
             if (isNaN(parsedCount) && request.body.text.length > 0) {
                 response.send(
+<<<<<<< HEAD
                     '***** Please provide a number or leave that parameter empty *****'
+=======
+                    '***** Please provide a number or leave that parameter empty *****',
+>>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
                 );
             } else {
                 const items = await(firebaseRequests.getNewsFeedByCount(count));
                 _.map(items, item => {
                     const button = item.hidden ? ['show'] : ['hide'];
                     await(
+<<<<<<< HEAD
                         slackMessages.newsFeedItemMessage(item, null, button)
+=======
+                        slackMessages.newsFeedItemMessage(item, null, button),
+>>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
                     );
                 });
             }
             response.send({
+<<<<<<< HEAD
                 text: `***** sent ${count} items your way! *****`
             });
         } else {
@@ -183,6 +302,16 @@ exports.recentFeed = functions.https.onRequest(
             );
         }
     })
+=======
+                text: `***** sent ${count} items your way! *****`,
+            });
+        } else {
+            response.send(
+                '***** Only users from Mississauga Dolphins admin team can run this command *****',
+            );
+        }
+    }),
+>>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
 );
 
 exports.cheers = functions.https.onRequest(
@@ -195,7 +324,11 @@ exports.cheers = functions.https.onRequest(
         } else {
             response.send(403);
         }
+<<<<<<< HEAD
     })
+=======
+    }),
+>>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
 );
 
 exports.view = functions.https.onRequest(
@@ -208,7 +341,11 @@ exports.view = functions.https.onRequest(
         } else {
             response.send(403);
         }
+<<<<<<< HEAD
     })
+=======
+    }),
+>>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
 );
 
 exports.registerPushDevice = functions.https.onRequest(
@@ -218,13 +355,25 @@ exports.registerPushDevice = functions.https.onRequest(
             deviceName,
             expoVersion,
             deviceYearClass,
+<<<<<<< HEAD
             token
         } = request.query;
         if (token && type) {
             firebaseRequests.addItemByNode('Users', request.query);
+=======
+            token,
+            type,
+        } = request.query;
+        if (token && type) {
+            firebaseRequests.addItemByNode(type, request.query);
+>>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
             response.send(200);
         } else {
             response.send(403);
         }
+<<<<<<< HEAD
     })
+=======
+    }),
+>>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
 );
