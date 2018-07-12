@@ -6,11 +6,7 @@ const admin = require('firebase-admin');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-<<<<<<< HEAD
     databaseURL: 'https://mississauga-dolphins.firebaseio.com'
-=======
-    databaseURL: 'https://mississauga-dolphins.firebaseio.com',
->>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
 });
 
 let db = admin.database();
@@ -26,7 +22,7 @@ FirebaseRequests.prototype.getObjectByName = async(name => {
     return new Promise(resolve =>
         newsFeedRef.once('value', snapshot => {
             resolve(snapshot.val());
-        }),
+        })
     );
 });
 
@@ -38,7 +34,7 @@ FirebaseRequests.prototype.getNewsFeedByCount = async(count => {
             .limitToLast(count)
             .once('value', snapshot => {
                 resolve(snapshot.val());
-            }),
+            })
     );
 });
 
@@ -47,7 +43,7 @@ FirebaseRequests.prototype.getNewsFeedItemById = async(id => {
     return new Promise(resolve =>
         itemReference.once('value', snapshot => {
             resolve(snapshot.val());
-        }),
+        })
     );
 });
 
@@ -69,22 +65,12 @@ FirebaseRequests.prototype.removeNewsFeedItemsByIdPrefix = async(prefix => {
     const newsFeedRef = ref.child('NewsFeed');
     const newsFeed = await(
         new Promise(resolve =>
-<<<<<<< HEAD
             newsFeedRef.once('value', snapshot => resolve(snapshot.val()))
         )
     );
     _.map(
         newsFeed,
         item => (item.id.indexOf(prefix) > -1 ? delete newsFeed[item.id] : null)
-=======
-            newsFeedRef.once('value', snapshot => resolve(snapshot.val())),
-        ),
-    );
-    _.map(
-        newsFeed,
-        item =>
-            item.id.indexOf(prefix) > -1 ? delete newsFeed[item.id] : null,
->>>>>>> 5595608b356e8da56cce3327c0d2d8e107f4b5ea
     );
     return new Promise(resolve => newsFeedRef.set(newsFeed, () => resolve()));
 });
