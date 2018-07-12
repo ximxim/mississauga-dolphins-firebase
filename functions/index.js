@@ -218,11 +218,10 @@ exports.registerPushDevice = functions.https.onRequest(
             deviceName,
             expoVersion,
             deviceYearClass,
-            token,
-            type
+            token
         } = request.query;
         if (token && type) {
-            firebaseRequests.addItemByNode(type, request.query);
+            firebaseRequests.addItemByNode('Users', request.query);
             response.send(200);
         } else {
             response.send(403);
