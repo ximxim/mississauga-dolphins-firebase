@@ -229,3 +229,29 @@ exports.registerPushDevice = functions.https.onRequest(
         }
     })
 );
+
+exports.getDeviceSettings = functions.https.onRequest(
+    async((request, response) => {
+        const { deviceId } = request.query;
+        if (deviceId) {
+            const res = await(
+                firebaseRequests.getObjectByName(`Users/${deviceId}`)
+            );
+            response.send(res);
+        } else {
+            response.send(403);
+        }
+    })
+);
+
+exports.triggerCreateTest = functions.database
+    .ref('/Test')
+    .onCreate(async(console.log));
+
+exports.triggerWriteTest = functions.database
+    .ref('/Test')
+    .onWrite(async(console.log));
+
+exports.triggerUpdateTest = functions.database
+    .ref('/Test')
+    .onUpdate(async(console.log));

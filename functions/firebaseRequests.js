@@ -18,9 +18,9 @@ function FirebaseRequests() {
 }
 
 FirebaseRequests.prototype.getObjectByName = async(name => {
-    const newsFeedRef = ref.child(name);
+    const objectRef = ref.child(name);
     return new Promise(resolve =>
-        newsFeedRef.once('value', snapshot => {
+        objectRef.once('value', snapshot => {
             resolve(snapshot.val());
         })
     );
