@@ -213,15 +213,19 @@ exports.view = functions.https.onRequest(
 exports.registerPushDevice = functions.https.onRequest(
     async((request, response) => {
         const {
-            deviceId,
+            installationId,
             deviceName,
             expoVersion,
             deviceYearClass,
             token
         } = request.query;
         if (token) {
-            firebaseRequests.addItemByNode('Users', {
-                [deviceId]: request.query
+            firebaseRequests.addItemByNode('Users/' + installationId, {
+                installationId,
+                deviceName,
+                expoVersion,
+                deviceYearClass,
+                token
             });
             response.send(200);
         } else {
@@ -232,10 +236,37 @@ exports.registerPushDevice = functions.https.onRequest(
 
 exports.getDeviceSettings = functions.https.onRequest(
     async((request, response) => {
-        const { deviceId } = request.query;
-        if (deviceId) {
+        const { installationId } = request.query;
+        if (installationId) {
             const res = await(
-                firebaseRequests.getObjectByName(`Users/${deviceId}`)
+                firebaseRequests.getObjectByName('Users/' + installationId)
+            );
+            response.send(res);
+        } else {
+            response.send(403);
+        }
+    })
+);
+
+exports.updateNotificationPreference = functions.https.onRequest(
+    async((request, response) => {
+        const {
+            installationId,
+            game_start,
+            positions_change,
+            score_wicket,
+            game_ends
+        } = request.query;
+        if (installationId) {
+            const res = await(
+                firebaseRequests.updateItemById(`Users`, installationId, {
+                    notification_settings: {
+                        game_start,
+                        positions_change,
+                        score_wicket,
+                        game_ends
+                    }
+                })
             );
             response.send(res);
         } else {
