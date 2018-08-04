@@ -3,6 +3,7 @@ const localConfig = require('./localConfig');
 const _ = require('lodash');
 const async = require('es5-async-await/async');
 const await = require('es5-async-await/await');
+const Expo = require('expo-server-sdk-modded');
 
 const getTwitterFeed = require('./twitterFeed');
 const getFacebookFeed = require('./facebookFeed');
@@ -272,6 +273,43 @@ exports.updateNotificationPreference = functions.https.onRequest(
         } else {
             response.send(403);
         }
+    })
+);
+
+exports.testPushNotification = functions.https.onRequest(
+    async((request, response) => {
+        let expo = new Expo();
+        let messages = [];
+
+        const users = await(firebaseRequests.getObjectByName('Users'));
+        const optedUsers = _.filter(
+            users,
+            user => user.notification_settings.game_start
+        );
+        _.map(optedUsers, user => {
+            if (!Expo.isExpoPushToken(user.token)) {
+                console.log('token is invalid');
+            } else {
+                messages.push({
+                    to: user.token,
+                    sound: 'default',
+                    body: 'This is a test notification',
+                    data: { withSome: 'data' }
+                });
+            }
+        });
+
+        let chunks = expo.chunkPushNotifications(messages);
+        _.map(chunks, chunk => {
+            try {
+                let receipts = await(expo.sendPushNotificationsAsync(chunk));
+                console.log(receipts);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        response.sendStatus(200);
     })
 );
 

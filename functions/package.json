@@ -11,12 +11,14 @@
         "ngrok": "./ngrok http -bind-tls=true localhost:8010"
     },
     "dependencies": {
-        "@google-cloud/functions-emulator": "1.0.0-beta.4",
+        "@google-cloud/functions-emulator": "1.0.0-beta.5",
         "es5-async-await": "^1.0.0",
+        "expo-server-sdk": "^3.0.1",
+        "expo-server-sdk-modded": "^2.3.2",
         "fb": "^2.0.0",
         "fibers": "^2.0.2",
-        "firebase-admin": "5.12.1",
-        "firebase-functions": "1.1.0",
+        "firebase-admin": "5.13.1",
+        "firebase-functions": "2.0.2",
         "instagram-node": "^0.5.8",
         "lodash": "^4.17.10",
         "moment": "^2.22.2",
