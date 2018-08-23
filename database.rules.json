@@ -1,0 +1,31 @@
+{
+    "rules": {
+        "NewsFeed": {
+            ".read": true,
+            ".indexOn": ["date", "key", "id"]
+        },
+        "Events": {
+            ".read": true,
+            ".indexOn": ["date", "key", "id"]
+        },
+        "Players": {
+            ".read": true,
+            ".indexOn": ["FIRST NAME", "LAST NAME"]
+        },
+        "Games": {
+            ".read": true,
+            ".indexOn": ["created_at", "active"]
+        },
+        "ContactInfo": {
+            ".read": true
+        },
+        "Sponsors": {
+            ".read": true
+        },
+        "ActiveGame": {
+            ".read": true
+        },
+        ".read": "auth != null",
+        ".write": "auth != null"
+    }
+}
