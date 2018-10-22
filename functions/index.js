@@ -313,14 +313,41 @@ exports.testPushNotification = functions.https.onRequest(
     })
 );
 
-exports.triggerCreateTest = functions.database
-    .ref('/Test')
-    .onCreate(async(console.log));
+// exports.triggerCreateTest = functions.database
+//     .ref('/Test')
+//     .onCreate(async((change, context) => {
+//         await(slackMessages.message(change));
+//         await(slackMessages.message(context));
+//     }));
 
 exports.triggerWriteTest = functions.database
     .ref('/Test')
-    .onWrite(async(console.log));
+    .onWrite(async((change, context) => {
+        const before = change.before.val();
+        const after = change.after.val();
 
-exports.triggerUpdateTest = functions.database
-    .ref('/Test')
-    .onUpdate(async(console.log));
+        if (before === null && after !== null) {
+            await(slackMessages.message('started game'));
+        } else if (before !== null && after === null) {
+            await(slackMessages.message('ended game'));
+        } else if (before && after) {
+            const key = Object.keys(before)[0];
+            if (!before[key].active && after[key].active) {
+                await(slackMessages.message('started game'));
+            } else if (before[key].active && !after[key].active) {
+                await(slackMessages.message('ended game'));
+            } else if ((before[key].home.batting
+                && !after[key].home.batting)
+                || (before[key].visitor.batting
+                && !after[key].visitor.batting)) {
+                await(slackMessages.message('batting stance changed'));
+            } else if ((before[key].home.wickets !== after[key].home.wickets)
+                || (before[key].visitor.wickets !== after[key].visitor.wickets)) {
+                await(slackMessages.message('Wickets changed'));
+            }
+        }
+    }));
+
+// exports.triggerUpdateTest = functions.database
+//     .ref('/Test')
+//     .onUpdate(async(console.log));
