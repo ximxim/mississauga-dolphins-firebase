@@ -276,52 +276,8 @@ exports.updateNotificationPreference = functions.https.onRequest(
     })
 );
 
-exports.testPushNotification = functions.https.onRequest(
-    async((request, response) => {
-        let expo = new Expo();
-        let messages = [];
-
-        const users = await(firebaseRequests.getObjectByName('Users'));
-        const optedUsers = _.filter(
-            users,
-            user => user.notification_settings.game_start
-        );
-        _.map(optedUsers, user => {
-            if (!Expo.isExpoPushToken(user.token)) {
-                console.log('token is invalid');
-            } else {
-                messages.push({
-                    to: user.token,
-                    sound: 'default',
-                    body: 'This is a test notification',
-                    data: { withSome: 'data' }
-                });
-            }
-        });
-
-        let chunks = expo.chunkPushNotifications(messages);
-        _.map(chunks, chunk => {
-            try {
-                let receipts = await(expo.sendPushNotificationsAsync(chunk));
-                console.log(receipts);
-            } catch (error) {
-                console.error(error);
-            }
-        });
-
-        response.sendStatus(200);
-    })
-);
-
-// exports.triggerCreateTest = functions.database
-//     .ref('/Test')
-//     .onCreate(async((change, context) => {
-//         await(slackMessages.message(change));
-//         await(slackMessages.message(context));
-//     }));
-
-exports.triggerWriteTest = functions.database
-    .ref('/Test')
+exports.gamesPushNotificationsTrigger = functions.database
+    .ref('/Games')
     .onWrite(async((change, context) => {
         let expo = new Expo();
         let messages = [];
@@ -389,7 +345,6 @@ exports.triggerWriteTest = functions.database
                 messages.push({
                     to: user.token,
                     sound: 'default',
-                    title: 'Mississauga Dolphins',
                     body,
                 });
             }
@@ -405,7 +360,3 @@ exports.triggerWriteTest = functions.database
             }
         });
     }));
-
-// exports.triggerUpdateTest = functions.database
-//     .ref('/Test')
-//     .onUpdate(async(console.log));
