@@ -1,7 +1,7 @@
 const async = require('es5-async-await/async');
 const _ = require('lodash');
 const await = require('es5-async-await/await');
-const serviceAccount = require('./md-firebase-admin.json');
+const serviceAccount = require('../md-firebase-admin.json');
 const admin = require('firebase-admin');
 
 admin.initializeApp({
