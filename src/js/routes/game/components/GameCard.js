@@ -527,10 +527,7 @@ class GameCard extends Component {
 		);
 	};
 
-	handleFinishGame = () =>
-		this.setState({ active: false }, () =>
-			this.props.finish(this.props.eventId)
-		);
+	handleFinishGame = () => this.props.finish(this.props.eventId);
 }
 
 export default GameCard;

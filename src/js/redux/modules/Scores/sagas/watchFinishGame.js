@@ -7,6 +7,7 @@ import * as scoresModule from '../index';
 function finishGame({ id, game }) {
 	const fClient = getClient();
 	const ref = fClient.database().ref(`/Games/${id}`);
+	game.active = false;
 	return ref.set(game);
 }
 
