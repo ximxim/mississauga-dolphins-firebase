@@ -28,26 +28,26 @@ const config =
 
 //PROD FUNCTIONS
 exports.cheers = functions.https.onRequest((req, res) =>
-	cheers(req, res, config),
+	cheers(req, res, config)
 );
 exports.view = functions.https.onRequest((req, res) => view(req, res, config));
 exports.getNewsFeed = functions.https.onRequest((req, res) =>
-	getNewsFeed(req, res, config),
+	getNewsFeed(req, res, config)
 );
 exports.slackListener = functions.https.onRequest((req, res) =>
-	slackListener(req, res, config),
+	slackListener(req, res, config)
 );
 exports.recentFeed = functions.https.onRequest((req, res) =>
-	recentFeed(req, res, config),
+	recentFeed(req, res, config)
 );
 exports.registerPushDevice = functions.https.onRequest((req, res) =>
-	registerPushDevice(req, res, config),
+	registerPushDevice(req, res, config)
 );
 exports.getDeviceSettings = functions.https.onRequest((req, res) =>
-	getDeviceSettings(req, res, config),
+	getDeviceSettings(req, res, config)
 );
 exports.updateNotificationPreference = functions.https.onRequest((req, res) =>
-	updateNotificationPreference(req, res, config),
+	updateNotificationPreference(req, res, config)
 );
 exports.gamesPushNotificationsTrigger = functions.database
 	.ref('/Games')
@@ -55,28 +55,28 @@ exports.gamesPushNotificationsTrigger = functions.database
 
 //DEV FUNCTIONS
 exports.viewDev = functions.https.onRequest((req, res) =>
-	viewDev(req, res, config),
+	viewDev(req, res, config)
 );
 exports.getNewsFeedDev = functions.https.onRequest((req, res) =>
-	getNewsFeedDev(req, res, config),
+	getNewsFeedDev(req, res, config)
 );
 exports.cheersDev = functions.https.onRequest((req, res) =>
-	cheersDev(req, res, config),
+	cheersDev(req, res, config)
 );
 exports.slackListenerDev = functions.https.onRequest((req, res) =>
-	slackListenerDev(req, res, config),
+	slackListenerDev(req, res, config)
 );
 exports.recentFeedDev = functions.https.onRequest((req, res) =>
-	recentFeedDev(req, res, config),
+	recentFeedDev(req, res, config)
 );
 exports.registerPushDeviceDev = functions.https.onRequest((req, res) =>
-	registerPushDeviceDev(req, res, config),
+	registerPushDeviceDev(req, res, config)
 );
 exports.getDeviceSettingsDev = functions.https.onRequest((req, res) =>
-	getDeviceSettingsDev(req, res, config),
+	getDeviceSettingsDev(req, res, config)
 );
 exports.updateNotificationPreferenceDev = functions.https.onRequest(
-	(req, res) => updateNotificationPreferenceDev(req, res, config),
+	(req, res) => updateNotificationPreferenceDev(req, res, config)
 );
 exports.gamesPushNotificationsTriggerDev = functions.database
 	.instance('mississauga-dolphins-dev')
