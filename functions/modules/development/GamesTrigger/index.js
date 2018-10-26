@@ -84,6 +84,7 @@ module.exports = async((change, context, config) => {
                 to: user.token,
                 sound: 'default',
                 body,
+                data: after[key],
             });
         }
     });

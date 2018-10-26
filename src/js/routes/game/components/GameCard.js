@@ -26,7 +26,7 @@ class GameCard extends Component {
 		nonStriker: ENV.newGame.nonStriker || '',
 		bowler: ENV.newGame.bowler || '',
 		active: false,
-		update_at: '',
+		updated_at: '',
 		created_at: '',
 		event_id: ''
 	};

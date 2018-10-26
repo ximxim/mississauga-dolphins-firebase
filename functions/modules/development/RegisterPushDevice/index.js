@@ -15,13 +15,27 @@ module.exports = async((request, response, config) => {
         token
     } = request.query;
     if (token) {
-        firebaseRequests.addItemByNode('Users/' + installationId, {
-            installationId,
-            deviceName,
-            expoVersion,
-            deviceYearClass,
-            token
-        });
+        const existingUser = await(
+            firebaseRequests.getObjectByName('Users/' + installationId)
+        );
+
+        if (existingUser) {
+            firebaseRequests.updateItemById('Users/', installationId, { token });
+        } else {
+            firebaseRequests.addItemByNode('Users/' + installationId, {
+                installationId,
+                deviceName,
+                expoVersion,
+                deviceYearClass,
+                token,
+                notification_settings: {
+                    game_start: 'true',
+                    game_ends: 'true',
+                    positions_change: 'true',
+                    score_wicket: 'true'
+                }
+            });
+        }
         response.send(200);
     } else {
         response.send(403);
