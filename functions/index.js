@@ -78,7 +78,7 @@ exports.getDeviceSettingsDev = functions.https.onRequest((req, res) =>
 exports.updateNotificationPreferenceDev = functions.https.onRequest(
 	(req, res) => updateNotificationPreferenceDev(req, res, config)
 );
-exports.gamesPushNotificationsTriggerDev = functions.database
+exports.gamesOnWriteDev = functions.database
 	.instance('mississauga-dolphins-dev')
 	.ref('/Games')
 	.onWrite((req, res) => gameTriggerDev(req, res, config));
