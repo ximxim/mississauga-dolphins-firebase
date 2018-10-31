@@ -29,10 +29,11 @@ module.exports = async((request, response, config) => {
                 deviceYearClass,
                 token,
                 notification_settings: {
-                    game_start: 'true',
-                    game_ends: 'true',
-                    positions_change: 'true',
-                    score_wicket: 'true'
+                    game_start: true,
+                    game_ends: true,
+                    positions_change: true,
+                    score_wicket: true,
+                    key_players_change: true
                 }
             });
         }

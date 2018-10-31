@@ -35,7 +35,7 @@ module.exports = async((change, context, config) => {
     if (!before[key] && after[key]) {
         // IF THE GAME DIDN"T EXISTS AND AFTER IT DID THEN A NEW GAME STARTED
         pushUsers = _.filter(users,
-            user => user.notification_settings.game_start === 'true');
+            user => user.notification_settings.game_start);
 
         body = `A game started between ${after[key].home.name} vs ${after[key].visitor.name}. Checkout the live scores in app.`;
     } else if (!key || (!before[key].active && !after[key].active)) {
@@ -44,13 +44,13 @@ module.exports = async((change, context, config) => {
     } else if (!before[key].active && after[key].active) {
         //IF THE GAME UPDATED FROM INACTIVE TO ACTIVE THEN AN EXISTING GAME STARTED
         pushUsers = _.filter(users,
-            user => user.notification_settings.game_start === 'true');
+            user => user.notification_settings.game_start);
 
         body = `A game started between ${after[key].home.name} vs ${after[key].visitor.name}. Checkout the live scores in app.`;
     } else if (before[key].active && !after[key].active) {
         //IF THE GAME CHANGED FROM ACTIVE TO INACTIVE THEN GAME ENDED
         pushUsers = _.filter(users,
-            user => user.notification_settings.game_ends === 'true');
+            user => user.notification_settings.game_ends);
 
         body = `A game ended between ${score}`;
     } else if (
@@ -59,7 +59,7 @@ module.exports = async((change, context, config) => {
     ) {
         //IF THE GAME'S TEAMS BATTING STANCE CHANGED THEN BATTING STANCE CHANGED
         pushUsers = _.filter(users,
-            user => user.notification_settings.positions_change === 'true');
+            user => user.notification_settings.positions_change);
 
         const battingTeam = after[key].home.batting ? after[key].home.name : after[key].visitor.name;
         body = `${battingTeam} is batting now. Score is ${score}`
@@ -69,11 +69,19 @@ module.exports = async((change, context, config) => {
     ) {
         //IF THE GAME'S TEAMS WICKETS CHANGED THEN WICKETS CHANGED
         pushUsers = _.filter(users,
-            user => user.notification_settings.score_wicket === 'true');
+            user => user.notification_settings.score_wicket);
 
         const wicketTeam = before[key].home.wickets !== after[key].home.wickets ? after[key].home.name : after[key].visitor.name;
 
         body = `${wicketTeam} lost a wicket. Score is ${score}`;
+    } else if (before[key].striker !== after[key].striker ||
+    before[key].nonStriker !== after[key].nonStriker ||
+    before[key].bowler !== after[key].bowler
+    ) {
+        pushUsers = _.filter(users,
+            user => user.notification_settings.key_players_change);
+
+        body = `Positions updated. Striker: ${after[key].striker} Non Striker: ${after[key].nonStriker} Bowler: ${after[key].bowler}`;
     }
 
     _.map(pushUsers, user => {
