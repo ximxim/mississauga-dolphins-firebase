@@ -49,7 +49,7 @@ exports.getDeviceSettings = functions.https.onRequest((req, res) =>
 exports.updateNotificationPreference = functions.https.onRequest((req, res) =>
 	updateNotificationPreference(req, res, config)
 );
-exports.gamesPushNotificationsTrigger = functions.database
+exports.gamesOnWriteDev = functions.database
 	.ref('/Games')
 	.onWrite((req, res) => gameTrigger(req, res, config));
 
