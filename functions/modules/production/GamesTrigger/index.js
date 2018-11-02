@@ -84,6 +84,8 @@ module.exports = async((change, context, config) => {
         body = `Positions updated. Striker: ${after[key].striker} Non Striker: ${after[key].nonStriker} Bowler: ${after[key].bowler}`;
     }
 
+    const event = await(firebaseRequests.getObjectByName(`Events/${after[key].event_id}`));
+
     _.map(pushUsers, user => {
         if (!Expo.isExpoPushToken(user.token)) {
             console.log('token is invalid');
@@ -92,7 +94,7 @@ module.exports = async((change, context, config) => {
                 to: user.token,
                 sound: 'default',
                 body,
-                data: after[key],
+                data: event,
             });
         }
     });
