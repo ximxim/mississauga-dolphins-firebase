@@ -99,12 +99,15 @@ module.exports = async((change, context, config) => {
         }
     });
 
+
     let chunks = expo.chunkPushNotifications(messages);
     _.map(chunks, chunk => {
         try {
             let receipts = await(expo.sendPushNotificationsAsync(chunk));
+            slackMessages.message(`Success! Push notifications went out to ${messages.length} users`);
             console.log(receipts);
         } catch (error) {
+            slackMessages.message(`Failed! Push notifications failed to send to ${messages.length} users`);
             console.error(error);
         }
     });

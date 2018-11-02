@@ -2,10 +2,12 @@ const async = require('es5-async-await/async');
 const await = require('es5-async-await/await');
 
 const FirebaseRequests = require('../../../utils/firebaseRequests');
+const SlackMessages = require('../../../utils/slackMessages');
 
 module.exports = async((request, response, config) => {
     //INITIALIZE
     const firebaseRequests = new FirebaseRequests();
+    const slackMessages = new SlackMessages(config.slack);
 
     const {
         installationId,
@@ -22,6 +24,7 @@ module.exports = async((request, response, config) => {
         if (existingUser) {
             firebaseRequests.updateItemById('Users/', installationId, { token });
         } else {
+            slackMessages.message(`A new user got added to push notification list ${installationId} - ${deviceName}`);
             firebaseRequests.addItemByNode('Users/' + installationId, {
                 installationId,
                 deviceName,
