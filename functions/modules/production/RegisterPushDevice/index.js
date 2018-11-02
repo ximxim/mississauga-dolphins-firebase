@@ -16,7 +16,7 @@ module.exports = async((request, response, config) => {
         deviceYearClass,
         token
     } = request.query;
-    if (token) {
+    if (token && installationId) {
         const existingUser = await(
             firebaseRequests.getObjectByName('Users/' + installationId)
         );
@@ -24,7 +24,7 @@ module.exports = async((request, response, config) => {
         if (existingUser) {
             firebaseRequests.updateItemById('Users/', installationId, { token });
         } else {
-            slackMessages.message(`A new user got added to push notification list ${installationId} - ${deviceName}`);
+            slackMessages.message(`Success! A new user got added to push notification list ${installationId} - ${deviceName}`);
             firebaseRequests.addItemByNode('Users/' + installationId, {
                 installationId,
                 deviceName,
@@ -42,6 +42,7 @@ module.exports = async((request, response, config) => {
         }
         response.send(200);
     } else {
+        slackMessages.message(`Failed! A new user was not able to register for push notification ${installationId} - ${deviceName}`);
         response.send(403);
     }
 })
