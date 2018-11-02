@@ -12,16 +12,25 @@ module.exports = async((request, response, config) => {
         game_start,
         positions_change,
         score_wicket,
-        game_ends
+        game_ends,
+        key_players_change
     } = request.query;
+    console.log(        installationId,
+            game_start,
+            positions_change,
+            score_wicket,
+            game_ends,
+            key_players_change
+);
     if (installationId) {
         const res = await(
             firebaseRequests.updateItemById(`Users`, installationId, {
                 notification_settings: {
-                    game_start,
-                    positions_change,
-                    score_wicket,
-                    game_ends
+                    game_start: game_start === 'true',
+                    positions_change: positions_change === 'true',
+                    score_wicket: score_wicket === 'true',
+                    game_ends: game_ends === 'true',
+                    key_players_change: key_players_change === 'true',
                 }
             })
         );
