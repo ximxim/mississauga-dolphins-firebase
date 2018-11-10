@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "mississauga-dolphins"
+  },
+  "targets": {
+    "mississauga-dolphins": {
+      "hosting": {
+        "staging": [
+          "mississauga-dolphins-staging"
+        ],
+        "production": [
+          "mississauga-dolphins"
+        ]
+      }
+    }
   }
 }
