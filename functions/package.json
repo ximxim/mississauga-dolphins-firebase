@@ -5,8 +5,8 @@
         "serve": "firebase serve --only functions",
         "shell": "firebase experimental:functions:shell",
         "start": "npm run shell",
-        "deploy-functions": "firebase deploy --only functions",
-        "deploy-database": "firebase deploy --only database",
+        "dfunc": "firebase deploy --only functions",
+        "ddb": "firebase deploy --only database",
         "logs": "fm logs read",
         "ngrok": "./ngrok http -bind-tls=true localhost:8010"
     },
