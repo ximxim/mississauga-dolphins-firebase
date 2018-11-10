@@ -2,7 +2,8 @@
     "database": {
         "rules": "database.rules.json"
     },
-    "hosting": {
+    "hosting": [{
+        "target": "staging",
         "public": "build",
         "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
         "rewrites": [
@@ -11,5 +12,14 @@
                 "destination": "/index.html"
             }
         ]
-    }
+    }, {
+      "public": "production",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+          {
+              "source": "**",
+              "destination": "/index.html"
+          }
+      ]
+      }]
 }

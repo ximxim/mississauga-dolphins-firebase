@@ -39,7 +39,8 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "deploy": "firebase deploy --only hosting",
+        "dprod": "firebase deploy --only hosting:production",
+        "dstag": "firebase deploy --only hosting:staging",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
         "remotedev": "babel-node scripts/remotedevServer.js"
