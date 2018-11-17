@@ -4,6 +4,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import withSetup from './js/redux/setup';
+import { MainNav } from './js/components';
 
 import games from './js/routes/games';
 import game from './js/routes/game';
@@ -16,17 +17,24 @@ type Props = {
 
 class App extends Component<Props, *> {
   render() {
+    let component = null;
     if (this.props.location.pathname === '/') {
-      return (<Redirect to="/games" />);
+      component = <Redirect to="/games" />;
     }
-    return (
-        <div>
+    component = (
+        <MainNav>
             <React.Fragment>
                 <Route path="/games" component={games} />
                 <Route path="/game/:id" component={game} />
             </React.Fragment>
             <ToastContainer />
-        </div>
+        </MainNav>
+    );
+
+    return (
+        <MainNav>
+            {component}
+        </MainNav>
     );
   }
 }
