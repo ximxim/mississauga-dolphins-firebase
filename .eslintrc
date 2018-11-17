@@ -25,7 +25,7 @@
     "react/prefer-stateless-function": 0,
     "no-else-return": 0,
     "radix": 0,
-    "react/jsx-indent": [2, 8],
+    "react/jsx-indent": [2, 4]
   },
   "plugins": [
     "babel",
