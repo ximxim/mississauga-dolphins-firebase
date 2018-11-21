@@ -22,13 +22,13 @@ class App extends Component<Props, *> {
       component = <Redirect to="/games" />;
     }
     component = (
-        <MainNav>
+        <div>
             <React.Fragment>
                 <Route path="/games" component={games} />
                 <Route path="/game/:id" component={game} />
             </React.Fragment>
             <ToastContainer />
-        </MainNav>
+        </div>
     );
 
     return (

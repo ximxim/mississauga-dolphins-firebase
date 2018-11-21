@@ -38,3 +38,18 @@ h4.helper {
     align-items: center;
     margin: auto;
 }
+
+::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.3);
+  }
+  
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.3);
+  }
+  

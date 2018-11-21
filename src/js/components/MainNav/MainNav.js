@@ -1,6 +1,8 @@
 /* @flow */
 import React from 'react';
 
+import { Sidebar, SidebarContent, Wrapper } from './components';
+
 type Props = {
     children: Object,
 };
@@ -10,9 +12,14 @@ class MainNav extends React.Component<Props, *> {
 
     render() {
       return (
-          <div className="">
-              {this.props.children}
-          </div>
+          <Wrapper>
+              <Sidebar>
+                  <div><p>something else</p></div>
+              </Sidebar>
+              <SidebarContent>
+                  {this.props.children}
+              </SidebarContent>
+          </Wrapper>
       );
     }
 }
