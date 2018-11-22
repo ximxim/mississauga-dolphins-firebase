@@ -41,27 +41,36 @@ h4.helper {
 
 ::-webkit-scrollbar {
     width: 4px;
-  }
-  
+}
+
 ::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: rgba(255,255,255,0.3);
-  }
-  
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: rgba(255,255,255,0.3);
-  }
+    background-color: rgba(255, 255, 255, 0.3);
+}
 
-  .bg-primary {
-      background-color: rgb(5, 48, 29) !important;
-  }
+.bg-primary {
+    background-color: #05301d !important;
+}
 
-  .bg-dark {
+.bg-dark {
     background-color: rgb(3, 27, 16) !important;
 }
 
-  h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Vidaloka', serif;
-  }
-  
+}
+
+.navbar-brand {
+    color: white;
+    font-family: 'Fugaz One', cursive;
+}

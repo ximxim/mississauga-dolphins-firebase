@@ -68,6 +68,9 @@ align-items: stretch;
 
 export const NavBar = styled.nav`
 background-color: black;
+display: flex;
+justify-content: space-between;
+align-items: center;
 `;
 
 export const BrandLogo = styled.img`
@@ -101,4 +104,19 @@ cursor: pointer !important;
 
 export const Divider = styled.hr`
 border-top: 1px solid #1d523a !important;
+`;
+
+export const NavBarButton = styled.button`
+border-radius: 10px;
+border: 2px solid white;
+background-color: ${props => props.theme.brandPrimary};
+color: white;
+cursor: pointer;
+width: 40px;
+height: 40px;
+transition: all 0.3s;
+&:hover {
+    background-color: white !important;
+    color: ${props => props.theme.brandPrimary};
+}
 `;
