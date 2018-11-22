@@ -2,6 +2,10 @@
 import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faTachometerAlt, faNewspaper, faHeadset, faUsers, faLifeRing, faCogs,
+} from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
 import { MainNav } from './js/components';
@@ -15,8 +19,11 @@ type Props = {
     },
 }
 
+library.add(faTachometerAlt, faNewspaper, faHeadset, faUsers, faLifeRing, faCogs);
+
 class App extends Component<Props, *> {
   render() {
+    console.log(library);
     let component = null;
     if (this.props.location.pathname === '/') {
       component = <Redirect to="/games" />;
