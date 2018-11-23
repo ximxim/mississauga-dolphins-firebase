@@ -69,3 +69,6 @@ h5,
 h6 {
     font-family: 'Vidaloka', serif;
 }
+ .popover {
+     margin-top: 0px;
+ }

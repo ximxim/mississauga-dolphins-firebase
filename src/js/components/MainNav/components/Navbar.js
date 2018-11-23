@@ -51,7 +51,7 @@ class MainNav extends React.Component<Props, *> {
                     aria-label="Notifications"
                     className="mx-1"
                     id="notificationPopover"
-                    onClick={this.toggleNotificationPopover}
+                    onMouseEnter={() => this.toggleNotificationPopover(true)}
                   >
                       <FontAwesomeIcon icon="bell" />
                   </NavBarButton>
@@ -59,7 +59,7 @@ class MainNav extends React.Component<Props, *> {
                     placement="bottom"
                     isOpen={this.state.notificationPopoverVisibility}
                     target="notificationPopover"
-                    toggle={this.toggleNotificationPopover}
+                    onMouseLeave={() => this.toggleNotificationPopover(false)}
                   >
                       <PopoverHeader>Notifications</PopoverHeader>
                       <PopoverBody>
@@ -70,7 +70,7 @@ class MainNav extends React.Component<Props, *> {
                     aria-label="Information"
                     className="mx-1"
                     id="informationPopover"
-                    onClick={this.toggleInformationPopover}
+                    onMouseEnter={() => this.toggleInformationPopover(true)}
                   >
                       <FontAwesomeIcon icon="info" />
                   </NavBarButton>
@@ -78,7 +78,7 @@ class MainNav extends React.Component<Props, *> {
                     placement="bottom"
                     isOpen={this.state.informationPopoverVisibility}
                     target="informationPopover"
-                    toggle={this.toggleInformationPopover}
+                    onMouseLeave={() => this.toggleInformationPopover(false)}
                   >
                       <PopoverHeader>Information</PopoverHeader>
                       <PopoverBody>
@@ -89,7 +89,7 @@ class MainNav extends React.Component<Props, *> {
                     aria-label="User Information"
                     className="mx-1"
                     id="userPopover"
-                    onClick={this.toggleUserPopover}
+                    onMouseEnter={() => this.toggleUserPopover(true)}
                   >
                       <FontAwesomeIcon icon="user" />
                   </NavBarButton>
@@ -98,6 +98,7 @@ class MainNav extends React.Component<Props, *> {
                     isOpen={this.state.userPopoverVisilibity}
                     target="userPopover"
                     toggle={this.toggleUserPopover}
+                    onMouseLeave={() => this.toggleUserPopover(false)}
                   >
                       <PopoverHeader>User</PopoverHeader>
                       <PopoverBody>
@@ -109,21 +110,27 @@ class MainNav extends React.Component<Props, *> {
       );
     }
 
-    toggleNotificationPopover = () => {
+    toggleNotificationPopover = (visibility) => {
       this.setState(state => ({
-        notificationPopoverVisibility: !state.notificationPopoverVisibility,
+        informationPopoverVisibility: visibility ? false : state.informationPopoverVisibility,
+        userPopoverVisilibity: visibility ? false : state.userPopoverVisilibity,
+        notificationPopoverVisibility: visibility,
       }));
     };
 
-    toggleInformationPopover = () => {
+    toggleInformationPopover = (visibility) => {
       this.setState(state => ({
-        informationPopoverVisibility: !state.informationPopoverVisibility,
+        notificationPopoverVisibility: visibility ? false : state.notificationPopoverVisibility,
+        userPopoverVisilibity: visibility ? false : state.userPopoverVisilibity,
+        informationPopoverVisibility: visibility,
       }));
     };
 
-    toggleUserPopover = () => {
+    toggleUserPopover = (visibility) => {
       this.setState(state => ({
-        userPopoverVisilibity: !state.userPopoverVisilibity,
+        notificationPopoverVisibility: visibility ? false : state.notificationPopoverVisibility,
+        informationPopoverVisibility: visibility ? false : state.informationPopoverVisibility,
+        userPopoverVisilibity: visibility,
       }));
     };
 }
