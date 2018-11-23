@@ -11,6 +11,7 @@ type Props = {
     isOpen: Boolean,
     toggleSidebar: () => void,
     featureFlags: SidebarTypes,
+    signOut: () => void,
 };
 
 type State = {};
@@ -70,14 +71,17 @@ class MainNav extends React.Component<Props, State> {
         this.renderListItem({
           icon: 'user',
           title: 'Sign out',
+          onClick: this.props.signOut,
         }),
     ];
 
-    renderListItem = ({ icon, title, hidden }) => {
+    renderListItem = ({
+      icon, title, hidden, onClick,
+    }) => {
       if (hidden) return null;
       return (
           <SidebarListItem className="p-3" key={title}>
-              <a href="#">
+              <a href="#" onClick={onClick}>
                   <FontAwesomeIcon icon={icon} className="mr-2" />
                   <span>{title}</span>
               </a>

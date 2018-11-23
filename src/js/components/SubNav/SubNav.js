@@ -6,20 +6,19 @@ import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 
 
-import { SidebarContent, Wrapper } from './MainNav.styled';
+import { SidebarContent, Wrapper } from './SubNav.styled';
 import { Admin } from '../../redux/modules/Meta/types';
 
 type Props = {
     children: Object,
     admin: Admin,
-    signOut: () => void,
 };
 
 type State = {
     isOpen: Boolean,
 };
 
-class MainNav extends React.Component<Props, State> {
+class SubNav extends React.Component<Props, State> {
     state: State = {
       isOpen: false,
     }
@@ -33,7 +32,6 @@ class MainNav extends React.Component<Props, State> {
                 isOpen={this.state.isOpen}
                 toggleSidebar={this.toggleSidebar}
                 featureFlags={this.props.admin.Sidebar}
-                signOut={this.props.signOut}
               />
               <SidebarContent>
                   <div className="row no-gutters">
@@ -44,7 +42,9 @@ class MainNav extends React.Component<Props, State> {
                           />
                       </div>
                   </div>
-                  {this.props.children}
+                  <div className="px-2">
+                      {this.props.children}
+                  </div>
               </SidebarContent>
           </Wrapper>
       );
@@ -57,4 +57,4 @@ const mapStateToProps = state => ({
   admin: state.meta.Admin,
 });
 
-export default connect(mapStateToProps)(MainNav);
+export default connect(mapStateToProps)(SubNav);

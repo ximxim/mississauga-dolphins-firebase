@@ -19,7 +19,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
-import { MainNav } from './js/components';
 import games from './js/routes/games';
 import game from './js/routes/game';
 import theme from './js/utils/theme';
@@ -45,10 +44,9 @@ library.add(
 );
 class App extends Component<Props, *> {
   render() {
-    console.log(library);
     let component = null;
     if (this.props.location.pathname === '/') {
-      component = <Redirect to="/games" />;
+      return <Redirect to="/games" />;
     }
     component = (
         <div>
@@ -62,9 +60,7 @@ class App extends Component<Props, *> {
 
     return (
         <ThemeProvider theme={theme}>
-            <MainNav>
-                {component}
-            </MainNav>
+            {component}
         </ThemeProvider>
     );
   }
