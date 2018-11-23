@@ -4,6 +4,7 @@ import React from 'react';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 
+
 import { SidebarContent, Wrapper } from './MainNav.styled';
 
 type Props = {
