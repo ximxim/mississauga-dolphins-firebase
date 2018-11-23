@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { media } from '../../utils/media';
+import { media } from '../../../utils/media';
 
 export const Sidebar = styled.nav`
 min-width: 200px;
@@ -53,26 +53,6 @@ margin-right: -140px;
 `}
 `;
 
-export const SidebarContent = styled.div`
-width: 100%;
-min-height: 100vh;
-transition: all 0.3s;
-max-height: 100vh;
-`;
-
-export const Wrapper = styled.div`
-display: flex;
-width: 100%;
-align-items: stretch;
-`;
-
-export const NavBar = styled.nav`
-background-color: black;
-display: flex;
-justify-content: space-between;
-align-items: center;
-`;
-
 export const BrandLogo = styled.img`
 width: 50px
 transition: all 0.3s;
@@ -106,17 +86,9 @@ export const Divider = styled.hr`
 border-top: 1px solid #1d523a !important;
 `;
 
-export const NavBarButton = styled.button`
-border-radius: 10px;
-border: 2px solid white;
-background-color: ${props => props.theme.brandPrimary};
-color: white;
-cursor: pointer;
-width: 40px;
-height: 40px;
-transition: all 0.3s;
-&:hover {
-    background-color: white !important;
-    color: ${props => props.theme.brandPrimary};
-}
+export const ToggleButton = styled.a`
+display: block;
+${media.large`
+display: none;
+`}
 `;

@@ -5,7 +5,17 @@ import { ToastContainer } from 'react-toastify';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { ThemeProvider } from 'styled-components';
 import {
-  faTachometerAlt, faNewspaper, faHeadset, faUsers, faLifeRing, faCogs, faBell, faInfo, faUser,
+  faTachometerAlt,
+  faNewspaper,
+  faHeadset,
+  faUsers,
+  faLifeRing,
+  faCogs,
+  faBell,
+  faInfo,
+  faUser,
+  faAlignJustify,
+  faWindowClose,
 } from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
@@ -20,8 +30,19 @@ type Props = {
     },
 }
 
-library.add(faTachometerAlt, faNewspaper, faHeadset, faUsers, faLifeRing, faCogs, faBell, faInfo, faUser);
-
+library.add(
+  faTachometerAlt,
+  faNewspaper,
+  faHeadset,
+  faUsers,
+  faLifeRing,
+  faCogs,
+  faBell,
+  faInfo,
+  faUser,
+  faAlignJustify,
+  faWindowClose,
+);
 class App extends Component<Props, *> {
   render() {
     console.log(library);
