@@ -1,14 +1,17 @@
 /* @flow */
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 
 
 import { SidebarContent, Wrapper } from './MainNav.styled';
+import { Admin } from '../../redux/modules/Meta/types';
 
 type Props = {
     children: Object,
+    admin: Admin,
 };
 
 type State = {
@@ -25,11 +28,18 @@ class MainNav extends React.Component<Props, State> {
     render() {
       return (
           <Wrapper>
-              <Sidebar isOpen={this.state.isOpen} toggleSidebar={this.toggleSidebar} />
+              <Sidebar
+                isOpen={this.state.isOpen}
+                toggleSidebar={this.toggleSidebar}
+                featureFlags={this.props.admin.Sidebar}
+              />
               <SidebarContent>
                   <div className="row no-gutters">
                       <div className="col">
-                          <Navbar toggleSidebar={this.toggleSidebar} />
+                          <Navbar
+                            toggleSidebar={this.toggleSidebar}
+                            featureFlags={this.props.admin.Navbar}
+                          />
                       </div>
                   </div>
                   {this.props.children}
@@ -41,4 +51,8 @@ class MainNav extends React.Component<Props, State> {
     toggleSidebar = () => this.setState(state => ({ isOpen: !state.isOpen }));
 }
 
-export default MainNav;
+const mapStateToProps = state => ({
+  admin: state.meta.Admin,
+});
+
+export default connect(mapStateToProps)(MainNav);

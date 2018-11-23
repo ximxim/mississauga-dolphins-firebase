@@ -5,10 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Sidebar, BrandLogo, BrandLogoWrapper, SidebarListItem, Divider, ToggleButton,
 } from './Sidebar.styled';
+import { Sidebar as SidebarTypes } from '../../../redux/modules/Meta/types';
 
 type Props = {
     isOpen: Boolean,
-    toggleSidebar: () => void;
+    toggleSidebar: () => void,
+    featureFlags: SidebarTypes,
 };
 
 type State = {};
@@ -31,46 +33,55 @@ class MainNav extends React.Component<Props, State> {
                   <BrandLogo src="/img/logo.png" className="p-2" alt="Mississauga Dolphins Logo" />
               </BrandLogoWrapper>
               <ul className="list-unstyled">
-                  <SidebarListItem className="p-3">
-                      <a href="#">
-                          <FontAwesomeIcon icon="newspaper" className="mr-2" />
-                          <span>NewsFeed</span>
-                      </a>
-                  </SidebarListItem>
-                  <SidebarListItem className="p-3">
-                      <a href="#">
-                          <FontAwesomeIcon icon="headset" className="mr-2" />
-                          <span>Games</span>
-                      </a>
-                  </SidebarListItem>
-                  <SidebarListItem className="p-3">
-                      <a href="#">
-                          <FontAwesomeIcon icon="users" className="mr-2" />
-                          <span>Players</span>
-                      </a>
-                  </SidebarListItem>
-                  <SidebarListItem className="p-3">
-                      <a href="#">
-                          <FontAwesomeIcon icon="life-ring" className="mr-2" />
-                          <span>Sponsors</span>
-                      </a>
-                  </SidebarListItem>
-                  <Divider />
-                  <SidebarListItem className="p-3">
-                      <a href="#">
-                          <FontAwesomeIcon icon="cogs" className="mr-2" />
-                          <span>Settings</span>
-                      </a>
-                  </SidebarListItem>
-                  <Divider />
-                  <SidebarListItem className="p-3">
-                      <a href="#">
-                          <FontAwesomeIcon icon="user" className="mr-2" />
-                          <span>Sign out</span>
-                      </a>
-                  </SidebarListItem>
+                  {this.renderSidebarOptions()}
               </ul>
           </Sidebar>
+      );
+    }
+
+    renderSidebarOptions = () => [
+      this.renderListItem({
+        icon: 'newspaper',
+        title: 'News feed',
+        hidden: !this.props.featureFlags.newsfeed,
+      }),
+      this.renderListItem({
+        icon: 'headset',
+        title: 'Games',
+        hidden: !this.props.featureFlags.games,
+      }),
+      this.renderListItem({
+        icon: 'users',
+        title: 'Players',
+        hidden: !this.props.featureFlags.players,
+      }),
+      this.renderListItem({
+        icon: 'life-ring',
+        title: 'Sponsors',
+        hidden: !this.props.featureFlags.sponsors,
+      }),
+        <Divider />,
+        this.renderListItem({
+          icon: 'cogs',
+          title: 'Settings',
+          hidden: !this.props.featureFlags.settings,
+        }),
+        <Divider />,
+        this.renderListItem({
+          icon: 'user',
+          title: 'Sign out',
+        }),
+    ];
+
+    renderListItem = ({ icon, title, hidden }) => {
+      if (hidden) return null;
+      return (
+          <SidebarListItem className="p-3" key={title}>
+              <a href="#">
+                  <FontAwesomeIcon icon={icon} className="mr-2" />
+                  <span>{title}</span>
+              </a>
+          </SidebarListItem>
       );
     }
 }
