@@ -10,129 +10,118 @@ import {
 } from './Navbar.styled';
 
 type Props = {
-    toggleSidebar: () => void;
+  toggleSidebar: () => void;
 }
 
 type State = {
-    notificationPopoverVisibility: Boolean,
-    informationPopoverVisibility: Boolean,
-    userPopoverVisilibity: Boolean,
+  notificationPopoverVisibility: Boolean,
+  informationPopoverVisibility: Boolean,
+  userPopoverVisilibity: Boolean,
 }
 
 class MainNav extends React.Component<Props, *> {
-    state: State = {
-      notificationPopoverVisibility: false,
-      informationPopoverVisibility: false,
-      userPopoverVisilibity: false,
-    }
+  state: State = {
+    notificationPopoverVisibility: false,
+    informationPopoverVisibility: false,
+    userPopoverVisilibity: false,
+  }
 
-    props: Props;
+  props: Props;
 
-    render() {
-      return (
-          <NavBar className="bg-primary px-3 py-2">
-              <div>
-                  <ToggleButton
-                    aria-label="Toggle Sidebar"
-                    className="mr-2"
-                    onClick={this.props.toggleSidebar}
-                  >
-                      <FontAwesomeIcon icon="align-justify" />
-                  </ToggleButton>
-                  <Brand
-                    href="index.html"
-                    className="navbar-brand brand"
-                  >
-                        Mississauga Dolphins
-                  </Brand>
-              </div>
-              <div>
-                  <NavBarButton
-                    aria-label="Notifications"
-                    className="mx-1"
-                    id="notificationPopover"
-                    onMouseEnter={() => this.toggleNotificationPopover(true)}
-                  >
-                      <FontAwesomeIcon icon="bell" />
-                  </NavBarButton>
-                  <Popover
-                    placement="bottom"
-                    isOpen={this.state.notificationPopoverVisibility}
-                    target="notificationPopover"
-                    onMouseLeave={() => this.toggleNotificationPopover(false)}
-                  >
-                      <PopoverHeader>Notifications</PopoverHeader>
-                      <PopoverBody>
-                            Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
-                      </PopoverBody>
-                  </Popover>
-                  <NavBarButton
-                    aria-label="Information"
-                    className="mx-1"
-                    id="informationPopover"
-                    onMouseEnter={() => this.toggleInformationPopover(true)}
-                  >
-                      <FontAwesomeIcon icon="info" />
-                  </NavBarButton>
-                  <Popover
-                    placement="bottom"
-                    isOpen={this.state.informationPopoverVisibility}
-                    target="informationPopover"
-                    onMouseLeave={() => this.toggleInformationPopover(false)}
-                  >
-                      <PopoverHeader>Information</PopoverHeader>
-                      <PopoverBody>
-                            Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
-                      </PopoverBody>
-                  </Popover>
-                  <NavBarButton
-                    aria-label="User Information"
-                    className="mx-1"
-                    id="userPopover"
-                    onMouseEnter={() => this.toggleUserPopover(true)}
-                  >
-                      <FontAwesomeIcon icon="user" />
-                  </NavBarButton>
-                  <Popover
-                    placement="bottom"
-                    isOpen={this.state.userPopoverVisilibity}
-                    target="userPopover"
-                    toggle={this.toggleUserPopover}
-                    onMouseLeave={() => this.toggleUserPopover(false)}
-                  >
-                      <PopoverHeader>User</PopoverHeader>
-                      <PopoverBody>
-                            Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
-                      </PopoverBody>
-                  </Popover>
-              </div>
-          </NavBar>
-      );
-    }
+  render() {
+    return (
+        <NavBar className="bg-primary px-3 py-2">
+            <div>
+                <ToggleButton
+                  aria-label="Toggle Sidebar"
+                  className="mr-2"
+                  onClick={this.props.toggleSidebar}
+                >
+                    <FontAwesomeIcon icon="align-justify" />
+                </ToggleButton>
+                <Brand
+                  href="index.html"
+                  className="navbar-brand brand"
+                >
+                  Mississauga Dolphins
+                </Brand>
+            </div>
+            <div>
+                {this.renderNavbarOptions()}
+            </div>
+        </NavBar>
+    );
+  }
 
-    toggleNotificationPopover = (visibility) => {
-      this.setState(state => ({
-        informationPopoverVisibility: visibility ? false : state.informationPopoverVisibility,
-        userPopoverVisilibity: visibility ? false : state.userPopoverVisilibity,
-        notificationPopoverVisibility: visibility,
-      }));
-    };
+  renderNavbarOptions = () => [
+    this.renderNavbarButton({
+      title: 'Notifications',
+      toggle: this.toggleNotificationPopover,
+      icon: 'bell',
+      isOpen: this.state.notificationPopoverVisibility,
+      body: 'Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc. In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph. A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long. Ultimately, a paragraph is a sentence or group of sentences that support one main idea. In this handout, we will refer to this as the “controlling idea,” because it controls what happens in the rest of the paragraph.',
+      hidden: true,
+    }),
+    this.renderNavbarButton({
+      title: 'Information',
+      toggle: this.toggleInformationPopover,
+      icon: 'info',
+      isOpen: this.state.informationPopoverVisibility,
+      body: 'Information is better than nothing',
+      hidden: false,
+    }),
+    this.renderNavbarButton({
+      title: 'User',
+      toggle: this.toggleUserPopover,
+      icon: 'user',
+      isOpen: this.state.userPopoverVisilibity,
+      body: 'User is better than nothing',
+      hidden: true,
+    }),
+  ];
 
-    toggleInformationPopover = (visibility) => {
-      this.setState(state => ({
-        notificationPopoverVisibility: visibility ? false : state.notificationPopoverVisibility,
-        userPopoverVisilibity: visibility ? false : state.userPopoverVisilibity,
-        informationPopoverVisibility: visibility,
-      }));
-    };
+  renderNavbarButton = ({
+    title, toggle, icon, isOpen, body, hidden,
+  }) => hidden || (
+      <span>
+          <NavBarButton
+            aria-label={title}
+            className="mx-1"
+            id={`${title}Popover`}
+            onClick={toggle}
+            key={title}
+          >
+              <FontAwesomeIcon icon={icon} />
+          </NavBarButton>
+          <Popover
+            placement="bottom"
+            isOpen={isOpen}
+            target={`${title}Popover`}
+            toggle={toggle}
+          >
+              <PopoverHeader>{title}</PopoverHeader>
+              <PopoverBody>{body}</PopoverBody>
+          </Popover>
+      </span>
+  )
 
-    toggleUserPopover = (visibility) => {
-      this.setState(state => ({
-        notificationPopoverVisibility: visibility ? false : state.notificationPopoverVisibility,
-        informationPopoverVisibility: visibility ? false : state.informationPopoverVisibility,
-        userPopoverVisilibity: visibility,
-      }));
-    };
+  toggleNotificationPopover = () => {
+    this.setState(state => ({
+      notificationPopoverVisibility: !state.notificationPopoverVisibility,
+    }));
+  };
+
+  toggleInformationPopover = () => {
+    this.setState(state => ({
+      informationPopoverVisibility: !state.informationPopoverVisibility,
+    }));
+  };
+
+  toggleUserPopover = () => {
+    this.setState(state => ({
+      userPopoverVisilibity: !state.userPopoverVisilibity,
+    }));
+  };
 }
 
 export default MainNav;

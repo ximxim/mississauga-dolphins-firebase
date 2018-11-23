@@ -29,6 +29,7 @@ position: relative !important;
 }
 & li span {
     opacity: 0;
+    position: absolute;
     margin-left: -150px;
     transition: all 0.5s;
 }
@@ -70,8 +71,12 @@ top: 0;
 export const SidebarListItem = styled.li`
 transition: all 0.3s;
 cursor: pointer !important;
+width: 100% !important;
 &:hover {
     padding-left: 20px !important;
+}
+&:hover span{
+    text-decoration: underline !important;
 }
 & svg {
     font-size: 20px;
@@ -79,6 +84,10 @@ cursor: pointer !important;
 & span {
     margin-left: 10px;
     font-size: 18px;
+}
+& > a {
+    color: white !important;
+    width: 100% !important
 }
 `;
 

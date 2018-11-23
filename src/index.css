@@ -58,7 +58,7 @@ h4.helper {
 }
 
 .bg-dark {
-    background-color: rgb(3, 27, 16) !important;
+    background-color: #031b10 !important;
 }
 
 h1,
@@ -67,8 +67,32 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Vidaloka', serif;
+    font-family: 'Laila', serif;
 }
- .popover {
-     margin-top: 0px;
- }
+
+.popover-body {
+    max-height: 350px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0px !important;
+}
+
+.bs-popover-auto[x-placement^=bottom] .arrow::after,
+.bs-popover-bottom .arrow::after {
+    border-bottom-color: #031b10;
+}
+
+.bs-popover-auto[x-placement^=bottom] .popover-header::before,
+.bs-popover-bottom .popover-header::before {
+    border-bottom: 0px !important;
+}
+
+.popover-header {
+    background-color: #031b10;
+    color: white;
+}
+
+.popover {
+    border-radius: 10px;
+    border: 2px solid #031b10;
+}

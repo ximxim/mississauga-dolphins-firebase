@@ -32,34 +32,41 @@ class MainNav extends React.Component<Props, State> {
               </BrandLogoWrapper>
               <ul className="list-unstyled">
                   <SidebarListItem className="p-3">
-                      <a href="#" className="text-white">
+                      <a href="#">
                           <FontAwesomeIcon icon="newspaper" className="mr-2" />
                           <span>NewsFeed</span>
                       </a>
                   </SidebarListItem>
                   <SidebarListItem className="p-3">
-                      <a href="#" className="text-white">
+                      <a href="#">
                           <FontAwesomeIcon icon="headset" className="mr-2" />
                           <span>Games</span>
                       </a>
                   </SidebarListItem>
                   <SidebarListItem className="p-3">
-                      <a href="#" className="text-white">
+                      <a href="#">
                           <FontAwesomeIcon icon="users" className="mr-2" />
                           <span>Players</span>
                       </a>
                   </SidebarListItem>
                   <SidebarListItem className="p-3">
-                      <a href="#" className="text-white">
+                      <a href="#">
                           <FontAwesomeIcon icon="life-ring" className="mr-2" />
                           <span>Sponsors</span>
                       </a>
                   </SidebarListItem>
                   <Divider />
                   <SidebarListItem className="p-3">
-                      <a href="#" className="text-white">
+                      <a href="#">
                           <FontAwesomeIcon icon="cogs" className="mr-2" />
                           <span>Settings</span>
+                      </a>
+                  </SidebarListItem>
+                  <Divider />
+                  <SidebarListItem className="p-3">
+                      <a href="#">
+                          <FontAwesomeIcon icon="user" className="mr-2" />
+                          <span>Sign out</span>
                       </a>
                   </SidebarListItem>
               </ul>
