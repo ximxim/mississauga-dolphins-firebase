@@ -3,7 +3,12 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
-  Sidebar, BrandLogo, BrandLogoWrapper, SidebarListItem, Divider, ToggleButton,
+  MainSidebarStyled,
+  BrandLogo,
+  BrandLogoWrapper,
+  MainSidebarListItem,
+  Divider,
+  MainToggleButton,
 } from './Sidebar.styled';
 import { Sidebar as SidebarTypes } from '../../../redux/modules/Meta/types';
 
@@ -16,18 +21,18 @@ type Props = {
 
 type State = {};
 
-class MainNav extends React.Component<Props, State> {
+class MainSidebar extends React.Component<Props, State> {
     state: State = {}
 
     props: Props;
 
     render() {
       return (
-          <Sidebar isOpen={this.props.isOpen} className="bg-primary shadow">
+          <MainSidebarStyled isOpen={this.props.isOpen} className="bg-primary shadow">
               <div className="bg-dark px-2 pt-2">
-                  <ToggleButton aria-label="Toggle Sidebar" onClick={this.props.toggleSidebar}>
+                  <MainToggleButton aria-label="Toggle Sidebar" onClick={this.props.toggleSidebar}>
                       <FontAwesomeIcon icon="window-close" />
-                  </ToggleButton>
+                  </MainToggleButton>
               </div>
               <BrandLogoWrapper className="pt-3 pb-2 mb-2 bg-dark">
 
@@ -36,7 +41,7 @@ class MainNav extends React.Component<Props, State> {
               <ul className="list-unstyled">
                   {this.renderSidebarOptions()}
               </ul>
-          </Sidebar>
+          </MainSidebarStyled>
       );
     }
 
@@ -80,14 +85,14 @@ class MainNav extends React.Component<Props, State> {
     }) => {
       if (hidden) return null;
       return (
-          <SidebarListItem className="p-3" key={title}>
+          <MainSidebarListItem className="p-3" key={title}>
               <a href="#" onClick={onClick}>
                   <FontAwesomeIcon icon={icon} className="mr-2" />
                   <span>{title}</span>
               </a>
-          </SidebarListItem>
+          </MainSidebarListItem>
       );
     }
 }
 
-export default MainNav;
+export default MainSidebar;

@@ -2,11 +2,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Sidebar from './components/Sidebar';
-import Navbar from './components/Navbar';
+import SubSidebar from './components/SubSidebar';
+import SubNavbar from './components/SubNavbar';
 
 
-import { SidebarContent, Wrapper } from './SubNav.styled';
+import { SubSidebarContent, SubWrapper } from './SubNav.styled';
 import { Admin } from '../../redux/modules/Meta/types';
 
 type Props = {
@@ -27,16 +27,16 @@ class SubNav extends React.Component<Props, State> {
 
     render() {
       return (
-          <Wrapper>
-              <Sidebar
+          <SubWrapper>
+              <SubSidebar
                 isOpen={this.state.isOpen}
                 toggleSidebar={this.toggleSidebar}
                 featureFlags={this.props.admin.Sidebar}
               />
-              <SidebarContent>
+              <SubSidebarContent>
                   <div className="row no-gutters">
                       <div className="col">
-                          <Navbar
+                          <SubNavbar
                             toggleSidebar={this.toggleSidebar}
                             featureFlags={this.props.admin.Navbar}
                           />
@@ -45,8 +45,8 @@ class SubNav extends React.Component<Props, State> {
                   <div className="px-2">
                       {this.props.children}
                   </div>
-              </SidebarContent>
-          </Wrapper>
+              </SubSidebarContent>
+          </SubWrapper>
       );
     }
 

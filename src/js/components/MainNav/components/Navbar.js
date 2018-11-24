@@ -6,7 +6,7 @@ import {
 } from 'reactstrap';
 
 import {
-  NavBar, NavBarButton, ToggleButton, Brand,
+  MainNavBar, MainNavBarButton, MainToggleButton, Brand,
 } from './Navbar.styled';
 import { Navbar } from '../../../redux/modules/Meta/types';
 
@@ -21,7 +21,7 @@ type State = {
   userPopoverVisilibity: Boolean,
 }
 
-class MainNav extends React.Component<Props, *> {
+class MainNavbar extends React.Component<Props, *> {
   state: State = {
     notificationPopoverVisibility: false,
     informationPopoverVisibility: false,
@@ -32,15 +32,15 @@ class MainNav extends React.Component<Props, *> {
 
   render() {
     return (
-        <NavBar className="bg-primary px-3 py-2">
+        <MainNavBar className="bg-primary px-3 py-2">
             <div>
-                <ToggleButton
+                <MainToggleButton
                   aria-label="Toggle Sidebar"
                   className="mr-2"
                   onClick={this.props.toggleSidebar}
                 >
                     <FontAwesomeIcon icon="align-justify" />
-                </ToggleButton>
+                </MainToggleButton>
                 <Brand
                   href="index.html"
                   className="navbar-brand brand"
@@ -51,7 +51,7 @@ class MainNav extends React.Component<Props, *> {
             <div>
                 {this.renderNavbarOptions()}
             </div>
-        </NavBar>
+        </MainNavBar>
     );
   }
 
@@ -86,7 +86,7 @@ class MainNav extends React.Component<Props, *> {
     title, toggle, icon, isOpen, body, hidden,
   }) => hidden || (
       <span>
-          <NavBarButton
+          <MainNavBarButton
             aria-label={title}
             className="mx-1"
             id={`${title}Popover`}
@@ -94,7 +94,7 @@ class MainNav extends React.Component<Props, *> {
             key={title}
           >
               <FontAwesomeIcon icon={icon} />
-          </NavBarButton>
+          </MainNavBarButton>
           <Popover
             placement="bottom"
             isOpen={isOpen}
@@ -126,4 +126,4 @@ class MainNav extends React.Component<Props, *> {
   };
 }
 
-export default MainNav;
+export default MainNavbar;

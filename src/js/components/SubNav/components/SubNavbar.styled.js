@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { media } from '../../../utils/media';
 
-export const NavBar = styled.nav`
+export const SubNavBarStyled = styled.nav`
 background-color: black;
 display: flex;
 justify-content: space-between;
@@ -9,7 +9,7 @@ align-items: center;
 position: sticky;
 `;
 
-export const NavBarButton = styled.button`
+export const SubNavBarButton = styled.button`
 color: ${props => props.theme.brandPrimary};
 border: ${props => `2px solid ${props.theme.brandPrimary}`};
 border-radius: 10px;
@@ -27,7 +27,7 @@ align-items: center;
 }
 `;
 
-export const ToggleButton = styled(NavBarButton)`
+export const SubToggleButton = styled(SubNavBarButton)`
 ${media.medium`
 display: none;
 `}

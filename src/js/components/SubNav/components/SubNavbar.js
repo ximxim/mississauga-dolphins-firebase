@@ -3,7 +3,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
-import { NavBar, NavBarButton, ToggleButton } from './Navbar.styled';
+import { SubNavBarStyled, SubNavBarButton, SubToggleButton } from './SubNavbar.styled';
 
 type Props = {
   toggleSidebar: () => void,
@@ -11,27 +11,27 @@ type Props = {
 
 type State = {}
 
-class MainNav extends React.Component<Props, *> {
+class SubNavbar extends React.Component<Props, *> {
   state: State = {}
 
   props: Props;
 
   render() {
     return (
-        <NavBar className="bg-white shadow px-3 py-2">
+        <SubNavBarStyled className="bg-white shadow px-3 py-2">
             <div>
-                <ToggleButton
+                <SubToggleButton
                   aria-label="Toggle Sidebar"
                   className="mr-2"
                   onClick={this.props.toggleSidebar}
                 >
                     <FontAwesomeIcon icon="align-justify" />
-                </ToggleButton>
+                </SubToggleButton>
             </div>
             <div>
                 {this.renderNavbarOptions()}
             </div>
-        </NavBar>
+        </SubNavBarStyled>
     );
   }
 
@@ -41,7 +41,7 @@ class MainNav extends React.Component<Props, *> {
     title, toggle, icon, isOpen, body, hidden,
   }) => hidden || (
       <span>
-          <NavBarButton
+          <SubNavBarButton
             aria-label={title}
             className="mx-1"
             id={`${title}Popover`}
@@ -49,7 +49,7 @@ class MainNav extends React.Component<Props, *> {
             key={title}
           >
               <FontAwesomeIcon icon={icon} />
-          </NavBarButton>
+          </SubNavBarButton>
           <Popover
             placement="bottom"
             isOpen={isOpen}
@@ -81,4 +81,4 @@ class MainNav extends React.Component<Props, *> {
   };
 }
 
-export default MainNav;
+export default SubNavbar;

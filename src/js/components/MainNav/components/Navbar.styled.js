@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import { media } from '../../../utils/media';
 
-export const NavBar = styled.nav`
+export const MainNavBar = styled.nav`
 background-color: black;
 display: flex;
 justify-content: space-between;
 align-items: center;
 `;
 
-export const NavBarButton = styled.button`
+export const MainNavBarButton = styled.button`
 border-radius: 10px;
 border: 2px solid white;
 background-color: ${props => props.theme.brandPrimary};
@@ -26,7 +26,7 @@ align-items: center;
 }
 `;
 
-export const ToggleButton = styled(NavBarButton)`
+export const MainToggleButton = styled(MainNavBarButton)`
 ${media.large`
 display: none;
 `}

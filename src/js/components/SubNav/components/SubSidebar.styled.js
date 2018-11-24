@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { media } from '../../../utils/media';
 
-export const Sidebar = styled.nav`
+export const SubSidebarStyled = styled.nav`
 min-width: 250px;
 max-width: 250px;
 transition: all 0.3s;
@@ -23,7 +23,7 @@ margin-left: 0px;
 `}
 `;
 
-export const ToggleButton = styled.a`
+export const SubToggleButton = styled.a`
 display: block;
 ${media.medium`
 display: none;

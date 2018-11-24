@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { media } from '../../../utils/media';
 
-export const Sidebar = styled.nav`
+export const MainSidebarStyled = styled.nav`
 min-width: 200px;
 max-width: 200px;
 color: #fff;
@@ -68,7 +68,7 @@ position: -webkit-sticky;
 top: 0;
 `;
 
-export const SidebarListItem = styled.li`
+export const MainSidebarListItem = styled.li`
 transition: all 0.3s;
 cursor: pointer !important;
 width: 100% !important;
@@ -95,7 +95,7 @@ export const Divider = styled.hr`
 border-top: 1px solid #1d523a !important;
 `;
 
-export const ToggleButton = styled.a`
+export const MainToggleButton = styled.a`
 display: block;
 ${media.large`
 display: none;
