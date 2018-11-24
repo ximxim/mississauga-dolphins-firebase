@@ -40,7 +40,7 @@ class Games extends Component<Props, State> {
 	  return (
     <div className="row no-gutters">
         <div className="col">
-            <SubNav>
+            <SubNav renderSidebarContent={this.renderSidebarContent}>
                 {this.renderActiveGames()}
                 {this.renderUpcomingGames()}
                 {this.renderPastGames()}
@@ -49,6 +49,10 @@ class Games extends Component<Props, State> {
     </div>
 
 	  );
+	}
+
+	renderSidebarContent = () => {
+
 	}
 
 	renderActiveGames = () => {

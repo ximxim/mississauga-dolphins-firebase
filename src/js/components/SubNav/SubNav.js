@@ -12,6 +12,7 @@ import { Admin } from '../../redux/modules/Meta/types';
 type Props = {
     children: Object,
     admin: Admin,
+    renderSidebarContent: () => void,
 };
 
 type State = {
@@ -32,7 +33,9 @@ class SubNav extends React.Component<Props, State> {
                 isOpen={this.state.isOpen}
                 toggleSidebar={this.toggleSidebar}
                 featureFlags={this.props.admin.Sidebar}
-              />
+              >
+                  {this.props.renderSidebarContent()}
+              </SubSidebar>
               <SubSidebarContent>
                   <div className="row no-gutters">
                       <div className="col">
