@@ -36,27 +36,32 @@ class Dropdown extends React.Component<Props, State> {
     props: Props;
 
     render() {
+      const { label } = this.props;
+      if (!label) return this.renderDropdown();
       return (
-          <div>
-              <h6 className="d-inline">{this.props.label}</h6>
-              <ButtonDropdown
-                isOpen={this.state.isOpen}
-                toggle={this.toggleDropdown}
-              >
-                  <DropdownToggle
-                    className="bg-transparent text-dark border-0 d-inline"
-                    caret
-                  >
-                      {this.state.selectedValue}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                      {this.renderOptions()}
-                  </DropdownMenu>
-              </ButtonDropdown>
+          <div className="py-1 px-3 border-bottom">
+              <h6 className="d-inline mr-2">{`${label}:`}</h6>
+              {this.renderDropdown()}
           </div>
-
       );
     }
+
+    renderDropdown = () => (
+        <ButtonDropdown
+          isOpen={this.state.isOpen}
+          toggle={this.toggleDropdown}
+        >
+            <DropdownToggle
+              className="bg-transparent text-dark border-0 d-inline m-0 py-0 px-1"
+              caret
+            >
+                {this.state.selectedValue}
+            </DropdownToggle>
+            <DropdownMenu>
+                {this.renderOptions()}
+            </DropdownMenu>
+        </ButtonDropdown>
+    )
 
     renderOptions = () => _.map(this.props.options, (option, index) => (
         <DropdownItem

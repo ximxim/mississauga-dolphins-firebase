@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { DateTime, Dropdown } from '../../../../components/ui';
+import {
+  SearchBar, DateTime, SortControl, Dropdown,
+} from '../../../../components/ui';
 
 import { GameCard } from './SidebarContent.styled';
 
@@ -17,7 +19,7 @@ class SidebarContent extends React.Component<Props, State> {
 
     render() {
       return (
-          <div className="col">
+          <div>
               {this.renderSearchBar()}
               {this.renderFilter()}
               {this.renderSort()}
@@ -26,7 +28,7 @@ class SidebarContent extends React.Component<Props, State> {
       );
     }
 
-  renderSearchBar = () => <p>Search bar goes here</p>;
+  renderSearchBar = () => <SearchBar />
 
   renderFilter = () => (
       <Dropdown
@@ -38,7 +40,11 @@ class SidebarContent extends React.Component<Props, State> {
       />
   );
 
-  renderSort = () => <p>Sort bar goes here</p>;
+  renderSort = () => (
+      <div className="pt-2 text-center">
+          <SortControl />
+      </div>
+  );
 
   renderGameCards = () => <p>Games cards goe here</p>;
 

@@ -16,6 +16,8 @@ import {
   faUser,
   faAlignJustify,
   faWindowClose,
+  faSortAlphaDown,
+  faSortAlphaUp,
 } from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
@@ -40,6 +42,8 @@ library.add(
   faUser,
   faAlignJustify,
   faWindowClose,
+  faSortAlphaDown,
+  faSortAlphaUp,
 );
 class App extends Component<Props, *> {
   render() {
