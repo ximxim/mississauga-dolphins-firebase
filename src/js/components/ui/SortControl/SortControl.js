@@ -1,16 +1,30 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import _ from 'lodash';
 
 import { Dropdown } from '..';
 
 type State = {
   ascending: Boolean,
+  option: string,
 }
 
-class SortControl extends React.Component<*, State> {
+type Props = {
+  onChange: () => void,
+  options: {
+    key: string,
+    value: string,
+    type: string,
+  }
+};
+
+class SortControl extends React.Component<Props, State> {
   state: State = {
     ascending: true,
+    option: '',
   }
+
+  props: Props;
 
   render() {
     return (
@@ -37,14 +51,20 @@ class SortControl extends React.Component<*, State> {
   }
 
   renderDropdown = () => (
-      <Dropdown options={[
-        { value: 'Title' },
-        { value: 'Startdate' },
-      ]}
-      />
+      <Dropdown options={this.props.options} onChange={this.handleOptionChange} />
   )
 
-  toggleDirection = () => this.setState(state => ({ ascending: !state.ascending }));
+  handleOptionChange = ({ selectedValue }) => this.setState(
+    { option: selectedValue },
+    this.handleChange,
+  );
+
+  toggleDirection = () => this.setState(
+    state => ({ ascending: !state.ascending }),
+    this.handleChange,
+  );
+
+  handleChange = () => this.props.onChange(this.state);
 }
 
 export default SortControl;

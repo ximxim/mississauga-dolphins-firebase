@@ -37,3 +37,5 @@ export const getPastGameEvents = (state) => {
   const pastEvents = _.filter(descendingFeed, item => item.start_time < moment(0, 'HH').format());
   return _.filter(pastEvents, event => event.game);
 };
+
+export const getAllGameEvents = state => _.filter(state.events.items, event => event.game);

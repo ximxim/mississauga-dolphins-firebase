@@ -7,14 +7,23 @@ type Props = {
   labelStyle?: Object,
   wrapperStyle?: Object,
   placeholder?: string,
+  onChange?: () => void,
 }
+ type State = {
+   value: string,
+ }
 
-class SearchBar extends React.Component<Props, *> {
+class SearchBar extends React.Component<Props, State> {
   static defaultProps = {
     inputStyle: {},
     labelStyle: {},
     wrapperStyle: {},
     placeholder: 'Search...',
+    onChange: () => {},
+  }
+
+  state: State = {
+    value: '',
   }
 
   props: Props;
@@ -35,11 +44,17 @@ class SearchBar extends React.Component<Props, *> {
               type="search"
               name="search"
               id="search"
+              onChange={this.handleChange}
+              value={this.state.value}
               placeholder={placeholder}
             />
         </FormGroup>
     );
   }
+
+  handleChange = (e) => {
+    this.setState({ value: e.target.value }, this.props.onChange(this.state));
+  };
 }
 
 export default SearchBar;

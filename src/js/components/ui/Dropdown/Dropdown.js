@@ -11,6 +11,7 @@ type Option = {
     value: string,
     disabled?: Boolean,
     header?: Boolean,
+    key?: string,
 }
 
 type Props = {
@@ -68,7 +69,7 @@ class Dropdown extends React.Component<Props, State> {
           header={option.header}
           disabled={option.disabled}
           key={index}
-          onClick={() => this.handleItemClick(option.value)}
+          onClick={() => this.handleItemClick(option.key ? option.key : option.value)}
         >
             {option.value}
         </DropdownItem>

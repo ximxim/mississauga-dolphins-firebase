@@ -2,11 +2,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Sidebar from './components/MainSidebar';
+import MainSidebar from './components/MainSidebar';
 import Navbar from './components/MainNavbar';
 
 
-import { SidebarContent, Wrapper } from './MainNav.styled';
+import { MainSidebarContent, Wrapper } from './MainNav.styled';
 import { Admin } from '../../redux/modules/Meta/types';
 
 type Props = {
@@ -29,13 +29,13 @@ class MainNav extends React.Component<Props, State> {
     render() {
       return (
           <Wrapper>
-              <Sidebar
+              <MainSidebar
                 isOpen={this.state.isOpen}
                 toggleSidebar={this.toggleSidebar}
                 featureFlags={this.props.admin.Sidebar}
                 signOut={this.props.signOut}
               />
-              <SidebarContent>
+              <MainSidebarContent>
                   <div className="row no-gutters">
                       <div className="col">
                           <Navbar
@@ -45,7 +45,7 @@ class MainNav extends React.Component<Props, State> {
                       </div>
                   </div>
                   {this.props.children}
-              </SidebarContent>
+              </MainSidebarContent>
           </Wrapper>
       );
     }
