@@ -1,19 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
+// UI COMPONENTS
 import {
   SearchBar, DateTime, SortControl, Dropdown,
 } from '../../../../components/ui';
 
+// REDUX
+import { getActiveGames, getScoresByGameId, getActiveGameEvents } from '../../../../redux/selectors';
+
+// STYLES
 import { GameCard } from './SidebarContent.styled';
 
-type Props = {};
+type Props = {
+    activeGames: () => void,
+    activeGameEvents: () => void,
+};
 
-type State = {
-}
+type State = {}
 
 class SidebarContent extends React.Component<Props, State> {
-    state: State = {
-    }
+    state: State = {}
 
     props: Props;
 
@@ -46,25 +54,42 @@ class SidebarContent extends React.Component<Props, State> {
       </div>
   );
 
-  renderGameCards = () => <p>Games cards goe here</p>;
+  renderGameCards = () => {
+    const activeGames = this.props.activeGameEvents();
+    return _.map(activeGames, game => this.renderGameCard(game));
+  };
 
-  renderGameCard = ({ game }) => (
-      <GameCard key={game.id}>
-          <ul className="list-unstyled">
-              <li>
-                  <h6 className="text-left">
-                      <a href="#">
-                          {game.title}
-                      </a>
-                  </h6>
-              </li>
-              <li>
-                  <h6>Start date</h6>
-                  <DateTime datetime={game.start_time} />
-              </li>
-          </ul>
-      </GameCard>
-  );
+  renderGameCard = (game) => {
+    if (game) {
+      return (
+          <GameCard key={game.id}>
+              <ul className="list-unstyled">
+                  <li>
+                      <h6 className="text-left">
+                          <a href="#">
+                              {game.title}
+                              {console.log(game)}
+                          </a>
+                      </h6>
+                  </li>
+                  <li>
+                      <h6>Start date</h6>
+                      <DateTime datetime={game.start_time} />
+                  </li>
+              </ul>
+          </GameCard>
+      );
+    }
+    return null;
+  };
 }
 
-export default SidebarContent;
+const mapStateToProps = state => ({
+  scores: state.scores,
+  events: state.events,
+  activeGames: () => getActiveGames(state),
+  activeGameEvents: () => getActiveGameEvents(state),
+  scoresById: id => getScoresByGameId(state, id),
+});
+
+export default connect(mapStateToProps)(SidebarContent);

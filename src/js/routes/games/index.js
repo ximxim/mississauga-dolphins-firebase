@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import _ from 'lodash';
-import moment from 'moment';
 
 // UTILS
 import requiresAuth from '../../utils/requiresAuth';
@@ -92,61 +91,6 @@ class Games extends Component<Props, State> {
 	    title: 'Past Games',
 	    toggle: this.toggleOtherPastGamesCollapse,
 	  });
-	};
-
-	getUpcomingEvents = () => {
-	  if (this.props.events) {
-	    const ascendingFeed = _.sortBy(this.props.events.items, [
-	      'start_time',
-	    ]);
-	    const upcomingEvents = _.filter(
-	      ascendingFeed,
-	      item => item.start_time >= moment(0, 'HH').format(),
-	    );
-	    return upcomingEvents.length > 0
-	      ? upcomingEvents
-	      : [
-	        {
-	          type: 'empty',
-	        },
-				  ];
-	  }
-	  return [];
-	};
-
-	getActiveGameEvents = () => {
-	  if (this.props.scores && this.props.events.items) {
-	    const activeGames = _.filter(
-	      this.props.scores.games,
-	      game => game.active,
-	    );
-	    return _.map(
-	      activeGames,
-	      game => this.props.events.items[game.event_id],
-	    );
-	  }
-	  return [];
-	};
-
-	getPastEvents = () => {
-	  if (this.props.events) {
-	    const ascendingFeed = _.sortBy(this.props.events.items, [
-	      'start_time',
-	    ]);
-	    const descendingFeed = ascendingFeed.reverse();
-	    const pastEvents = _.filter(
-	      descendingFeed,
-	      item => item.start_time < moment(0, 'HH').format(),
-	    );
-	    return pastEvents.length > 0
-	      ? pastEvents
-	      : [
-	        {
-	          type: 'empty',
-	        },
-				  ];
-	  }
-	  return [];
 	};
 }
 
