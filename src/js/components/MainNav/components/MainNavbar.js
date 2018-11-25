@@ -7,7 +7,7 @@ import {
 
 import {
   MainNavBar, MainNavBarButton, MainToggleButton, Brand,
-} from './Navbar.styled';
+} from './MainNavbar.styled';
 import { Navbar } from '../../../redux/modules/Meta/types';
 
 type Props = {

@@ -2,8 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Sidebar from './components/Sidebar';
-import Navbar from './components/Navbar';
+import Sidebar from './components/MainSidebar';
+import Navbar from './components/MainNavbar';
 
 
 import { SidebarContent, Wrapper } from './MainNav.styled';

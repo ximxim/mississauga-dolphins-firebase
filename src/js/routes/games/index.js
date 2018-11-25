@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Table, Collapse } from 'reactstrap';
+import { Route } from 'react-router-dom';
 import _ from 'lodash';
 import moment from 'moment';
 
+// UTILS
 import requiresAuth from '../../utils/requiresAuth';
-import { getActiveGames, getScoresByGameId } from '../../redux/selectors';
+
+// REDUX
 import {
-  createGame, updateGame, finishGame, deleteGame,
+  createGame,
+  updateGame,
+  finishGame,
+  deleteGame,
 } from '../../redux/modules/Scores';
+import { getActiveGames, getScoresByGameId } from '../../redux/selectors';
+
+// UI COMPONENTS
+import SidebarContent from './components/SidebarContent';
 import SubNav from '../../components/SubNav';
+
+// STYLES
+// import { GameCard } from './games.styled';
 
 type Props = {
 	history: Array<Object>,
@@ -21,18 +33,10 @@ type Props = {
 	},
 }
 
-type State = {
-	otherUpcomingGamesVisible: Boolean,
-	otherPastGamesVisible: Boolean,
-	otherActiveGamesVisible: Boolean,
-}
+type State = {}
 
 class Games extends Component<Props, State> {
-	state: State = {
-	  otherUpcomingGamesVisible: false,
-	  otherPastGamesVisible: false,
-	  otherActiveGamesVisible: false,
-	};
+	state: State;
 
 	props: Props;
 
@@ -41,9 +45,7 @@ class Games extends Component<Props, State> {
     <div className="row no-gutters">
         <div className="col">
             <SubNav renderSidebarContent={this.renderSidebarContent}>
-                {this.renderActiveGames()}
-                {this.renderUpcomingGames()}
-                {this.renderPastGames()}
+                <Route path={`${this.props.match.path}/:id`} component={() => <p>game</p>} />
             </SubNav>
         </div>
     </div>
@@ -51,9 +53,7 @@ class Games extends Component<Props, State> {
 	  );
 	}
 
-	renderSidebarContent = () => {
-
-	}
+	renderSidebarContent = () => <SidebarContent {...this.props} />;
 
 	renderActiveGames = () => {
 	  const activeGames = this.getActiveGameEvents();
@@ -94,80 +94,6 @@ class Games extends Component<Props, State> {
 	  });
 	};
 
-	renderGames = ({
-	  games, collapse, title, toggle,
-	}) => {
-	  let body;
-	  if (games.length === 0) {
-	    return null;
-	  }
-	  if (games.length < 3) {
-	    body = <tbody>{_.map(games, game => this.renderGame(game))}</tbody>;
-	  } else {
-	    const firstThreeGames = games.slice(0, 3);
-	    const otherGames = games.slice(3, games.length);
-
-	    body = (
-    <tbody>
-        {_.map(firstThreeGames, game => this.renderGame(game))}
-        <tr>
-            <td colSpan="2">
-                <Button
-                  className="btn btn-info center"
-                  onClick={toggle}
-                >
-                    {collapse ? 'Hide Games' : `Show All ${title}`}
-                </Button>
-            </td>
-        </tr>
-        <tr>
-            <td colSpan="2" style={{ borderTop: 0, padding: 0 }}>
-                <Collapse isOpen={collapse}>
-                    <Table>
-                        <tbody>
-                            {_.map(otherGames, game => this.renderGame(game))}
-                        </tbody>
-                    </Table>
-                </Collapse>
-            </td>
-        </tr>
-    </tbody>
-	    );
-	  }
-
-	  return (
-    <div>
-        <h4 className="helper">{title}</h4>
-        <Table bordered>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Start Date</th>
-                </tr>
-            </thead>
-            {body}
-        </Table>
-    </div>
-	  );
-	};
-
-	renderGame = game => (
-    <tr
-      key={game.id}
-      onClick={() => this.props.history.push(`/Game/${game.id}`)}
-    >
-        <td>{game.title}</td>
-        <td>{moment(game.start_time).format('MMMM Do YYYY, h:mm: a')}</td>
-    </tr>
-	);
-
-	renderHeader = () => (
-    <div className="col text-center">
-        <h2>Mississauga Dolphins Admin Portal</h2>
-        <h4>Games</h4>
-    </div>
-	);
-
 	getUpcomingEvents = () => {
 	  if (this.props.events) {
 	    const ascendingFeed = _.sortBy(this.props.events.items, [
@@ -194,7 +120,6 @@ class Games extends Component<Props, State> {
 	      this.props.scores.games,
 	      game => game.active,
 	    );
-	    console.log(activeGames);
 	    return _.map(
 	      activeGames,
 	      game => this.props.events.items[game.event_id],
@@ -223,18 +148,6 @@ class Games extends Component<Props, State> {
 	  }
 	  return [];
 	};
-
-	toggleOtherActiveGamesCollapse = () => this.setState(prevState => ({
-	    otherActiveGamesVisible: !prevState.otherActiveGamesVisible,
-	  }));
-
-	toggleOtherUpcomingGamesCollapse = () => this.setState(prevState => ({
-	    otherUpcomingGamesVisible: !prevState.otherUpcomingGamesVisible,
-	  }));
-
-	toggleOtherPastGamesCollapse = () => this.setState(prevState => ({
-	    otherPastGamesVisible: !prevState.otherPastGamesVisible,
-	  }));
 }
 
 const mapStateToProps = (state) => {

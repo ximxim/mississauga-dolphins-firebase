@@ -20,7 +20,6 @@ import {
 
 import withSetup from './js/redux/setup';
 import games from './js/routes/games';
-import game from './js/routes/game';
 import theme from './js/utils/theme';
 
 type Props = {
@@ -52,7 +51,6 @@ class App extends Component<Props, *> {
         <div>
             <React.Fragment>
                 <Route path="/games" component={games} />
-                <Route path="/game/:id" component={game} />
             </React.Fragment>
             <ToastContainer />
         </div>

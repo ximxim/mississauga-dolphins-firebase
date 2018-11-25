@@ -9,7 +9,7 @@ import {
   MainSidebarListItem,
   Divider,
   MainToggleButton,
-} from './Sidebar.styled';
+} from './MainSidebar.styled';
 import { Sidebar as SidebarTypes } from '../../../redux/modules/Meta/types';
 
 type Props = {
@@ -50,42 +50,48 @@ class MainSidebar extends React.Component<Props, State> {
         icon: 'newspaper',
         title: 'News feed',
         hidden: !this.props.featureFlags.newsfeed,
+        key: 'newsfeed',
       }),
       this.renderListItem({
         icon: 'headset',
         title: 'Games',
         hidden: !this.props.featureFlags.games,
+        key: 'games',
       }),
       this.renderListItem({
         icon: 'users',
         title: 'Players',
         hidden: !this.props.featureFlags.players,
+        key: 'players',
       }),
       this.renderListItem({
         icon: 'life-ring',
         title: 'Sponsors',
         hidden: !this.props.featureFlags.sponsors,
+        key: 'sponsors',
       }),
-        <Divider />,
+        <Divider key="divider1" />,
         this.renderListItem({
           icon: 'cogs',
           title: 'Settings',
           hidden: !this.props.featureFlags.settings,
+          key: 'settings',
         }),
-        <Divider />,
+        <Divider key="divider2" />,
         this.renderListItem({
           icon: 'user',
           title: 'Sign out',
           onClick: this.props.signOut,
+          key: 'signout',
         }),
     ];
 
     renderListItem = ({
-      icon, title, hidden, onClick,
+      icon, title, hidden, onClick, key,
     }) => {
       if (hidden) return null;
       return (
-          <MainSidebarListItem className="p-3" key={title}>
+          <MainSidebarListItem className="p-3" key={key}>
               <a href="#" onClick={onClick}>
                   <FontAwesomeIcon icon={icon} className="mr-2" />
                   <span>{title}</span>

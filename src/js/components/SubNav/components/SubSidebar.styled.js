@@ -25,6 +25,9 @@ margin-left: 0px;
 
 export const SubToggleButton = styled.a`
 display: block;
+background-color: ${props => props.theme.brandPrimary};
+color: white !important;
+padding-left: 10px;
 ${media.medium`
 display: none;
 `}
