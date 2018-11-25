@@ -22,7 +22,8 @@ export const getEventPlayers = (state, id) => state.events.items[id].players || 
 
 export const getUpcomingGameEvents = (state) => {
   const ascendingFeed = _.sortBy(state.events.items, ['start_time']);
-  return _.filter(ascendingFeed, item => item.start_time >= moment(0, 'HH').format());
+  const upcomingEvents = _.filter(ascendingFeed, item => item.start_time >= moment(0, 'HH').format());
+  return _.filter(upcomingEvents, event => event.game);
 };
 
 export const getActiveGameEvents = (state) => {
@@ -33,5 +34,6 @@ export const getActiveGameEvents = (state) => {
 export const getPastGameEvents = (state) => {
   const ascendingFeed = _.sortBy(state.events.items, ['start_time']);
   const descendingFeed = ascendingFeed.reverse();
-  return _.filter(descendingFeed, item => item.start_time < moment(0, 'HH').format());
+  const pastEvents = _.filter(descendingFeed, item => item.start_time < moment(0, 'HH').format());
+  return _.filter(pastEvents, event => event.game);
 };

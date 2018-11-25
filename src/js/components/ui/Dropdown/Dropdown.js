@@ -39,7 +39,7 @@ class Dropdown extends React.Component<Props, State> {
       const { label } = this.props;
       if (!label) return this.renderDropdown();
       return (
-          <div className="py-1 px-3 border-bottom">
+          <div className="py-1 px-3">
               <h6 className="d-inline mr-2">{`${label}:`}</h6>
               {this.renderDropdown()}
           </div>
