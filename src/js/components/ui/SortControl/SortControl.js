@@ -54,8 +54,8 @@ class SortControl extends React.Component<Props, State> {
       <Dropdown options={this.props.options} onChange={this.handleOptionChange} />
   )
 
-  handleOptionChange = ({ selectedValue }) => this.setState(
-    { option: selectedValue },
+  handleOptionChange = ({ selectedKey }) => this.setState(
+    { option: selectedKey },
     this.handleChange,
   );
 

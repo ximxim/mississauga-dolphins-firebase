@@ -23,10 +23,12 @@ import { EventsType } from '../../../../redux/modules/Events/types';
 // import { GameCard } from './SidebarContent.styled';
 
 type Props = {
-    activeGameEvents: () => void,
-    upcomingGameEvents: () => void,
-    allGameEvents: () => void,
-    pastGameEvents: () => void,
+    scores: {
+        loading: Boolean,
+    },
+    events: {
+        loading: Boolean,
+    },
 };
 
 type State = {
@@ -42,8 +44,8 @@ type State = {
 class SidebarContent extends React.Component<Props, State> {
     state: State = {
       events: [],
-      filter: 'Active',
-      search: '',
+      filter: 'active',
+      search: null,
       sort: {
         ascending: true,
         option: 'start_time',
@@ -52,21 +54,15 @@ class SidebarContent extends React.Component<Props, State> {
 
     props: Props;
 
-    componentDidMount() {
-      const activeGames = this.props.activeGameEvents();
-      const upcomingGames = this.props.upcomingGameEvents();
-      const pastGames = this.props.pastGameEvents();
-
-      if (activeGames.length > 0) {
-        this.setState({ events: activeGames });
-      } else if (upcomingGames.length > 0) {
-        this.setState({ events: upcomingGames });
-      } else {
-        this.setState({ events: pastGames });
-      }
+    componentWillReceiveProps(nextProps) {
+      this.getGames(nextProps);
     }
 
     render() {
+      const { scores, events } = this.props;
+      if (scores.loading || events.loading) {
+        return <p className="text-center">loading</p>;
+      }
       return (
           <div>
               <div className="sticky-top shadow">
@@ -92,12 +88,13 @@ class SidebarContent extends React.Component<Props, State> {
       <div className="border-bottom bg-white">
           <Dropdown
             label="Filter"
+            value={this.state.filter}
             onChange={this.handleFilterChange}
             options={[
-              { value: 'Active' },
-              { value: 'Upcoming' },
-              { value: 'Past' },
-              { value: 'All' },
+              { value: 'Active', key: 'active' },
+              { value: 'Upcoming', key: 'upcoming' },
+              { value: 'Past', key: 'past' },
+              { value: 'All', key: 'all' },
             ]}
           />
       </div>
@@ -109,9 +106,9 @@ class SidebarContent extends React.Component<Props, State> {
           <SortControl
             onChange={this.handleSortChange}
             options={[
-              { key: 'title', value: 'Title', type: 'string' },
-              { key: 'description', value: 'Description', type: 'string' },
-              { key: 'start_time', value: 'Start time', type: 'datetime' },
+              { key: 'title', value: 'Title' },
+              { key: 'description', value: 'Description' },
+              { key: 'start_time', value: 'Start time' },
             ]}
           />
       </div>
@@ -123,8 +120,8 @@ class SidebarContent extends React.Component<Props, State> {
       </ul>
   );
 
-  handleFilterChange = ({ selectedValue }) => this.setState(
-    { filter: selectedValue.toLowerCase() },
+  handleFilterChange = ({ selectedKey }) => this.setState(
+    { filter: selectedKey },
     this.getGames,
   );
 
@@ -138,28 +135,45 @@ class SidebarContent extends React.Component<Props, State> {
     this.getGames,
   );
 
-
-  getGames = () => {
+  getGames = (nextProps) => {
     const { filter, sort, search } = this.state;
+    const props = nextProps || this.props;
+    const {
+      activeGameEvents,
+      upcomingGameEvents,
+      pastGameEvents,
+      allGameEvents,
+    } = props;
     let gameEvents = [];
 
     // FILTER
-    if (filter === 'active') {
-      gameEvents = this.props.activeGameEvents();
-    } else if (filter === 'upcoming') {
-      gameEvents = this.props.upcomingGameEvents();
-    } else if (filter === 'past') {
-      gameEvents = this.props.pastGameEvents();
-    } else {
-      gameEvents = this.props.allGameEvents();
+    if (filter === 'active' && activeGameEvents.length > 0) {
+      this.setState({ filter: 'active' });
+      gameEvents = activeGameEvents;
+    }
+    if (filter === 'upcoming' && upcomingGameEvents.length > 0) {
+      this.setState({ filter: 'upcoming' });
+      gameEvents = upcomingGameEvents;
+    }
+    if (filter === 'past' && pastGameEvents.length > 0) {
+      this.setState({ filter: 'past' });
+      gameEvents = pastGameEvents;
+    }
+    if (filter === 'all' && allGameEvents.length > 0) {
+      this.setState({ filter: 'all' });
+      gameEvents = allGameEvents;
     }
     // SORT
     gameEvents = _.sortBy(gameEvents, [sort.option]);
     gameEvents = sort.ascending ? gameEvents : gameEvents.reverse();
 
     // SEARCH
-    console.log(search);
-    gameEvents = _.filter(gameEvents, event => event.title.toLowerCase().includes(search.toLowerCase()));
+    if (search) {
+      gameEvents = _.filter(
+        gameEvents,
+        event => event.title.toLowerCase().includes(search.toLowerCase()),
+      );
+    }
 
     this.setState({ events: gameEvents });
   }
@@ -168,10 +182,10 @@ class SidebarContent extends React.Component<Props, State> {
 const mapStateToProps = state => ({
   scores: state.scores,
   events: state.events,
-  activeGameEvents: () => getActiveGameEvents(state),
-  upcomingGameEvents: () => getUpcomingGameEvents(state),
-  pastGameEvents: () => getPastGameEvents(state),
-  allGameEvents: () => getAllGameEvents(state),
+  activeGameEvents: getActiveGameEvents(state),
+  upcomingGameEvents: getUpcomingGameEvents(state),
+  pastGameEvents: getPastGameEvents(state),
+  allGameEvents: getAllGameEvents(state),
 });
 
 export default connect(mapStateToProps)(SidebarContent);

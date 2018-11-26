@@ -52,9 +52,10 @@ class SearchBar extends React.Component<Props, State> {
     );
   }
 
-  handleChange = (e) => {
-    this.setState({ value: e.target.value }, this.props.onChange(this.state));
-  };
+  handleChange = ({ target }) => this.setState(
+    { value: target.value },
+    this.props.onChange({ value: target.value }),
+  );
 }
 
 export default SearchBar;
