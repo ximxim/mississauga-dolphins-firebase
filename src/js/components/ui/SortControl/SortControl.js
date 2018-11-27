@@ -15,12 +15,17 @@ type Props = {
     key: string,
     value: string,
   },
+  option?: string,
 };
 
 class SortControl extends React.Component<Props, State> {
+  static defaultProps = {
+    option: '',
+  }
+
   state: State = {
     ascending: true,
-    option: '',
+    option: this.props.option,
   }
 
   props: Props;
@@ -50,7 +55,11 @@ class SortControl extends React.Component<Props, State> {
   }
 
   renderDropdown = () => (
-      <Dropdown options={this.props.options} onChange={this.handleOptionChange} />
+      <Dropdown
+        value={this.state.option}
+        options={this.props.options}
+        onChange={this.handleOptionChange}
+      />
   )
 
   handleOptionChange = ({ selectedKey }) => this.setState(

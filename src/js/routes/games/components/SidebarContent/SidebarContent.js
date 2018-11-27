@@ -16,7 +16,6 @@ import {
   getUpcomingGameEvents,
   getAllGameEvents,
 } from '../../../../redux/selectors';
-import { EventsType } from '../../../../redux/modules/Events/types';
 
 // STYLES
 // import { GameCard } from './SidebarContent.styled';
@@ -35,7 +34,6 @@ type Props = {
 };
 
 type State = {
-    events: Array<EventsType>,
     filter: string,
     search: string,
     sort: {
@@ -46,7 +44,6 @@ type State = {
 
 class SidebarContent extends React.Component<Props, State> {
     state: State = {
-      events: [],
       filter: 'active',
       search: null,
       sort: {
@@ -69,7 +66,7 @@ class SidebarContent extends React.Component<Props, State> {
                   {this.renderFilter()}
               </div>
               {this.renderSort()}
-              {this.renderGameCards()}
+              {this.renderGameCards(this.getGames())}
           </div>
       );
     }
@@ -104,6 +101,7 @@ class SidebarContent extends React.Component<Props, State> {
       <div className="pt-2 text-center">
           <SortControl
             onChange={this.handleSortChange}
+            option="start_time"
             options={[
               { key: 'title', value: 'Title' },
               { key: 'description', value: 'Description' },
@@ -113,25 +111,29 @@ class SidebarContent extends React.Component<Props, State> {
       </div>
   );
 
-  renderGameCards = () => (
-      <ul className="list-unstyled pt-2">
-          {_.map(this.state.events, event => <GameCard event={event} key={event.id} />)}
-      </ul>
-  );
+  renderGameCards = (gameEvents) => {
+    const { filter } = this.state;
+    if (gameEvents.length > 0) {
+      return (
+          <ul className="list-unstyled pt-2">
+              {_.map(gameEvents, event => <GameCard event={event} key={event.id} />)}
+          </ul>
+      );
+    }
+    return <p className="text-center pt-2">{`No ${filter} games found`}</p>;
+  }
+
 
   handleFilterChange = ({ selectedKey }) => this.setState(
     { filter: selectedKey },
-    this.getGames,
   );
 
   handleSortChange = ({ option, ascending }) => this.setState(
     { sort: { option, ascending } },
-    this.getGames,
   );
 
   handleSearchChange = ({ value }) => this.setState(
     { search: value },
-    this.getGames,
   );
 
   getGames = () => {
@@ -141,28 +143,20 @@ class SidebarContent extends React.Component<Props, State> {
       upcomingGameEvents,
       pastGameEvents,
       allGameEvents,
-      events,
-      scores,
     } = this.props;
     let gameEvents = [];
 
-    if (events.loading || scores.loading) return null;
-
     // FILTER
     if (filter === 'active' && activeGameEvents.length > 0) {
-      this.setState({ filter: 'active' });
       gameEvents = activeGameEvents;
     }
     if (filter === 'upcoming' && upcomingGameEvents.length > 0) {
-      this.setState({ filter: 'upcoming' });
       gameEvents = upcomingGameEvents;
     }
     if (filter === 'past' && pastGameEvents.length > 0) {
-      this.setState({ filter: 'past' });
       gameEvents = pastGameEvents;
     }
     if (filter === 'all' && allGameEvents.length > 0) {
-      this.setState({ filter: 'all' });
       gameEvents = allGameEvents;
     }
     // SORT
@@ -176,8 +170,7 @@ class SidebarContent extends React.Component<Props, State> {
         event => event.title.toLowerCase().includes(search.toLowerCase()),
       );
     }
-
-    this.setState({ events: gameEvents });
+    return gameEvents;
   }
 }
 
