@@ -14,8 +14,7 @@ type Props = {
   options: {
     key: string,
     value: string,
-    type: string,
-  }
+  },
 };
 
 class SortControl extends React.Component<Props, State> {

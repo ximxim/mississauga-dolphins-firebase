@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { DateTime } from '..';
 import { Card } from './GameCard.styled';
@@ -22,9 +23,9 @@ class GameCard extends React.Component<Props, *> {
           <Card className="border-top px-1 py-2" key={event.id}>
               <div>
                   <h6 className="text-left mb-0">
-                      <a href="#">
+                      <Link to={`/games/${event.id}`}>
                           {event.title}
-                      </a>
+                      </Link>
                   </h6>
               </div>
               <div>

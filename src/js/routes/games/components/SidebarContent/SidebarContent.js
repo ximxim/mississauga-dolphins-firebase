@@ -12,8 +12,7 @@ import {
 
 // REDUX
 import {
-  getActiveGameEvents,
-  getPastGameEvents,
+  getActiveGameEvents, getPastGameEvents,
   getUpcomingGameEvents,
   getAllGameEvents,
 } from '../../../../redux/selectors';
@@ -29,6 +28,10 @@ type Props = {
     events: {
         loading: Boolean,
     },
+    activeGameEvents: {},
+    upcomingGameEvents: {},
+    pastGameEvents: {},
+    allGameEvents: {},
 };
 
 type State = {
@@ -53,10 +56,6 @@ class SidebarContent extends React.Component<Props, State> {
     }
 
     props: Props;
-
-    componentWillReceiveProps(nextProps) {
-      this.getGames(nextProps);
-    }
 
     render() {
       const { scores, events } = this.props;
@@ -135,16 +134,19 @@ class SidebarContent extends React.Component<Props, State> {
     this.getGames,
   );
 
-  getGames = (nextProps) => {
+  getGames = () => {
     const { filter, sort, search } = this.state;
-    const props = nextProps || this.props;
     const {
       activeGameEvents,
       upcomingGameEvents,
       pastGameEvents,
       allGameEvents,
-    } = props;
+      events,
+      scores,
+    } = this.props;
     let gameEvents = [];
+
+    if (events.loading || scores.loading) return null;
 
     // FILTER
     if (filter === 'active' && activeGameEvents.length > 0) {
