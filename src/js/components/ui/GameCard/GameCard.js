@@ -6,6 +6,7 @@ import { Card } from './GameCard.styled';
 
 
 type Props = {
+    selected: Boolean,
     event: {
         id: string,
         title: string,
@@ -18,9 +19,13 @@ class GameCard extends React.Component<Props, *> {
     props: Props;
 
     render() {
-      const { event } = this.props;
+      const { event, selected } = this.props;
       return (
-          <Card className="border-top px-1 py-2" key={event.id}>
+          <Card
+            className="border-top px-1 py-2"
+            key={event.id}
+            selected={selected}
+          >
               <div>
                   <h6 className="text-left mb-0">
                       <Link to={`/games/${event.id}`}>

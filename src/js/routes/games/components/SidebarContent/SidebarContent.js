@@ -23,10 +23,11 @@ import {
 type Props = {
   loadingScores: Boolean,
   loadingEvents: Boolean,
-    activeGameEvents: {},
-    upcomingGameEvents: {},
-    pastGameEvents: {},
-    allGameEvents: {},
+  activeGameEvents: {},
+  upcomingGameEvents: {},
+  pastGameEvents: {},
+  allGameEvents: {},
+  location: { pathname: string, },
 };
 
 type State = {
@@ -112,7 +113,20 @@ class SidebarContent extends React.Component<Props, State> {
     if (gameEvents.length > 0) {
       return (
           <ul className="list-unstyled pt-2">
-              {_.map(gameEvents, event => <GameCard event={event} key={event.id} />)}
+              {_.map(gameEvents, (event) => {
+                const { pathname } = this.props.location;
+                const split = pathname.split('/');
+                const selected = split.length > 0
+                  ? split[2] === event.id
+                  : false;
+                return (
+                    <GameCard
+                      event={event}
+                      key={event.id}
+                      selected={selected}
+                    />
+                );
+              })}
           </ul>
       );
     }
