@@ -8,6 +8,7 @@ import requiresAuth from '../../utils/requiresAuth';
 // UI COMPONENTS
 import SidebarContent from './components/SidebarContent';
 import SubNav from '../../components/SubNav';
+import Game from './routes/game';
 
 type Props = {
 	history: Array<Object>,
@@ -31,7 +32,7 @@ class Games extends Component<Props, State> {
     <div className="row no-gutters">
         <div className="col">
             <SubNav renderSidebarContent={this.renderSidebarContent}>
-                <Route path={`${this.props.match.path}/:id`} component={() => <p>game</p>} />
+                <Route path={`${this.props.match.path}/:id`} component={Game} />
             </SubNav>
         </div>
     </div>

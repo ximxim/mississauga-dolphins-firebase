@@ -21,12 +21,8 @@ import {
 // import { GameCard } from './SidebarContent.styled';
 
 type Props = {
-    scores: {
-        loading: Boolean,
-    },
-    events: {
-        loading: Boolean,
-    },
+  loadingScores: Boolean,
+  loadingEvents: Boolean,
     activeGameEvents: {},
     upcomingGameEvents: {},
     pastGameEvents: {},
@@ -55,8 +51,8 @@ class SidebarContent extends React.Component<Props, State> {
     props: Props;
 
     render() {
-      const { scores, events } = this.props;
-      if (scores.loading || events.loading) {
+      const { loadingScores, loadingEvents } = this.props;
+      if (loadingEvents || loadingScores) {
         return <p className="text-center">loading</p>;
       }
       return (
@@ -175,8 +171,8 @@ class SidebarContent extends React.Component<Props, State> {
 }
 
 const mapStateToProps = state => ({
-  scores: state.scores,
-  events: state.events,
+  loadingScores: state.scores.loading,
+  loadingEvents: state.events.loading,
   activeGameEvents: getActiveGameEvents(state),
   upcomingGameEvents: getUpcomingGameEvents(state),
   pastGameEvents: getPastGameEvents(state),
