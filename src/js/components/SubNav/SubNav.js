@@ -14,7 +14,7 @@ type State = {
 };
 
 const ToggleContext = React.createContext();
-export function ToggleConsumer(props) {
+export function ToggleConsumer(props: {children: Object}) {
   return (
       <ToggleContext.Consumer>
           {context => props.children(context)}
