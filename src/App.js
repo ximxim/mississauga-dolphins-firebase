@@ -22,7 +22,7 @@ import {
 
 import withSetup from './js/redux/setup';
 import games from './js/routes/games';
-import theme from './js/utils/theme';
+import theme, { GlobalStyle } from './js/utils/theme';
 
 type Props = {
     location: {
@@ -57,6 +57,7 @@ class App extends Component<Props, *> {
                 <Route path="/games" component={games} />
             </React.Fragment>
             <ToastContainer />
+            <GlobalStyle />
         </div>
     );
 
