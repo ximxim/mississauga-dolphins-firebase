@@ -33,6 +33,7 @@ import {
 // UI COMPONENTS
 import GameCard from './components/GameCard';
 import PlayersSuggestInput from './components/PlayersSuggestInput';
+import SubNavbar from '../../../../components/SubNav/components/SubNavbar';
 
 import styles from './styles';
 
@@ -71,6 +72,13 @@ class Game extends Component<Props, State> {
 
 	  return (
     <div className="container">
+        <div className="row no-gutters">
+            <div className="col">
+                <SubNavbar
+                  toggleSidebar={() => {}}
+                />
+            </div>
+        </div>
         <div className="row">
             <div className="col">{this.renderBreadCrumbs(event)}</div>
         </div>
