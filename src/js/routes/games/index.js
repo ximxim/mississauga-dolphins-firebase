@@ -23,11 +23,7 @@ type Props = {
 type State = {}
 
 class Games extends Component<Props, State> {
-	state: State;
-
-	props: Props;
-
-	render() {
+  render() {
 	  return (
     <div className="row no-gutters">
         <div className="col">
@@ -37,7 +33,7 @@ class Games extends Component<Props, State> {
         </div>
     </div>
 	  );
-	}
+  }
 
 	renderSidebarContent = () => <SidebarContent {...this.props} />;
 }

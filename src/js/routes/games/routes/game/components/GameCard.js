@@ -5,7 +5,7 @@ import {
 import moment from 'moment';
 import { toast } from 'react-toastify';
 
-import PlayersSuggestInput from './PlayersSuggestInput';
+import { PlayersSuggestInput } from '../../../../../components/ui';
 import ENV from '../../../../../../env';
 
 type Props = {
@@ -130,11 +130,11 @@ class GameCard extends Component<Props> {
 	  if (this.props.submit) {
 	    actions.push(
     <Button
-      className="btn-primary text-white btn-lg circle-btn-sm btn-block"
-      variant="raised"
-      onClick={this.handleCreateGame}
-      disabled={this.props.loading}
-      key="createGame"
+        className="btn-primary text-white btn-lg circle-btn-sm btn-block"
+        variant="raised"
+        onClick={this.handleCreateGame}
+        disabled={this.props.loading}
+        key="createGame"
 				>
 					Create Game
 
@@ -144,11 +144,11 @@ class GameCard extends Component<Props> {
 	  if (this.props.delete) {
 	    actions.push(
     <Button
-      className="btn-danger text-white btn-lg circle-btn-sm marginBottom btn-block"
-      variant="raised"
-      disabled={this.props.loading}
-      onClick={() => this.props.delete(this.props.eventId)}
-      key="deleteGame"
+        className="btn-danger text-white btn-lg circle-btn-sm marginBottom btn-block"
+        variant="raised"
+        disabled={this.props.loading}
+        onClick={() => this.props.delete(this.props.eventId)}
+        key="deleteGame"
 				>
 					Delete Game
 
@@ -159,11 +159,11 @@ class GameCard extends Component<Props> {
 	  if (this.props.update) {
 	    actions.push(
     <Button
-      className="btn-primary text-white btn-lg circle-btn-sm marginBottom btn-block"
-      variant="raised"
-      disabled={this.props.loading}
-      onClick={this.handleUpdateGame}
-      key="updateGame"
+        className="btn-primary text-white btn-lg circle-btn-sm marginBottom btn-block"
+        variant="raised"
+        disabled={this.props.loading}
+        onClick={this.handleUpdateGame}
+        key="updateGame"
 				>
 					Update Game
 
@@ -173,11 +173,11 @@ class GameCard extends Component<Props> {
 	  if (this.props.finish) {
 	    actions.push(
     <Button
-      className="btn-danger text-white btn-lg circle-btn-sm marginBottom btn-block"
-      variant="raised"
-      disabled={this.props.loading}
-      onClick={this.handleFinishGame}
-      key="finishGame"
+        className="btn-danger text-white btn-lg circle-btn-sm marginBottom btn-block"
+        variant="raised"
+        disabled={this.props.loading}
+        onClick={this.handleFinishGame}
+        key="finishGame"
 				>
 					Finish Game
 
@@ -190,13 +190,13 @@ class GameCard extends Component<Props> {
 	renderHomeTeamNameField = () => (
     <FormGroup className="has-wrapper">
         <Input
-          type="text"
-          value={this.state.home.name}
-          name="home-team"
-          id="home-team-name"
-          className="has-input input-sm"
-          placeholder="Enter Name"
-          onChange={event => this.setState({
+            type="text"
+            value={this.state.home.name}
+            name="home-team"
+            id="home-team-name"
+            className="has-input input-sm"
+            placeholder="Enter Name"
+            onChange={event => this.setState({
 					    home: {
 					      ...this.state.home,
 					      name: event.target.value,
@@ -213,12 +213,12 @@ class GameCard extends Component<Props> {
 
 	  return (
     <PlayersSuggestInput
-      players={players}
-      value={striker}
-      placeholder="Entere a player name"
-      onSuggestionSelected={(event, { suggestion }) => this.props.addPlayer(suggestion.id)
+        players={players}
+        value={striker}
+        placeholder="Entere a player name"
+        onSuggestionSelected={(event, { suggestion }) => this.props.addPlayer(suggestion.id)
 				}
-      onChange={(event, { newValue }) => this.setState({ striker: newValue })
+        onChange={(event, { newValue }) => this.setState({ striker: newValue })
 				}
     />
 	  );
@@ -230,12 +230,12 @@ class GameCard extends Component<Props> {
 
 	  return (
     <PlayersSuggestInput
-      players={players}
-      value={nonStriker}
-      placeholder="Enter a player name"
-      onSuggestionSelected={(event, { suggestion }) => this.props.addPlayer(suggestion.id)
+        players={players}
+        value={nonStriker}
+        placeholder="Enter a player name"
+        onSuggestionSelected={(event, { suggestion }) => this.props.addPlayer(suggestion.id)
 				}
-      onChange={(event, { newValue }) => this.setState({ nonStriker: newValue })
+        onChange={(event, { newValue }) => this.setState({ nonStriker: newValue })
 				}
     />
 	  );
@@ -247,12 +247,12 @@ class GameCard extends Component<Props> {
 
 	  return (
     <PlayersSuggestInput
-      players={players}
-      value={bowler}
-      placeholder="Enter a player name"
-      onSuggestionSelected={(event, { suggestion }) => this.props.addPlayer(suggestion.id)
+        players={players}
+        value={bowler}
+        placeholder="Enter a player name"
+        onSuggestionSelected={(event, { suggestion }) => this.props.addPlayer(suggestion.id)
 				}
-      onChange={(event, { newValue }) => this.setState({ bowler: newValue })
+        onChange={(event, { newValue }) => this.setState({ bowler: newValue })
 				}
     />
 	  );
@@ -261,13 +261,13 @@ class GameCard extends Component<Props> {
 	renderVisitorTeamNameField = () => (
     <FormGroup className="has-wrapper">
         <Input
-          type="text"
-          value={this.state.visitor.name}
-          name="visitor-team"
-          id="visitor-team-name"
-          className="has-input input-sm"
-          placeholder="Enter Name"
-          onChange={event => this.setState({
+            type="text"
+            value={this.state.visitor.name}
+            name="visitor-team"
+            id="visitor-team-name"
+            className="has-input input-sm"
+            placeholder="Enter Name"
+            onChange={event => this.setState({
 					    visitor: {
 					      ...this.state.visitor,
 					      name: event.target.value,
@@ -281,13 +281,13 @@ class GameCard extends Component<Props> {
 	renderHomeTeamScoreField = () => (
     <FormGroup className="has-wrapper">
         <Input
-          type="number"
-          value={this.state.home.score}
-          name="home-team-score"
-          id="home-team-score"
-          className="has-input input-sm"
-          placeholder="Enter Score"
-          onChange={event => this.setState({
+            type="number"
+            value={this.state.home.score}
+            name="home-team-score"
+            id="home-team-score"
+            className="has-input input-sm"
+            placeholder="Enter Score"
+            onChange={event => this.setState({
 					    home: {
 					      ...this.state.home,
 					      score: event.target.value,
@@ -301,13 +301,13 @@ class GameCard extends Component<Props> {
 	renderVisitorTeamScoreField = () => (
     <FormGroup className="has-wrapper">
         <Input
-          type="number"
-          value={this.state.visitor.score}
-          name="visitor-team-score"
-          id="visitor-team-score"
-          className="has-input input-sm"
-          placeholder="Enter Score"
-          onChange={event => this.setState({
+            type="number"
+            value={this.state.visitor.score}
+            name="visitor-team-score"
+            id="visitor-team-score"
+            className="has-input input-sm"
+            placeholder="Enter Score"
+            onChange={event => this.setState({
 					    visitor: {
 					      ...this.state.visitor,
 					      score: event.target.value,
@@ -321,13 +321,13 @@ class GameCard extends Component<Props> {
 	renderHomeTeamWicketsField = () => (
     <FormGroup className="has-wrapper">
         <Input
-          type="number"
-          value={this.state.home.wickets}
-          name="home-team-wickets"
-          id="home-team-wickets"
-          className="has-input input-sm"
-          placeholder="Enter Wickets"
-          onChange={event => this.setState({
+            type="number"
+            value={this.state.home.wickets}
+            name="home-team-wickets"
+            id="home-team-wickets"
+            className="has-input input-sm"
+            placeholder="Enter Wickets"
+            onChange={event => this.setState({
 					    home: {
 					      ...this.state.home,
 					      wickets: event.target.value,
@@ -341,13 +341,13 @@ class GameCard extends Component<Props> {
 	renderVisitorTeamWicketsField = () => (
     <FormGroup className="has-wrapper">
         <Input
-          type="number"
-          value={this.state.visitor.wickets}
-          name="visitor-team-wickets"
-          id="visitor-team-wickets"
-          className="has-input input-sm"
-          placeholder="Enter Wickets"
-          onChange={event => this.setState({
+            type="number"
+            value={this.state.visitor.wickets}
+            name="visitor-team-wickets"
+            id="visitor-team-wickets"
+            className="has-input input-sm"
+            placeholder="Enter Wickets"
+            onChange={event => this.setState({
 					    visitor: {
 					      ...this.state.visitor,
 					      wickets: event.target.value,
@@ -361,13 +361,13 @@ class GameCard extends Component<Props> {
 	renderHomeTeamOversField = () => (
     <FormGroup className="has-wrapper">
         <Input
-          type="number"
-          value={this.state.home.overs}
-          name="home-team-overs"
-          id="home-team-overs"
-          className="has-input input-sm"
-          placeholder="Enter Overs"
-          onChange={event => this.setState({
+            type="number"
+            value={this.state.home.overs}
+            name="home-team-overs"
+            id="home-team-overs"
+            className="has-input input-sm"
+            placeholder="Enter Overs"
+            onChange={event => this.setState({
 					    home: {
 					      ...this.state.home,
 					      overs: event.target.value,
@@ -381,13 +381,13 @@ class GameCard extends Component<Props> {
 	renderVisitorTeamOversField = () => (
     <FormGroup className="has-wrapper">
         <Input
-          type="number"
-          value={this.state.visitor.overs}
-          name="visitor-team-overs"
-          id="visitor-team-overs"
-          className="has-input input-sm"
-          placeholder="Enter Overs"
-          onChange={event => this.setState({
+            type="number"
+            value={this.state.visitor.overs}
+            name="visitor-team-overs"
+            id="visitor-team-overs"
+            className="has-input input-sm"
+            placeholder="Enter Overs"
+            onChange={event => this.setState({
 					    visitor: {
 					      ...this.state.visitor,
 					      overs: event.target.value,
@@ -402,11 +402,11 @@ class GameCard extends Component<Props> {
     <FormGroup check>
         <Label check>
             <Input
-              type="checkbox"
-              checked={this.state.home.batting}
-              name="home-team-batting"
-              id="home-team-batting"
-              onChange={event => this.setState({
+                type="checkbox"
+                checked={this.state.home.batting}
+                name="home-team-batting"
+                id="home-team-batting"
+                onChange={event => this.setState({
 						    home: {
 						      ...this.state.home,
 						      batting: event.target.checked,
@@ -428,11 +428,11 @@ class GameCard extends Component<Props> {
     <FormGroup check>
         <Label check>
             <Input
-              type="checkbox"
-              checked={this.state.visitor.batting}
-              name="visitor-team-batting"
-              id="visitor-team-batting"
-              onChange={event => this.setState({
+                type="checkbox"
+                checked={this.state.visitor.batting}
+                name="visitor-team-batting"
+                id="visitor-team-batting"
+                onChange={event => this.setState({
 						    visitor: {
 						      ...this.state.visitor,
 						      batting: event.target.checked,

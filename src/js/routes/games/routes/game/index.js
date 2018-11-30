@@ -32,7 +32,7 @@ import {
 
 // UI COMPONENTS
 import GameCard from './components/GameCard';
-import PlayersSuggestInput from './components/PlayersSuggestInput';
+import { PlayersSuggestInput } from '../../../../components/ui';
 import SubNavbar from '../../../../components/SubNav/components/SubNavbar';
 
 import styles from './styles';
@@ -74,9 +74,7 @@ class Game extends Component<Props, State> {
     <div>
         <div className="row no-gutters">
             <div className="col">
-                <SubNavbar
-                    toggleSidebar={() => {}}
-                />
+                <SubNavbar />
             </div>
         </div>
         <div className="row">
