@@ -71,11 +71,11 @@ class Game extends Component<Props, State> {
 	  if (!event) return null;
 
 	  return (
-    <div className="container">
+    <div>
         <div className="row no-gutters">
             <div className="col">
                 <SubNavbar
-                  toggleSidebar={() => {}}
+                    toggleSidebar={() => {}}
                 />
             </div>
         </div>
@@ -105,9 +105,9 @@ class Game extends Component<Props, State> {
             <div style={styles.cardBody}>
                 <div style={styles.title}>
                     <img
-                      src={game.cover.source}
-                      alt="game cover"
-                      style={styles.image}
+                        src={game.cover.source}
+                        alt="game cover"
+                        style={styles.image}
                     />
                 </div>
                 <Table style={styles.table} striped>
@@ -125,7 +125,7 @@ class Game extends Component<Props, State> {
                         <tr>
                             <td>
                                 <FontAwesome.FaInfoCircle
-                                  style={styles.icon}
+                                    style={styles.icon}
                                 />
                             </td>
                             <td style={{ textAlign: 'left' }}>
@@ -156,24 +156,24 @@ class Game extends Component<Props, State> {
         <div className="card-body">
             <Form>
                 <PlayersSuggestInput
-                  players={this.props.players}
-                  placeholder="Enter a player name"
-                  value={playerName}
-                  onSuggestionSelected={
+                    players={this.props.players}
+                    placeholder="Enter a player name"
+                    value={playerName}
+                    onSuggestionSelected={
 					  (event, { suggestion }) => this.setState(
 						  { selectedPlayer: suggestion.id },
 						  )
 							}
-                  onChange={(event, { newValue }) => this.setState({ playerName: newValue })
+                    onChange={(event, { newValue }) => this.setState({ playerName: newValue })
 							}
                 />
                 <Button
-                  className="btn-success text-white btn-md circle-btn-sm btn-block"
-                  variant="raised"
-                  onClick={this.handleAddPlayer}
-                  disabled={!playerName || this.props.loadingEvents}
-                  style={{ marginTop: 10 }}
-                  key="addPlayer"
+                    className="btn-success text-white btn-md circle-btn-sm btn-block"
+                    variant="raised"
+                    onClick={this.handleAddPlayer}
+                    disabled={!playerName || this.props.loadingEvents}
+                    style={{ marginTop: 10 }}
+                    key="addPlayer"
                 >
 							Add Player
 
@@ -192,11 +192,11 @@ class Game extends Component<Props, State> {
 	  if (!game.game_id) {
 	    return (
     <GameCard
-      players={this.props.players}
-      loading={this.props.loadingScores}
-      eventId={game.id}
-      submit={this.props.createGame}
-      addPlayer={selectedPlayer => this.setState({ selectedPlayer }, this.handleAddPlayer)
+        players={this.props.players}
+        loading={this.props.loadingScores}
+        eventId={game.id}
+        submit={this.props.createGame}
+        addPlayer={selectedPlayer => this.setState({ selectedPlayer }, this.handleAddPlayer)
 					}
 				/>
 	    );
@@ -206,13 +206,13 @@ class Game extends Component<Props, State> {
 	    if (game.game_id && !score.active) {
 	    return (
     <GameCard
-      players={this.props.players}
-      eventId={game.id}
-      update={this.handleUpdate}
-      delete={this.handleDelete}
-      loading={this.props.loadingScores}
-      game={score}
-      addPlayer={selectedPlayer => this.setState(
+        players={this.props.players}
+        eventId={game.id}
+        update={this.handleUpdate}
+        delete={this.handleDelete}
+        loading={this.props.loadingScores}
+        game={score}
+        addPlayer={selectedPlayer => this.setState(
 						    { selectedPlayer },
 						    this.handleAddPlayer,
 						  )
@@ -224,13 +224,13 @@ class Game extends Component<Props, State> {
 
 	  return (
     <GameCard
-      players={this.props.players}
-      eventId={game.id}
-      update={this.handleUpdate}
-      finish={this.handleFinish}
-      loading={this.props.loadingScores}
-      game={score}
-      addPlayer={selectedPlayer => this.setState({ selectedPlayer }, this.handleAddPlayer)
+        players={this.props.players}
+        eventId={game.id}
+        update={this.handleUpdate}
+        finish={this.handleFinish}
+        loading={this.props.loadingScores}
+        game={score}
+        addPlayer={selectedPlayer => this.setState({ selectedPlayer }, this.handleAddPlayer)
 				}
     />
 	  );
@@ -272,10 +272,10 @@ class Game extends Component<Props, State> {
         {' '}
         {player.LAST_NAME}
         <Button
-          className="close"
-          onClick={() => this.handleDeletePlayer(player.id)
+            className="close"
+            onClick={() => this.handleDeletePlayer(player.id)
 								}
-          disabled={this.props.loadingEvents}
+            disabled={this.props.loadingEvents}
         >
             <span aria-hidden="true">&times;</span>
         </Button>
