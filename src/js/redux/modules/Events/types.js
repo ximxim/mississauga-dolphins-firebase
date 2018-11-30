@@ -15,3 +15,9 @@ export type EventsType = {
       title : string,
       game_id: string,
 };
+
+export type Type = {
+  loading: Boolean,
+  error: string,
+  items: Array<EventsType>,
+}
