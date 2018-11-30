@@ -44,7 +44,7 @@ class GameCard extends Component<Props> {
 
 	render() {
 	  return (
-    <div className="card" style={{ margin: 10 }}>
+    <div className="card m-1">
         <div className="card-body">
             <Form>
                 <Table className="table">

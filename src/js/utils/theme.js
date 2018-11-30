@@ -118,4 +118,35 @@ a {
 a:hover { 
     color: initial;
 }
+
+.border-2 {
+	border: ${props => `2px solid ${props.theme.darkGrey} !important`};
+}
+
+.rounded {
+	border-radius: 10px !important;
+}
+
+.overflow-hidden {
+	overflow: hidden !important;
+}
+
+.fs-1 {
+	font-size: 12px !important;
+}
+.fs-2 {
+	font-size: 14px !important;
+}
+.fs-3 {
+	font-size: 16px !important;
+}
+.fs-4 {
+	font-size: 18px !important;
+}
+.fs-5 {
+	font-size: 20px !important;
+}
+.fs-6 {
+	font-size: 22px !important;
+}
 `;

@@ -2,10 +2,12 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ToggleConsumer } from '../SubNav';
+import { ToggleConsumer } from '../SubNav/SubNav';
 import { SubNavBarStyled, SubToggleButton } from './SubNavbar.styled';
 
-type Props = {}
+type Props = {
+	children: Object,
+}
 
 type State = {}
 
@@ -18,9 +20,8 @@ class SubNavbar extends React.Component<Props, *> {
     return (
 
         <SubNavBarStyled className="bg-white shadow px-3 py-2">
-            <div>
-                {this.toggleSidebar()}
-            </div>
+            {this.toggleSidebar()}
+            {this.props.children}
         </SubNavBarStyled>
     );
   }
@@ -29,9 +30,9 @@ class SubNavbar extends React.Component<Props, *> {
       <ToggleConsumer>
           {({ toggleSubSidebar }) => (
               <SubToggleButton
-                aria-label="Toggle Sidebar"
-                className="mr-2"
-                onClick={toggleSubSidebar}
+                  aria-label="Toggle Sidebar"
+                  className="mr-2"
+                  onClick={toggleSubSidebar}
               >
                   <FontAwesomeIcon icon="align-justify" />
               </SubToggleButton>

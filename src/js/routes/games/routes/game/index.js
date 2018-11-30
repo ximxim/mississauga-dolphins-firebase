@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Table,
-  Breadcrumb,
-  BreadcrumbItem,
   Form,
   Button,
   ListGroup,
   ListGroupItem,
 } from 'reactstrap';
-import * as FontAwesome from 'react-icons/lib/fa';
-import moment from 'moment';
-import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
 // REDUX
@@ -33,9 +27,7 @@ import {
 // UI COMPONENTS
 import GameCard from './components/GameCard';
 import { PlayersSuggestInput } from '../../../../components/ui';
-import SubNavbar from '../../../../components/SubNav/components/SubNavbar';
-
-import styles from './styles';
+import { SubNavbar, GameDetailsCard } from '../../../../components';
 
 type Props = {
 	players: Object,
@@ -56,9 +48,7 @@ type Props = {
 	},
 }
 
-type State = {
-
-}
+type State = {}
 
 class Game extends Component<Props, State> {
 	state = {
@@ -72,74 +62,25 @@ class Game extends Component<Props, State> {
 
 	  return (
     <div>
-        <div className="row no-gutters">
+        <div className="row no-gutters sticky-top">
             <div className="col">
-                <SubNavbar />
+                <SubNavbar>
+                    <a>something</a>
+                </SubNavbar>
             </div>
         </div>
-        <div className="row">
-            <div className="col">{this.renderBreadCrumbs(event)}</div>
-        </div>
-        <div className="row">
-            {this.renderGameDetails(event)}
+        <div className="row no-gutters">
+            <div className="col-md-4">
+                <GameDetailsCard game={event} />
+            </div>
             {this.renderGameMainContent(event)}
         </div>
     </div>
 	  );
 	}
 
-	renderBreadCrumbs = event => (
-    <Breadcrumb>
-        <BreadcrumbItem>
-            <Link to="/Games">Games</Link>
-        </BreadcrumbItem>
-        <BreadcrumbItem active>{event.title}</BreadcrumbItem>
-    </Breadcrumb>
-	);
-
-	renderGameDetails = game => (
-    <div className="col-md-4" key={game.id}>
-        <div className="card" style={styles.card}>
-            <div style={styles.cardBody}>
-                <div style={styles.title}>
-                    <img
-                        src={game.cover.source}
-                        alt="game cover"
-                        style={styles.image}
-                    />
-                </div>
-                <Table style={styles.table} striped>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <FontAwesome.FaClockO style={styles.icon} />
-                            </td>
-                            <td style={{ textAlign: 'left' }}>
-                                {moment(game.start_time).format(
-									  'MMMM Do YYYY, h:mm: a',
-                                )}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <FontAwesome.FaInfoCircle
-                                    style={styles.icon}
-                                />
-                            </td>
-                            <td style={{ textAlign: 'left' }}>
-                                <p>{game.match_no}</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </div>
-        </div>
-    </div>
-	);
-
 	renderGameMainContent = game => (
-    <div className="col-md-8 padder">
-        <h2 className="text-center">{game.title}</h2>
+    <div className="col-md-8">
         {this.renderScoringControls(game)}
         <h2 className="text-center">Players List</h2>
         {this.renderAddPlayersControl()}
