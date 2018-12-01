@@ -26,7 +26,7 @@ import {
 
 // UI COMPONENTS
 import GameCard from './components/GameCard';
-import { PlayersSuggestInput } from '../../../../components/ui';
+import { PlayersSuggestInput, NavbarButton } from '../../../../components/ui';
 import { SubNavbar, GameDetailsCard } from '../../../../components';
 
 type Props = {
@@ -56,7 +56,7 @@ class Game extends Component<Props, State> {
 	  selectedPlayer: -1,
 	};
 
-	render() {
+	render = () => {
 	  const event = this.props.getEvent;
 	  if (!event) return null;
 
@@ -64,9 +64,7 @@ class Game extends Component<Props, State> {
     <div>
         <div className="row no-gutters sticky-top">
             <div className="col">
-                <SubNavbar>
-                    <a>something</a>
-                </SubNavbar>
+                {this.renderNavbar()}
             </div>
         </div>
         <div className="row no-gutters">
@@ -78,6 +76,15 @@ class Game extends Component<Props, State> {
     </div>
 	  );
 	}
+
+	renderNavbar = () => (
+    <SubNavbar>
+        <NavbarButton icon="play-circle" label="Start" />
+        <NavbarButton icon="trash-alt" label="Remove" />
+        <NavbarButton icon="pencil-alt" label="Update" />
+        <NavbarButton icon="stop-circle" label="Finish" />
+    </SubNavbar>
+	)
 
 	renderGameMainContent = game => (
     <div className="col-md-8">

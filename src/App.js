@@ -18,6 +18,12 @@ import {
   faWindowClose,
   faSortAlphaDown,
   faSortAlphaUp,
+  faAlignLeft,
+  faAlignRight,
+  faTrashAlt,
+  faPencilAlt,
+  faPlayCircle,
+  faStopCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
@@ -44,9 +50,16 @@ library.add(
   faWindowClose,
   faSortAlphaDown,
   faSortAlphaUp,
+  faAlignLeft,
+  faAlignRight,
+  faTrashAlt,
+  faPencilAlt,
+  faPlayCircle,
+  faStopCircle,
 );
 class App extends Component<Props, *> {
   render() {
+	  console.log(library);
     let component = null;
     if (this.props.location.pathname === '/') {
       return <Redirect to="/games" />;

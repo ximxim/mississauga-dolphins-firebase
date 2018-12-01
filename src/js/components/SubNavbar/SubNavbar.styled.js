@@ -1,32 +1,35 @@
 import styled from 'styled-components';
 import { media } from '../../utils/media';
 
-export const SubNavBarStyled = styled.nav`
-background-color: black;
-display: flex;
-justify-content: space-between;
-align-items: center;
-`;
-
 export const SubNavBarButton = styled.button`
 color: ${props => props.theme.brandPrimary};
 border: ${props => `2px solid ${props.theme.brandPrimary}`};
 border-radius: 10px;
-background-color: white;
+background-color: ${props => props.theme.white};
 cursor: pointer;
-width: 40px;
-height: 40px;
 transition: all 0.3s;
-display: inline-flex;
+display: flex;
 justify-content: center;
 align-items: center;
+margin-left: 5px;
 &:hover {
     background-color: ${props => props.theme.brandPrimary};
-    color: white;
+    color: ${props => props.theme.white};
 }
 `;
 
 export const SubToggleButton = styled(SubNavBarButton)`
+${media.medium`
+display: none;
+`}
+`;
+
+export const SubNavbarLabel = styled.h6`
+margin: 0px;
+padding: 5px;
+`;
+
+export const SubToggleLabel = styled(SubNavbarLabel)`
 ${media.medium`
 display: none;
 `}
