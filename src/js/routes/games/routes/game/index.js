@@ -122,7 +122,7 @@ class Game extends Component<Props, State> {
 	    icon: 'user-plus',
 	    label: 'Add Player',
 	    key: 'addPlayer',
-	    hidden: false,
+	    hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
 	  },
 	]);
 
