@@ -80,7 +80,6 @@ class Game extends Component<Props, State> {
 	renderNavbar = () => (
     <SubNavbar>
         {this.NavbarOptions().map((option) => {
-          console.log(option.hidden);
           if (option.hidden) return null;
           return (
               <NavbarButton
