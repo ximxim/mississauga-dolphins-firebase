@@ -24,6 +24,7 @@ import {
   faPencilAlt,
   faPlayCircle,
   faStopCircle,
+  faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
@@ -56,6 +57,7 @@ library.add(
   faPencilAlt,
   faPlayCircle,
   faStopCircle,
+  faUserPlus,
 );
 class App extends Component<Props, *> {
   render() {

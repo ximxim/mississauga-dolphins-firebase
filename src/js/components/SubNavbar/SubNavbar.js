@@ -27,7 +27,7 @@ class SubNavbar extends React.Component<Props, *> {
 
   render() {
     return (
-        <Navbar color="light" light expand="md">
+        <Navbar color="light" light expand="md" className="shadow bg-white">
             {this.toggleSidebar()}
             {this.navbarToggler()}
             <Collapse isOpen={this.state.isOpen} navbar>

@@ -79,12 +79,52 @@ class Game extends Component<Props, State> {
 
 	renderNavbar = () => (
     <SubNavbar>
-        <NavbarButton icon="play-circle" label="Start" />
-        <NavbarButton icon="trash-alt" label="Remove" />
-        <NavbarButton icon="pencil-alt" label="Update" />
-        <NavbarButton icon="stop-circle" label="Finish" />
+        {this.NavbarOptions().map((option) => {
+          console.log(option.hidden);
+          if (option.hidden) return null;
+          return (
+              <NavbarButton
+                  icon={option.icon}
+                  label={option.label}
+                  key={option.key}
+              />
+          );
+        })}
     </SubNavbar>
 	)
+
+	NavbarOptions = () => ([
+	  {
+	    icon: 'play-circle',
+	    label: 'Start',
+	    key: 'start',
+	    hidden: !this.gameHasNoScore(),
+	  },
+	  {
+	    icon: 'trash-alt',
+	    label: 'Remove',
+	    key: 'remove',
+	    hidden: !this.gameHasScoreAndIsInactive(),
+	  },
+	  {
+	    icon: 'pencil-alt',
+	    label: 'Update',
+	    key: 'update',
+	    hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
+	  },
+	  {
+	    icon: 'stop-circle',
+	    label: 'Finish',
+	    key: 'finish',
+	    hidden: !this.gameIsActive(),
+	  },
+	  {
+	    icon: 'user-plus',
+	    label: 'Add Player',
+	    key: 'addPlayer',
+	    hidden: false,
+	  },
+	]);
 
 	renderGameMainContent = game => (
     <div className="col-md-8">
@@ -148,8 +188,7 @@ class Game extends Component<Props, State> {
 	    );
 	  }
 
-	  if (score) {
-	    if (game.game_id && !score.active) {
+	    if (!score || (game.game_id && !score.active)) {
 	    return (
     <GameCard
         players={this.props.players}
@@ -158,14 +197,9 @@ class Game extends Component<Props, State> {
         delete={this.handleDelete}
         loading={this.props.loadingScores}
         game={score}
-        addPlayer={selectedPlayer => this.setState(
-						    { selectedPlayer },
-						    this.handleAddPlayer,
-						  )
-						}
+        addPlayer={selectedPlayer => this.setState({ selectedPlayer }, this.handleAddPlayer)}
     />
 	    );
-	  }
 	  }
 
 	  return (
@@ -245,6 +279,16 @@ class Game extends Component<Props, State> {
 
 	  this.props.deletePlayer({ eventId, playerId });
 	};
+
+	gameHasNoScore = () => !this.props.getEvent.game_id;
+
+	gameHasScoreAndIsInactive = () => {
+	  const game = this.props.getEvent;
+	  const score = this.props.getScoresByGameId(game.id);
+	  return score ? (game.game_id && !score.active) : false;
+	};
+
+	gameIsActive = () => !this.gameHasNoScore() && !this.gameHasScoreAndIsInactive();
 }
 
 const mapStateToProps = (state, ownProps) => ({
