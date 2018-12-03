@@ -28,6 +28,7 @@ import {
 import GameCard from './components/GameCard';
 import { PlayersSuggestInput, NavbarButton } from '../../../../components/ui';
 import { SubNavbar, GameDetailsCard } from '../../../../components';
+import StartGameModal from './components/StartGameModal';
 
 type Props = {
 	players: Object,
@@ -73,6 +74,7 @@ class Game extends Component<Props, State> {
             </div>
             {this.renderGameMainContent(event)}
         </div>
+        <StartGameModal ref={(o) => { this.startGameModal = o; }} />
     </div>
 	  );
 	}
@@ -86,6 +88,7 @@ class Game extends Component<Props, State> {
                   icon={option.icon}
                   label={option.label}
                   key={option.key}
+                  onClick={option.onClick}
               />
           );
         })}
@@ -98,30 +101,35 @@ class Game extends Component<Props, State> {
 	    label: 'Start',
 	    key: 'start',
 	    hidden: !this.gameHasNoScore(),
+	    onClick: () => this.startGameModal.toggle(),
 	  },
 	  {
 	    icon: 'trash-alt',
 	    label: 'Remove',
 	    key: 'remove',
 	    hidden: !this.gameHasScoreAndIsInactive(),
+	    onClick: () => console.log('clicked'),
 	  },
 	  {
 	    icon: 'pencil-alt',
 	    label: 'Update',
 	    key: 'update',
 	    hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
+	    onClick: () => console.log('clicked'),
 	  },
 	  {
 	    icon: 'stop-circle',
 	    label: 'Finish',
 	    key: 'finish',
 	    hidden: !this.gameIsActive(),
+	    onClick: () => console.log('clicked'),
 	  },
 	  {
 	    icon: 'user-plus',
 	    label: 'Add Player',
 	    key: 'addPlayer',
 	    hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
+	    onClick: () => console.log('clicked'),
 	  },
 	]);
 
