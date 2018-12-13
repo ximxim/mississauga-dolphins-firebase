@@ -58,7 +58,7 @@ exports.recentFeedStaging = functions.https.onRequest((req, res) => recentFeedSt
 exports.registerPushDeviceStaging = functions.https.onRequest((req, res) => registerPushDeviceStaging(req, res, config));
 exports.getDeviceSettingsStaging = functions.https.onRequest((req, res) => getDeviceSettingsStaging(req, res, config));
 exports.updateNotificationPreferenceStaging = functions.https.onRequest((req, res) => updateNotificationPreferenceStaging(req, res, config));
-exports.gameTriggerStaging = functions.database
+exports.gamesOnWriteStaging = functions.database
 	  .instance('mississauga-dolphins-staging')
 	  .ref('/Games')
 	  .onWrite((req, res) => gameTriggerStaging(req, res, config));
