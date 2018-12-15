@@ -23,26 +23,26 @@ type Props = {
 type State = {}
 
 class Games extends Component<Props, State> {
-  render() {
-	  return (
-    <div className="row no-gutters">
-        <div className="col">
-            <SubNav renderSidebarContent={this.renderSidebarContent}>
-                <Route path={`${this.props.match.path}/:id`} component={Game} />
-            </SubNav>
-        </div>
-    </div>
-	  );
-  }
+    render() {
+        return (
+            <div className="row no-gutters">
+                <div className="col">
+                    <SubNav renderSidebarContent={this.renderSidebarContent}>
+                        <Route path={`${this.props.match.path}/:id`} component={Game} />
+                    </SubNav>
+                </div>
+            </div>
+        );
+    }
 
 	renderSidebarContent = () => <SidebarContent {...this.props} />;
 }
 
 const mapStateToProps = (state) => {
-  const { uid: user } = state.authUser;
-  return {
-    user,
-  };
+    const { uid: user } = state.authUser;
+    return {
+        user,
+    };
 };
 
 export default connect(mapStateToProps)(requiresAuth(Games));
