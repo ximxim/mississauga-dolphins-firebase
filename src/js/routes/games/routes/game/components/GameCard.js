@@ -54,83 +54,86 @@ class GameCard extends Component<Props> {
 
     render() {
         return (
-            <div className="card m-1">
-                <div className="card-body">
-                    <Form>
-                        <Table className="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style={{ borderTop: 0 }}>
-                                        &nbsp;
-                                    </th>
-                                    <th scope="col" style={{ borderTop: 0 }}>
-                                        Home
-                                    </th>
-                                    <th scope="col" style={{ borderTop: 0 }}>
-                                        Visitor
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">Name</th>
-                                    <td>{this.renderHomeTeamNameField()}</td>
-                                    <td>{this.renderVisitorTeamNameField()}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Score</th>
-                                    <td>{this.renderHomeTeamScoreField()}</td>
-                                    <td>
-                                        {this.renderVisitorTeamScoreField()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Overs</th>
-                                    <td>{this.renderHomeTeamOversField()}</td>
-                                    <td>
-                                        {this.renderVisitorTeamOversField()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Wickets</th>
-                                    <td>{this.renderHomeTeamWicketsField()}</td>
-                                    <td>
-                                        {this.renderVisitorTeamWicketsField()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Batting</th>
-                                    <td>{this.renderHomeTeamBattingField()}</td>
-                                    <td>
-                                        {this.renderVisitorTeamBattingField()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Striker</th>
-                                    <td colSpan="2">
-                                        {this.renderStrikerInput()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Non Striker</th>
-                                    <td colSpan="2">
-                                        {this.renderNonStrikerInput()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Bowler</th>
-                                    <td colSpan="2">
-                                        {this.renderBowlerInput()}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                        {this.renderButtons()}
-                    </Form>
-                </div>
-            </div>
+            <Form>
+                <Table className="table">
+                    {this.renderTableHeader()}
+                    {this.renderTableBody()}
+                </Table>
+            </Form>
         );
     }
+
+    renderTableHeader = () => (
+        <thead>
+            <tr>
+                <th scope="col" className="border-top-0">
+                    &nbsp;
+                </th>
+                <th scope="col" className="border-top-0">
+                    Home
+                </th>
+                <th scope="col" className="border-top-0">
+                    Visitor
+                </th>
+            </tr>
+        </thead>
+    )
+
+    renderTableBody = () => (
+        <tbody>
+            <tr>
+                <th scope="row">Name</th>
+                <td>{this.renderHomeTeamNameField()}</td>
+                <td>{this.renderVisitorTeamNameField()}</td>
+            </tr>
+            <tr>
+                <th scope="row">Score</th>
+                <td>{this.renderHomeTeamScoreField()}</td>
+                <td>
+                    {this.renderVisitorTeamScoreField()}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Overs</th>
+                <td>{this.renderHomeTeamOversField()}</td>
+                <td>
+                    {this.renderVisitorTeamOversField()}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Wickets</th>
+                <td>{this.renderHomeTeamWicketsField()}</td>
+                <td>
+                    {this.renderVisitorTeamWicketsField()}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Batting</th>
+                <td>{this.renderHomeTeamBattingField()}</td>
+                <td>
+                    {this.renderVisitorTeamBattingField()}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Striker</th>
+                <td colSpan="2">
+                    {this.renderStrikerInput()}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Non Striker</th>
+                <td colSpan="2">
+                    {this.renderNonStrikerInput()}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Bowler</th>
+                <td colSpan="2">
+                    {this.renderBowlerInput()}
+                </td>
+            </tr>
+        </tbody>
+    );
 
     renderButtons = () => {
         const actions = [];
@@ -406,8 +409,7 @@ class GameCard extends Component<Props> {
                         },
                     }))}
                 />
-    &nbsp;
-
+                &nbsp;
             </Label>
         </FormGroup>
     );
@@ -431,8 +433,7 @@ class GameCard extends Component<Props> {
                         },
                     }))}
                 />
-    &nbsp;
-
+                &nbsp;
             </Label>
         </FormGroup>
     );

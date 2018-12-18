@@ -26,15 +26,21 @@ import {
 
 // UI COMPONENTS
 import GameCard from './components/GameCard';
-import { PlayersSuggestInput, NavbarButton } from '../../../../components/ui';
-import { SubNavbar, GameDetailsCard } from '../../../../components';
-import StartGameModal from './components/StartGameModal';
+import { PlayersSuggestInput } from '../../../../components/ui';
+import { GameDetailsCard } from '../../../../components';
+import Navbar from './components/Navbar';
+import ScoreModal from './components/ScoreModal';
 
 type Props = {
   players: Object,
   getEvent: Object,
   loadingEvents: Boolean,
   loadingScores: Boolean,
+  match: {
+    params: {
+      id: string,
+    },
+  },
   getScoresByGameId: (string) => void,
   createGame: () => void,
   updateGame: () => void,
@@ -42,14 +48,11 @@ type Props = {
   deleteGame: () => void,
   addPlayer: () => void,
   deletePlayer: () => void,
-  match: {
-    params: {
-      id: string,
-    },
-  },
-}
+};
 
-type State = {}
+type State = {
+    scoreModalVisible: false,
+};
 
 class Game extends Component<Props, State> {
   state = {
@@ -58,6 +61,7 @@ class Game extends Component<Props, State> {
   };
 
   render = () => {
+      const { scoreModalVisible } = this.state;
       const event = this.props.getEvent;
       if (!event) return null;
 
@@ -65,35 +69,29 @@ class Game extends Component<Props, State> {
           <div>
               <div className="row no-gutters sticky-top">
                   <div className="col">
-                      {this.renderNavbar()}
+                      <Navbar options={this.NavbarOptions()} />
                   </div>
               </div>
               <div className="row no-gutters">
                   <div className="col-md-4">
                       <GameDetailsCard game={event} />
                   </div>
-                  {this.renderGameMainContent(event)}
+                  <div className="col-md-8">
+                      {this.renderScoringControls(event)}
+                      <h2 className="text-center">Players List</h2>
+                      {this.renderAddPlayersControl()}
+                  </div>
               </div>
-              <StartGameModal ref={(o) => { this.startGameModal = o; }} />
+              <ScoreModal
+                  visible={scoreModalVisible}
+                  toggle={this.toggleScoreModal}
+                  header={this.renderScoreModalHeader}
+                  body={this.renderScoreModalBody}
+                  footer={this.renderScoreModalFooter}
+              />
           </div>
       );
   }
-
-  renderNavbar = () => (
-      <SubNavbar>
-          {this.NavbarOptions().map((option) => {
-              if (option.hidden) return null;
-              return (
-                  <NavbarButton
-                      icon={option.icon}
-                      label={option.label}
-                      key={option.key}
-                      onClick={option.onClick}
-                  />
-              );
-          })}
-      </SubNavbar>
-  )
 
   NavbarOptions = () => ([
       {
@@ -129,17 +127,9 @@ class Game extends Component<Props, State> {
           label: 'Add Player',
           key: 'addPlayer',
           hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
-          onClick: () => console.log('clicked'),
+          onClick: this.toggleScoreModal,
       },
   ]);
-
-  renderGameMainContent = game => (
-      <div className="col-md-8">
-          {this.renderScoringControls(game)}
-          <h2 className="text-center">Players List</h2>
-          {this.renderAddPlayersControl()}
-      </div>
-  );
 
   renderAddPlayersControl = () => {
       const { playerName } = this.state;
@@ -152,11 +142,9 @@ class Game extends Component<Props, State> {
                           players={this.props.players}
                           placeholder="Enter a player name"
                           value={playerName}
-                          onSuggestionSelected={
-                              (event, { suggestion }) => this.setState(
-                                  { selectedPlayer: suggestion.id },
-                              )
-                          }
+                          onSuggestionSelected={(event, { suggestion }) => this.setState(
+                              { selectedPlayer: suggestion.id },
+                          )}
                           onChange={(event, { newValue }) => this.setState({ playerName: newValue })
                           }
                       />
@@ -168,10 +156,7 @@ class Game extends Component<Props, State> {
                           style={{ marginTop: 10 }}
                           key="addPlayer"
                       >
-              Add Player
-
-
-                          {' '}
+                        Add Player
                       </Button>
                       <br />
                   </Form>
@@ -280,6 +265,12 @@ class Game extends Component<Props, State> {
       );
   };
 
+  renderScoreModalHeader = () => <h4>something else</h4>
+
+  renderScoreModalBody = () => <p>body stuff</p>
+
+  renderScoreModalFooter = () => <p>footer stuff</p>
+
   handleAddPlayer = () => {
       const eventId = this.props.match.params.id;
       const playerId = this.state.selectedPlayer;
@@ -303,6 +294,10 @@ class Game extends Component<Props, State> {
   };
 
   gameIsActive = () => !this.gameHasNoScore() && !this.gameHasScoreAndIsInactive();
+
+  toggleScoreModal = () => this.setState(state => (
+      { scoreModalVisible: !state.scoreModalVisible }
+  ));
 }
 
 const mapStateToProps = (state, ownProps) => ({
