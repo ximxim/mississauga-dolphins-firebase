@@ -25,7 +25,7 @@ import {
 } from '../../../../redux/modules/Events';
 
 // UI COMPONENTS
-import GameCard from './components/GameCard';
+import ScoreForm from './components/ScoreForm';
 import { PlayersSuggestInput } from '../../../../components/ui';
 import { GameDetailsCard } from '../../../../components';
 import Navbar from './components/Navbar';
@@ -77,7 +77,6 @@ class Game extends Component<Props, State> {
                       <GameDetailsCard game={event} />
                   </div>
                   <div className="col-md-8">
-                      {this.renderScoringControls(event)}
                       <h2 className="text-center">Players List</h2>
                       {this.renderAddPlayersControl()}
                   </div>
@@ -86,50 +85,74 @@ class Game extends Component<Props, State> {
                   visible={scoreModalVisible}
                   toggle={this.toggleScoreModal}
                   header={this.renderScoreModalHeader}
-                  body={this.renderScoreModalBody}
-                  footer={this.renderScoreModalFooter}
+                  body={() => this.renderScoreModalBody(event)}
+                  footer={() => this.renderScoreModalFooter(event)}
               />
           </div>
       );
   }
 
-  NavbarOptions = () => ([
-      {
-          icon: 'play-circle',
-          label: 'Start',
-          key: 'start',
-          hidden: !this.gameHasNoScore(),
-          onClick: () => this.startGameModal.toggle(),
-      },
-      {
-          icon: 'trash-alt',
-          label: 'Remove',
-          key: 'remove',
-          hidden: !this.gameHasScoreAndIsInactive(),
-          onClick: () => console.log('clicked'),
-      },
-      {
-          icon: 'pencil-alt',
-          label: 'Update',
-          key: 'update',
-          hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
-          onClick: () => console.log('clicked'),
-      },
-      {
-          icon: 'stop-circle',
-          label: 'Finish',
-          key: 'finish',
-          hidden: !this.gameIsActive(),
-          onClick: () => console.log('clicked'),
-      },
-      {
-          icon: 'user-plus',
-          label: 'Add Player',
-          key: 'addPlayer',
-          hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
-          onClick: this.toggleScoreModal,
-      },
-  ]);
+    ScoreActions = () => ([
+        {
+            icon: 'play-circle',
+            label: 'Start',
+            key: 'start',
+            color: 'primary',
+            hidden: !this.gameHasNoScore(),
+            onClick: () => {
+                const score = this.ScoreForm.getScore({ active: true });
+                this.props.createGame(score);
+            },
+        },
+        {
+            icon: 'trash-alt',
+            label: 'Remove',
+            key: 'remove',
+            color: 'danger',
+            hidden: !this.gameHasScoreAndIsInactive(),
+            onClick: () => {
+                const score = this.ScoreForm.getScore();
+                this.handleDelete(score.event_id);
+            },
+        },
+        {
+            icon: 'pencil-alt',
+            label: 'Update',
+            key: 'update',
+            color: 'primary',
+            hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
+            onClick: () => {
+                const score = this.ScoreForm.getScore({ active: true });
+                this.handleUpdate(score);
+            },
+        },
+        {
+            icon: 'stop-circle',
+            label: 'Finish',
+            key: 'finish',
+            color: 'danger',
+            hidden: !this.gameIsActive(),
+            onClick: () => {
+                const score = this.ScoreForm.getScore({ active: false });
+                this.handleFinish(score.event_id);
+            },
+        },
+    ]);
+
+    NavbarOptions = () => ([
+        {
+            icon: 'pencil-alt',
+            label: 'Score',
+            key: 'score',
+            onClick: this.toggleScoreModal,
+        },
+        {
+            icon: 'user-plus',
+            label: 'Add Player',
+            key: 'addPlayer',
+            onClick: this.toggleScoreModal,
+        },
+    ]);
 
   renderAddPlayersControl = () => {
       const { playerName } = this.state;
@@ -163,55 +186,6 @@ class Game extends Component<Props, State> {
                   {this.renderPlayersList()}
               </div>
           </div>
-      );
-  };
-
-  renderScoringControls = (game) => {
-      const score = this.props.getScoresByGameId(game.id);
-
-      if (!game.game_id) {
-          return (
-              <GameCard
-                  players={this.props.players}
-                  loading={this.props.loadingScores}
-                  eventId={game.id}
-                  submit={this.props.createGame}
-                  addPlayer={selectedPlayer => this.setState(
-                      { selectedPlayer },
-                      this.handleAddPlayer,
-                  )}
-              />
-          );
-      }
-
-      if (!score || (game.game_id && !score.active)) {
-          return (
-              <GameCard
-                  players={this.props.players}
-                  eventId={game.id}
-                  update={this.handleUpdate}
-                  delete={this.handleDelete}
-                  loading={this.props.loadingScores}
-                  game={score}
-                  addPlayer={selectedPlayer => this.setState(
-                      { selectedPlayer },
-                      this.handleAddPlayer,
-                  )}
-              />
-          );
-      }
-
-      return (
-          <GameCard
-              players={this.props.players}
-              eventId={game.id}
-              update={this.handleUpdate}
-              finish={this.handleFinish}
-              loading={this.props.loadingScores}
-              game={score}
-              addPlayer={selectedPlayer => this.setState({ selectedPlayer }, this.handleAddPlayer)
-              }
-          />
       );
   };
 
@@ -265,11 +239,42 @@ class Game extends Component<Props, State> {
       );
   };
 
-  renderScoreModalHeader = () => <h4>something else</h4>
+  renderScoreModalHeader = () => <h4>Score Card</h4>
 
-  renderScoreModalBody = () => <p>body stuff</p>
+  renderScoreModalBody = event => (
+      <ScoreForm
+          players={this.props.players}
+          loading={this.props.loadingScores}
+          eventId={event.id}
+          game={this.props.getScoresByGameId(event.id)}
+          addPlayer={this.addPlayer}
+          ref={(o) => { this.ScoreForm = o; }}
+      />
+  )
 
-  renderScoreModalFooter = () => <p>footer stuff</p>
+  addPlayer = selectedPlayer => this.setState(
+      { selectedPlayer },
+      this.handleAddPlayer,
+  )
+
+  renderScoreModalFooter = () => (
+      <div>
+          {this.ScoreActions().map((action) => {
+              if (action.hidden) return null;
+              return (
+                  <Button
+                      outline
+                      color={action.color}
+                      key={action.key}
+                      onClick={action.onClick}
+                      className="mx-1"
+                  >
+                      {action.label}
+                  </Button>
+              );
+          })}
+      </div>
+  )
 
   handleAddPlayer = () => {
       const eventId = this.props.match.params.id;

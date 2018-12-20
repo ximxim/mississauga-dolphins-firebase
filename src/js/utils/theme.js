@@ -1,13 +1,13 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default {
-  brandPrimary: '#05301d',
-  brandDark: '#031b10',
-  darkGrey: '#484848',
-  white: 'white',
-  selection: '#9dccb6',
-  bodyFont: 'Comfortaa',
-  headingFont: 'Laila',
+    brandPrimary: '#05301d',
+    brandDark: '#031b10',
+    darkGrey: '#484848',
+    white: 'white',
+    selection: '#9dccb6',
+    bodyFont: 'Comfortaa',
+    headingFont: 'Laila',
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -148,5 +148,20 @@ a:hover {
 }
 .fs-6 {
 	font-size: 22px !important;
+}
+td, th {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+input {
+    border-radius: 10px !important;
+    border: ${props => `2px solid ${props.theme.brandPrimary} !important`};
+    padding: .375rem .75rem
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+button {
+    border-width: 2px !important;
+    border-radius: 10px !important;
 }
 `;
