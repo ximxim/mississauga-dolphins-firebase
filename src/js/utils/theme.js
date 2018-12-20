@@ -152,6 +152,8 @@ a:hover {
 td, th {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
+    text-align: center;
+    vertical-align: middle !important;
 }
 input {
     border-radius: 10px !important;
@@ -163,5 +165,23 @@ input {
 button {
     border-width: 2px !important;
     border-radius: 10px !important;
+}
+.modal-header {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    background-color: ${props => `${props.theme.brandPrimary} !important`};
+    color: white !important;
+}
+.modal-footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: ${props => `1px solid ${props.theme.brandPrimary} !important`};
+}
+.modal-content {
+    border-radius: 10px !important;
+    border: ${props => `2px solid ${props.theme.brandPrimary}`}
+}
+.close {
+    color: white !important;
 }
 `;
