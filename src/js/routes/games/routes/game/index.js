@@ -55,42 +55,42 @@ type State = {
 };
 
 class Game extends Component<Props, State> {
-  state = {
-      playerName: '',
-      selectedPlayer: -1,
-  };
+    state = {
+        playerName: '',
+        selectedPlayer: -1,
+    };
 
-  render = () => {
-      const { scoreModalVisible } = this.state;
-      const event = this.props.getEvent;
-      if (!event) return null;
+    render = () => {
+        const { scoreModalVisible } = this.state;
+        const event = this.props.getEvent;
+        if (!event) return null;
 
-      return (
-          <div>
-              <div className="row no-gutters sticky-top">
-                  <div className="col">
-                      <Navbar options={this.NavbarOptions()} />
-                  </div>
-              </div>
-              <div className="row no-gutters">
-                  <div className="col-md-4">
-                      <GameDetailsCard game={event} />
-                  </div>
-                  <div className="col-md-8">
-                      <h2 className="text-center">Players List</h2>
-                      {this.renderAddPlayersControl()}
-                  </div>
-              </div>
-              <ScoreModal
-                  visible={scoreModalVisible}
-                  toggle={this.toggleScoreModal}
-                  header={this.renderScoreModalHeader}
-                  body={() => this.renderScoreModalBody(event)}
-                  footer={() => this.renderScoreModalFooter(event)}
-              />
-          </div>
-      );
-  }
+        return (
+            <div>
+                <div className="row no-gutters sticky-top">
+                    <div className="col">
+                        <Navbar options={this.NavbarOptions()} />
+                    </div>
+                </div>
+                <div className="row no-gutters">
+                    <div className="col-md-4">
+                        <GameDetailsCard game={event} />
+                    </div>
+                    <div className="col-md-8">
+                        <h2 className="text-center">Players List</h2>
+                        {this.renderAddPlayersControl()}
+                    </div>
+                </div>
+                <ScoreModal
+                    visible={scoreModalVisible}
+                    toggle={this.toggleScoreModal}
+                    header={this.renderScoreModalHeader}
+                    body={() => this.renderScoreModalBody(event)}
+                    footer={() => this.renderScoreModalFooter(event)}
+                />
+            </div>
+        );
+    }
 
     ScoreActions = () => ([
         {
@@ -154,155 +154,156 @@ class Game extends Component<Props, State> {
         },
     ]);
 
-  renderAddPlayersControl = () => {
-      const { playerName } = this.state;
+    renderAddPlayersControl = () => {
+        const { playerName } = this.state;
 
-      return (
-          <div className="card" style={{ margin: 10 }}>
-              <div className="card-body">
-                  <Form>
-                      <PlayersSuggestInput
-                          players={this.props.players}
-                          placeholder="Enter a player name"
-                          value={playerName}
-                          onSuggestionSelected={(event, { suggestion }) => this.setState(
-                              { selectedPlayer: suggestion.id },
-                          )}
-                          onChange={(event, { newValue }) => this.setState({ playerName: newValue })
-                          }
-                      />
-                      <Button
-                          className="btn-success text-white btn-md circle-btn-sm btn-block"
-                          variant="raised"
-                          onClick={this.handleAddPlayer}
-                          disabled={!playerName || this.props.loadingEvents}
-                          style={{ marginTop: 10 }}
-                          key="addPlayer"
-                      >
+        return (
+            <div className="card" style={{ margin: 10 }}>
+                <div className="card-body">
+                    <Form>
+                        <PlayersSuggestInput
+                            players={this.props.players}
+                            placeholder="Enter a player name"
+                            value={playerName}
+                            onSuggestionSelected={(event, { suggestion }) => this.setState(
+                                { selectedPlayer: suggestion.id },
+                            )}
+                            onChange={(event, { newValue }) => this.setState(
+                                { playerName: newValue },
+                            )}
+                        />
+                        <Button
+                            className="btn-success text-white btn-md circle-btn-sm btn-block"
+                            variant="raised"
+                            onClick={this.handleAddPlayer}
+                            disabled={!playerName || this.props.loadingEvents}
+                            style={{ marginTop: 10 }}
+                            key="addPlayer"
+                        >
                         Add Player
-                      </Button>
-                      <br />
-                  </Form>
-                  {this.renderPlayersList()}
-              </div>
-          </div>
-      );
-  };
+                        </Button>
+                        <br />
+                    </Form>
+                    {this.renderPlayersList()}
+                </div>
+            </div>
+        );
+    };
 
-  handleUpdate = (form) => {
-      const selectedGame = this.props.getScoresByGameId(form.event_id);
-      this.props.updateGame({ id: selectedGame.id, game: form });
-  };
+    handleUpdate = (form) => {
+        const selectedGame = this.props.getScoresByGameId(form.event_id);
+        this.props.updateGame({ id: selectedGame.id, game: form });
+    };
 
-  handleFinish = (eventId) => {
-      const selectedGame = this.props.getScoresByGameId(eventId);
-      this.props.finishGame({ id: selectedGame.id, game: selectedGame });
-  };
+    handleFinish = (eventId) => {
+        const selectedGame = this.props.getScoresByGameId(eventId);
+        this.props.finishGame({ id: selectedGame.id, game: selectedGame });
+    };
 
-  handleDelete = (eventId) => {
-      const selectedGame = this.props.getScoresByGameId(eventId);
-      this.props.deleteGame({ id: selectedGame.id, game: selectedGame });
-  };
+    handleDelete = (eventId) => {
+        const selectedGame = this.props.getScoresByGameId(eventId);
+        this.props.deleteGame({ id: selectedGame.id, game: selectedGame });
+    };
 
-  renderPlayersList = () => {
-      const event = this.props.getEvent;
-      const playersList = this.props.players || [];
-      if (!event.players) {
-          return (
-              <p className="text-center">No players added to this event</p>
-          );
-      }
+    renderPlayersList = () => {
+        const event = this.props.getEvent;
+        const playersList = this.props.players || [];
+        if (!event.players) {
+            return (
+                <p className="text-center">No players added to this event</p>
+            );
+        }
 
-      return (
-          <ListGroup>
-              {_.map(event.players, (id) => {
-                  const player = playersList[id];
-                  if (!player) return null;
+        return (
+            <ListGroup>
+                {_.map(event.players, (id) => {
+                    const player = playersList[id];
+                    if (!player) return null;
 
-                  return (
-                      <ListGroupItem key={player.id}>
-                          {player.FIRST_NAME}
-                          {' '}
-                          {player.LAST_NAME}
-                          <Button
-                              className="close"
-                              onClick={() => this.handleDeletePlayer(player.id)
-                              }
-                              disabled={this.props.loadingEvents}
-                          >
-                              <span aria-hidden="true">&times;</span>
-                          </Button>
-                      </ListGroupItem>
-                  );
-              })}
-          </ListGroup>
-      );
-  };
+                    return (
+                        <ListGroupItem key={player.id}>
+                            {player.FIRST_NAME}
+                            {' '}
+                            {player.LAST_NAME}
+                            <Button
+                                className="close"
+                                onClick={() => this.handleDeletePlayer(player.id)
+                                }
+                                disabled={this.props.loadingEvents}
+                            >
+                                <span aria-hidden="true">&times;</span>
+                            </Button>
+                        </ListGroupItem>
+                    );
+                })}
+            </ListGroup>
+        );
+    };
 
-  renderScoreModalHeader = () => <h4>Score Card</h4>
+    renderScoreModalHeader = () => <h4>Score Card</h4>
 
-  renderScoreModalBody = event => (
-      <ScoreForm
-          players={this.props.players}
-          loading={this.props.loadingScores}
-          eventId={event.id}
-          game={this.props.getScoresByGameId(event.id)}
-          addPlayer={this.addPlayer}
-          ref={(o) => { this.ScoreForm = o; }}
-      />
-  )
+    renderScoreModalBody = event => (
+        <ScoreForm
+            players={this.props.players}
+            loading={this.props.loadingScores}
+            eventId={event.id}
+            game={this.props.getScoresByGameId(event.id)}
+            addPlayer={this.addPlayer}
+            ref={(o) => { this.ScoreForm = o; }}
+        />
+    )
 
-  addPlayer = selectedPlayer => this.setState(
-      { selectedPlayer },
-      this.handleAddPlayer,
-  )
+    addPlayer = selectedPlayer => this.setState(
+        { selectedPlayer },
+        this.handleAddPlayer,
+    )
 
-  renderScoreModalFooter = () => (
-      <div>
-          {this.ScoreActions().map((action) => {
-              if (action.hidden) return null;
-              return (
-                  <Button
-                      outline
-                      color={action.color}
-                      key={action.key}
-                      onClick={action.onClick}
-                      className="mx-1"
-                  >
-                      {action.label}
-                  </Button>
-              );
-          })}
-      </div>
-  )
+    renderScoreModalFooter = () => (
+        <div>
+            {this.ScoreActions().map((action) => {
+                if (action.hidden) return null;
+                return (
+                    <Button
+                        outline
+                        color={action.color}
+                        key={action.key}
+                        onClick={action.onClick}
+                        className="mx-1"
+                    >
+                        {action.label}
+                    </Button>
+                );
+            })}
+        </div>
+    )
 
-  handleAddPlayer = () => {
-      const eventId = this.props.match.params.id;
-      const playerId = this.state.selectedPlayer;
+    handleAddPlayer = () => {
+        const eventId = this.props.match.params.id;
+        const playerId = this.state.selectedPlayer;
 
-      this.props.addPlayer({ eventId, playerId });
-      this.setState({ selectedPlayer: '', playerName: '' });
-  };
+        this.props.addPlayer({ eventId, playerId });
+        this.setState({ selectedPlayer: '', playerName: '' });
+    };
 
-  handleDeletePlayer = (playerId) => {
-      const eventId = this.props.match.params.id;
+    handleDeletePlayer = (playerId) => {
+        const eventId = this.props.match.params.id;
 
-      this.props.deletePlayer({ eventId, playerId });
-  };
+        this.props.deletePlayer({ eventId, playerId });
+    };
 
-  gameHasNoScore = () => !this.props.getEvent.game_id;
+    gameHasNoScore = () => !this.props.getEvent.game_id;
 
-  gameHasScoreAndIsInactive = () => {
-      const game = this.props.getEvent;
-      const score = this.props.getScoresByGameId(game.id);
-      return score ? (game.game_id && !score.active) : false;
-  };
+    gameHasScoreAndIsInactive = () => {
+        const game = this.props.getEvent;
+        const score = this.props.getScoresByGameId(game.id);
+        return score ? (game.game_id && !score.active) : false;
+    };
 
-  gameIsActive = () => !this.gameHasNoScore() && !this.gameHasScoreAndIsInactive();
+    gameIsActive = () => !this.gameHasNoScore() && !this.gameHasScoreAndIsInactive();
 
-  toggleScoreModal = () => this.setState(state => (
-      { scoreModalVisible: !state.scoreModalVisible }
-  ));
+    toggleScoreModal = () => this.setState(state => (
+        { scoreModalVisible: !state.scoreModalVisible }
+    ));
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -322,7 +323,4 @@ const mapDispatchToProps = {
     deletePlayer,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
