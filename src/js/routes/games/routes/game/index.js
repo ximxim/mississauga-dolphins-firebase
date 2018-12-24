@@ -26,10 +26,9 @@ import {
 
 // UI COMPONENTS
 import ScoreForm from './components/ScoreForm';
-import { PlayersSuggestInput } from '../../../../components/ui';
+import { PlayersSuggestInput, Modal } from '../../../../components/ui';
 import { GameDetailsCard } from '../../../../components';
 import Navbar from './components/Navbar';
-import ScoreModal from './components/ScoreModal';
 
 type Props = {
   players: Object,
@@ -50,18 +49,13 @@ type Props = {
   deletePlayer: () => void,
 };
 
-type State = {
-    scoreModalVisible: false,
-};
-
-class Game extends Component<Props, State> {
+class Game extends Component<Props, *> {
     state = {
         playerName: '',
         selectedPlayer: -1,
     };
 
     render = () => {
-        const { scoreModalVisible } = this.state;
         const event = this.props.getEvent;
         if (!event) return null;
 
@@ -81,12 +75,11 @@ class Game extends Component<Props, State> {
                         {this.renderAddPlayersControl()}
                     </div>
                 </div>
-                <ScoreModal
-                    visible={scoreModalVisible}
-                    toggle={this.toggleScoreModal}
+                <Modal
                     header={this.renderScoreModalHeader}
                     body={() => this.renderScoreModalBody(event)}
                     footer={() => this.renderScoreModalFooter(event)}
+                    ref={(o) => { this.ScoreModal = o; }}
                 />
             </div>
         );
@@ -144,13 +137,12 @@ class Game extends Component<Props, State> {
             icon: 'pencil-alt',
             label: 'Score',
             key: 'score',
-            onClick: this.toggleScoreModal,
+            onClick: this.ScoreModal ? this.ScoreModal.toggle : null,
         },
         {
             icon: 'user-plus',
             label: 'Add Player',
             key: 'addPlayer',
-            onClick: this.toggleScoreModal,
         },
     ]);
 
@@ -300,10 +292,6 @@ class Game extends Component<Props, State> {
     };
 
     gameIsActive = () => !this.gameHasNoScore() && !this.gameHasScoreAndIsInactive();
-
-    toggleScoreModal = () => this.setState(state => (
-        { scoreModalVisible: !state.scoreModalVisible }
-    ));
 }
 
 const mapStateToProps = (state, ownProps) => ({

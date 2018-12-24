@@ -5,3 +5,4 @@ export { default as SortControl } from './SortControl';
 export { default as GameCard } from './GameCard';
 export { default as PlayersSuggestInput } from './PlayersSuggestInput';
 export { default as NavbarButton } from './NavbarButton';
+export { default as Modal } from './Modal';

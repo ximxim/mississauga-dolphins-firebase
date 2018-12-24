@@ -184,4 +184,13 @@ button {
 .close {
     color: white !important;
 }
+.btn-outline-primary {
+    border-color: ${props => props.theme.brandPrimary};
+    color: ${props => props.theme.brandPrimary};
+}
+.btn-outline-primary:hover {
+    border-color: ${props => props.theme.brandPrimary};
+    background-color: ${props => props.theme.brandPrimary};
+    color: ${props => props.theme.white};
+}
 `;

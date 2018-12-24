@@ -7,20 +7,24 @@ import {
 } from 'reactstrap';
 
 type Props = {
-    visible: Boolean,
-    toggle: () => void,
     header: () => void,
     body: () => void,
     footer: () => void,
 };
 
-type State = {};
+type State = {
+    isOpen: Boolean,
+};
 
-export default class ScoreModal extends Component<Props, State> {
+export default class CustomModal extends Component<Props, State> {
+    state = {
+        isOpen: false,
+    };
+
     render = () => {
-        const { visible, toggle } = this.props;
+        const { isOpen } = this.state;
         return (
-            <Modal isOpen={visible} toggle={toggle}>
+            <Modal isOpen={isOpen} toggle={this.toggle}>
                 {this.renderHeader()}
                 {this.renderBody()}
                 {this.renderFooter()}
@@ -29,8 +33,8 @@ export default class ScoreModal extends Component<Props, State> {
     }
 
     renderHeader = () => {
-        const { header, toggle } = this.props;
-        return <ModalHeader toggle={toggle}>{header()}</ModalHeader>;
+        const { header } = this.props;
+        return <ModalHeader toggle={this.toggle}>{header()}</ModalHeader>;
     }
 
     renderBody = () => {
@@ -42,4 +46,6 @@ export default class ScoreModal extends Component<Props, State> {
         const { footer } = this.props;
         return <ModalFooter>{footer()}</ModalFooter>;
     }
+
+    toggle = () => this.setState(state => ({ isOpen: !state.isOpen }));
 }
