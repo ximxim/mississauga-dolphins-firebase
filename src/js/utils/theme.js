@@ -193,4 +193,13 @@ button {
     background-color: ${props => props.theme.brandPrimary};
     color: ${props => props.theme.white};
 }
+.btn-outline-primary.disabled {
+    border-color: ${props => props.theme.brandPrimary};
+    color: ${props => props.theme.brandPrimary};
+}
+.btn-outline-primary.disabled:hover {
+    border-color: ${props => props.theme.brandPrimary};
+    background-color: ${props => props.theme.brandPrimary};
+    color: ${props => props.theme.white};
+}
 `;

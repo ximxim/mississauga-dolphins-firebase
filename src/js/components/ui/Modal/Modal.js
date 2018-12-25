@@ -7,9 +7,9 @@ import {
 } from 'reactstrap';
 
 type Props = {
-    header: () => void,
-    body: () => void,
-    footer: () => void,
+    header?: () => void,
+    body?: () => void,
+    footer?: () => void,
 };
 
 type State = {
@@ -20,6 +20,12 @@ export default class CustomModal extends Component<Props, State> {
     state = {
         isOpen: false,
     };
+
+    static defaultProps = {
+        header: () => {},
+        body: () => {},
+        footer: () => {},
+    }
 
     render = () => {
         const { isOpen } = this.state;

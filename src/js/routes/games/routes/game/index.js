@@ -72,7 +72,7 @@ class Game extends Component<Props, *> {
                     </div>
                     <div className="col-md-8">
                         <h2 className="text-center">Players List</h2>
-                        {this.renderAddPlayersControl()}
+                        {this.renderPlayersList()}
                     </div>
                 </div>
                 <Modal
@@ -80,6 +80,12 @@ class Game extends Component<Props, *> {
                     body={() => this.renderScoreModalBody(event)}
                     footer={() => this.renderScoreModalFooter(event)}
                     ref={(o) => { this.ScoreModal = o; }}
+                />
+                <Modal
+                    header={this.renderAddPlayersModalHeader}
+                    body={this.renderAddPlayersModalBody}
+                    footer={this.renderAddPlayersModalFooter}
+                    ref={(o) => { this.AddPlayersModal = o; }}
                 />
             </div>
         );
@@ -143,44 +149,9 @@ class Game extends Component<Props, *> {
             icon: 'user-plus',
             label: 'Add Player',
             key: 'addPlayer',
+            onClick: this.ScoreModal ? this.AddPlayersModal.toggle : null,
         },
     ]);
-
-    renderAddPlayersControl = () => {
-        const { playerName } = this.state;
-
-        return (
-            <div className="card" style={{ margin: 10 }}>
-                <div className="card-body">
-                    <Form>
-                        <PlayersSuggestInput
-                            players={this.props.players}
-                            placeholder="Enter a player name"
-                            value={playerName}
-                            onSuggestionSelected={(event, { suggestion }) => this.setState(
-                                { selectedPlayer: suggestion.id },
-                            )}
-                            onChange={(event, { newValue }) => this.setState(
-                                { playerName: newValue },
-                            )}
-                        />
-                        <Button
-                            className="btn-success text-white btn-md circle-btn-sm btn-block"
-                            variant="raised"
-                            onClick={this.handleAddPlayer}
-                            disabled={!playerName || this.props.loadingEvents}
-                            style={{ marginTop: 10 }}
-                            key="addPlayer"
-                        >
-                        Add Player
-                        </Button>
-                        <br />
-                    </Form>
-                    {this.renderPlayersList()}
-                </div>
-            </div>
-        );
-    };
 
     handleUpdate = (form) => {
         const selectedGame = this.props.getScoresByGameId(form.event_id);
@@ -234,6 +205,8 @@ class Game extends Component<Props, *> {
 
     renderScoreModalHeader = () => <h4>Score Card</h4>
 
+    renderAddPlayersModalHeader = () => <h4>Add Players</h4>
+
     renderScoreModalBody = event => (
         <ScoreForm
             players={this.props.players}
@@ -244,6 +217,25 @@ class Game extends Component<Props, *> {
             ref={(o) => { this.ScoreForm = o; }}
         />
     )
+
+    renderAddPlayersModalBody = () => {
+        const { players } = this.props;
+        const { playerName } = this.state;
+
+        return (
+            <PlayersSuggestInput
+                players={players}
+                placeholder="Enter a player name"
+                value={playerName}
+                onSuggestionSelected={(event, { suggestion }) => this.setState(
+                    { selectedPlayer: suggestion.id },
+                )}
+                onChange={(event, { newValue }) => this.setState(
+                    { playerName: newValue },
+                )}
+            />
+        );
+    }
 
     addPlayer = selectedPlayer => this.setState(
         { selectedPlayer },
@@ -268,6 +260,34 @@ class Game extends Component<Props, *> {
             })}
         </div>
     )
+
+    renderAddPlayersModalFooter = () => {
+        const { loadingEvents } = this.props;
+        const { playerName } = this.state;
+
+        return (
+            <div>
+                <Button
+                    color="secondary"
+                    outline
+                    onClick={this.AddPlayersModal ? this.AddPlayersModal.toggle : null}
+                    key="cancelAddPlayer"
+                    className="mr-1"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    color="primary"
+                    outline
+                    onClick={this.handleAddPlayer}
+                    disabled={!playerName || loadingEvents}
+                    key="addPlayer"
+                >
+                    Add Player
+                </Button>
+            </div>
+        );
+    }
 
     handleAddPlayer = () => {
         const eventId = this.props.match.params.id;
