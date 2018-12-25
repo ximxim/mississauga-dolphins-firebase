@@ -10,12 +10,10 @@ function attemptSignin({ username, password }) {
     return fClient
         .auth()
         .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() => {
-            return fClient
-                .auth()
-                .signInWithEmailAndPassword(username, password)
-                .catch(error => error);
-        });
+        .then(() => fClient
+            .auth()
+            .signInWithEmailAndPassword(username, password)
+            .catch(error => error));
 }
 
 export function* handleLogin(action) {

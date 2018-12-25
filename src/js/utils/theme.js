@@ -202,4 +202,7 @@ button {
     background-color: ${props => props.theme.brandPrimary};
     color: ${props => props.theme.white};
 }
+.rounded-15 {
+    border-radius: 15px;
+}
 `;

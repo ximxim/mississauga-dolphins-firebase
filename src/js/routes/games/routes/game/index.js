@@ -112,6 +112,7 @@ class Game extends Component<Props, *> {
             onClick: () => {
                 const score = this.ScoreForm.getScore();
                 this.handleDelete(score.event_id);
+                this.ScoreModal.toggle();
             },
         },
         {
@@ -123,6 +124,7 @@ class Game extends Component<Props, *> {
             onClick: () => {
                 const score = this.ScoreForm.getScore({ active: true });
                 this.handleUpdate(score);
+                this.ScoreModal.toggle();
             },
         },
         {
@@ -134,6 +136,7 @@ class Game extends Component<Props, *> {
             onClick: () => {
                 const score = this.ScoreForm.getScore({ active: false });
                 this.handleFinish(score.event_id);
+                this.ScoreModal.toggle();
             },
         },
     ]);
