@@ -10,6 +10,7 @@ type Props = {
 
 export default class PlayersList extends Component<Props, *> {
     render() {
+        if (!this.props.players) return null;
         return (
             <div>
                 <h2>Players List</h2>
