@@ -61,3 +61,4 @@ localConfig.js
 md-firebase-admin.json
 env.production.js
 build/
+.firebase/
