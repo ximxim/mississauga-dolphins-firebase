@@ -67,11 +67,11 @@ class Game extends Component<Props, *> {
                     </div>
                 </div>
                 <div className="row no-gutters mt-2 mr-1">
-                    <div className="col-md-4">
-                        <GameDetailsCard game={event} />
-                    </div>
                     <div className="col-md-8 pl-2">
                         <ScoreCard game={event} score={this.props.getScoresByGameId(event.id)} />
+                    </div>
+                    <div className="col-md-4">
+                        <GameDetailsCard game={event} />
                     </div>
                     <div className="col px-1 mt-4">
                         <h2>Players List</h2>

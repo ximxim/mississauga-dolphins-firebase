@@ -18,13 +18,13 @@ export default class GameDetailsCard extends React.Component<Props, *> {
                     <div className="col-6 pr-1">
                         <InfoCard>
                             <p>{moment(game.start_time).format('MMMM')}</p>
-                            <p>{moment(game.start_time).format('DD')}</p>
+                            <p className="py-1">{moment(game.start_time).format('DD')}</p>
                         </InfoCard>
                     </div>
                     <div className="col-6 pl-1">
                         <InfoCard>
                             <p>Match #</p>
-                            <p>{game.match_no}</p>
+                            <p className="py-1">{game.match_no}</p>
                         </InfoCard>
                     </div>
                 </div>

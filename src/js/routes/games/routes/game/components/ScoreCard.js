@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     Alert,
     Card,
@@ -7,6 +8,7 @@ import {
     CardTitle,
     CardSubtitle,
     CardHeader,
+    Badge,
 } from 'reactstrap';
 
 import { EventsType } from '../../../../../redux/modules/Events/types';
@@ -22,21 +24,35 @@ export default class ScoreCard extends Component<Props, *> {
         const { game, score } = this.props;
         return (
             <div>
-                <h2>{game.title}</h2>
-                <p>{moment(game.start_time).format('dddd, MMMM Do, YYYY [at] hh:mm a')}</p>
+                <div className="mb-3">
+                    <h2 className="mb-0">{game.title}</h2>
+                    <p className="d-inline">{moment(game.start_time).format('dddd, MMMM Do, YYYY [at] hh:mm a')}</p>
+                    {this.renderIndicator(score)}
+                </div>
                 {score ? this.renderScore(game, score) : this.renderEmptyState()}
             </div>
         );
     }
 
+    renderIndicator = score => (
+        score
+            ? (
+                <Badge color={score.active ? 'danger' : 'secondary'} className="ml-2">
+                    <FontAwesomeIcon icon="rss" />
+                    <span className="ml-1">{score.active ? 'Live' : 'Offline'}</span>
+                </Badge>
+            )
+            : null
+    )
+
     renderEmptyState = () => <Alert color="warning">No Score, click on 'Score' button to update score</Alert>
 
     renderScore = (game, score) => (
         <div className="row no-gutters">
-            <div className="col-md-6 pr-md-1">
+            <div className="col-md-6 pr-md-1 mt-2">
                 {this.renderScoreCard(score.home)}
             </div>
-            <div className="col-md-6 pl-md-1">
+            <div className="col-md-6 pl-md-1 mt-2">
                 {this.renderScoreCard(score.visitor)}
             </div>
             <div className="col-12 mt-2">
@@ -75,7 +91,7 @@ export default class ScoreCard extends Component<Props, *> {
                         {title}
                     </CardHeader>
                     <CardBody>
-                        <CardTitle className="text-center">
+                        <CardTitle className="text-center py-1 mb-0">
                             {body}
                         </CardTitle>
                     </CardBody>

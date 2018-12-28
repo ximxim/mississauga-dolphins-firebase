@@ -5,26 +5,27 @@ import { ToastContainer } from 'react-toastify';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { ThemeProvider } from 'styled-components';
 import {
-  faTachometerAlt,
-  faNewspaper,
-  faHeadset,
-  faUsers,
-  faLifeRing,
-  faCogs,
-  faBell,
-  faInfo,
-  faUser,
-  faAlignJustify,
-  faWindowClose,
-  faSortAlphaDown,
-  faSortAlphaUp,
-  faAlignLeft,
-  faAlignRight,
-  faTrashAlt,
-  faPencilAlt,
-  faPlayCircle,
-  faStopCircle,
-  faUserPlus,
+    faTachometerAlt,
+    faNewspaper,
+    faHeadset,
+    faUsers,
+    faLifeRing,
+    faCogs,
+    faBell,
+    faInfo,
+    faUser,
+    faAlignJustify,
+    faWindowClose,
+    faSortAlphaDown,
+    faSortAlphaUp,
+    faAlignLeft,
+    faAlignRight,
+    faTrashAlt,
+    faPencilAlt,
+    faPlayCircle,
+    faStopCircle,
+    faUserPlus,
+    faRss,
 } from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
@@ -38,50 +39,51 @@ type Props = {
 }
 
 library.add(
-  faTachometerAlt,
-  faNewspaper,
-  faHeadset,
-  faUsers,
-  faLifeRing,
-  faCogs,
-  faBell,
-  faInfo,
-  faUser,
-  faAlignJustify,
-  faWindowClose,
-  faSortAlphaDown,
-  faSortAlphaUp,
-  faAlignLeft,
-  faAlignRight,
-  faTrashAlt,
-  faPencilAlt,
-  faPlayCircle,
-  faStopCircle,
-  faUserPlus,
+    faTachometerAlt,
+    faNewspaper,
+    faHeadset,
+    faUsers,
+    faLifeRing,
+    faCogs,
+    faBell,
+    faInfo,
+    faUser,
+    faAlignJustify,
+    faWindowClose,
+    faSortAlphaDown,
+    faSortAlphaUp,
+    faAlignLeft,
+    faAlignRight,
+    faTrashAlt,
+    faPencilAlt,
+    faPlayCircle,
+    faStopCircle,
+    faUserPlus,
+    faRss,
 );
 class App extends Component<Props, *> {
-  render() {
-	  console.log(library);
-    let component = null;
-    if (this.props.location.pathname === '/') {
-      return <Redirect to="/games" />;
-    }
-    component = (
-        <div>
-            <React.Fragment>
-                <Route path="/games" component={games} />
-            </React.Fragment>
-            <ToastContainer />
-            <GlobalStyle />
-        </div>
-    );
+    render() {
+        console.log(library);
+        let component = null;
+        if (this.props.location.pathname === '/') {
+            return <Redirect to="/games" />;
+        }
+        component = (
+            <div>
+                <React.Fragment>
+                    <Route path="/games" component={games} />
+                </React.Fragment>
+                <ToastContainer />
+                <GlobalStyle />
+            </div>
+        );
 
-    return (
-        <ThemeProvider theme={theme}>
-            {component}
-        </ThemeProvider>
-    );
-  }
+        return (
+            <ThemeProvider theme={theme}>
+                {component}
+            </ThemeProvider>
+        );
+    }
 }
 
 export default withSetup(App);
