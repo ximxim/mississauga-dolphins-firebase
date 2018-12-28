@@ -1,26 +1,87 @@
+/* @flow */
 import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { ThemeProvider } from 'styled-components';
+import {
+    faTachometerAlt,
+    faNewspaper,
+    faHeadset,
+    faUsers,
+    faLifeRing,
+    faCogs,
+    faBell,
+    faInfo,
+    faUser,
+    faAlignJustify,
+    faWindowClose,
+    faSortAlphaDown,
+    faSortAlphaUp,
+    faAlignLeft,
+    faAlignRight,
+    faTrashAlt,
+    faPencilAlt,
+    faPlayCircle,
+    faStopCircle,
+    faUserPlus,
+    faRss,
+} from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
-
 import games from './js/routes/games';
-import game from './js/routes/game';
+import theme, { GlobalStyle } from './js/utils/theme';
 
-class App extends Component {
+type Props = {
+    location: {
+        pathname: string,
+    },
+}
 
+library.add(
+    faTachometerAlt,
+    faNewspaper,
+    faHeadset,
+    faUsers,
+    faLifeRing,
+    faCogs,
+    faBell,
+    faInfo,
+    faUser,
+    faAlignJustify,
+    faWindowClose,
+    faSortAlphaDown,
+    faSortAlphaUp,
+    faAlignLeft,
+    faAlignRight,
+    faTrashAlt,
+    faPencilAlt,
+    faPlayCircle,
+    faStopCircle,
+    faUserPlus,
+    faRss,
+);
+class App extends Component<Props, *> {
     render() {
+        console.log(library);
+        let component = null;
         if (this.props.location.pathname === '/') {
-            return (<Redirect to={'/games'} />);
+            return <Redirect to="/games" />;
         }
-        return (
+        component = (
             <div>
                 <React.Fragment>
                     <Route path="/games" component={games} />
-                    <Route path="/game/:id" component={game} />
                 </React.Fragment>
                 <ToastContainer />
+                <GlobalStyle />
             </div>
+        );
+
+        return (
+            <ThemeProvider theme={theme}>
+                {component}
+            </ThemeProvider>
         );
     }
 }

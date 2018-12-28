@@ -10,21 +10,21 @@ import * as firebase from '../utils/firebase';
 let store = {};
 
 export default function configureStore() {
-    firebase.initialize();
-    const sagaMiddleware = createSagaMiddleware();
+  firebase.initialize();
+  const sagaMiddleware = createSagaMiddleware();
 
-    const composeEnhancers = composeWithDevTools({
-        name: 'mississauga-dolphins-admin',
-        hostname: 'localhost',
-        port: 5678,
-    });
-    store = createStore(reducers, composeEnhancers(applyMiddleware(sagaMiddleware, promise)));
+  const composeEnhancers = composeWithDevTools({
+    name: 'mississauga-dolphins-admin',
+    hostname: 'localhost',
+    port: 5678,
+  });
+  store = createStore(reducers, composeEnhancers(applyMiddleware(sagaMiddleware, promise)));
 
-    sagaMiddleware.run(rootSaga);
+  sagaMiddleware.run(rootSaga);
 
-    return store;
+  return store;
 }
 
 export function getStore() {
-    return store
+  return store;
 }
