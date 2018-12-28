@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { media } from '../../../utils/media';
 
 export const MainSidebarStyled = styled.nav`
+z-index: 3000;
 min-width: 200px;
 max-width: 200px;
 color: #fff;
@@ -11,7 +12,6 @@ min-height: 100vh;
 max-height: 100vh;
 overflow-y: auto;
 -webkit-overflow-scrolling: touch;
-z-index: 4;
 margin-left: ${props => (props.isOpen ? '0px' : '-200px')};
 position: absolute;
 & img {
