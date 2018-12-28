@@ -205,4 +205,19 @@ button {
 .rounded-15 {
     border-radius: 15px;
 }
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    border: ${props => `2px solid ${props.theme.brandPrimary}`}
+}
+.card-header {
+    background-color: ${props => props.theme.brandPrimary};
+    color: ${props => props.theme.white};
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-family: ${props => props.theme.headingFont};
+}
+.card-body {
+    padding: 5px;
+}
 `;

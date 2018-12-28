@@ -18,14 +18,14 @@ class SubSidebar extends React.Component<Props, State> {
     props: Props;
 
     render() {
-      return (
-          <SubSidebarStyled isOpen={this.props.isOpen} className="shadow">
-              <SubToggleButton aria-label="Toggle Sidebar" onClick={this.props.toggleSidebar}>
-                  <FontAwesomeIcon icon="window-close" />
-              </SubToggleButton>
-              {this.props.children}
-          </SubSidebarStyled>
-      );
+        return (
+            <SubSidebarStyled isOpen={this.props.isOpen} className="shadow">
+                <SubToggleButton aria-label="Toggle Sidebar" onClick={this.props.toggleSidebar}>
+                    <FontAwesomeIcon icon="window-close" />
+                </SubToggleButton>
+                {this.props.children}
+            </SubSidebarStyled>
+        );
     }
 }
 

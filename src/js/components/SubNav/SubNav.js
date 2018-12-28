@@ -15,38 +15,38 @@ type State = {
 
 const ToggleContext = React.createContext();
 export function ToggleConsumer(props: {children: Object}) {
-  return (
-      <ToggleContext.Consumer>
-          {context => props.children(context)}
-      </ToggleContext.Consumer>
-  );
+    return (
+        <ToggleContext.Consumer>
+            {context => props.children(context)}
+        </ToggleContext.Consumer>
+    );
 }
 
 class SubNav extends React.Component<Props, State> {
     state: State = {
-      isOpen: false,
+        isOpen: false,
     }
 
     props: Props;
 
     render() {
-      return (
-          <SubWrapper>
-              <SubSidebar
-                isOpen={this.state.isOpen}
-                toggleSidebar={this.toggleSidebar}
-              >
-                  {this.props.renderSidebarContent()}
-              </SubSidebar>
-              <SubSidebarContent>
-                  <ToggleContext.Provider
-                    value={{ toggleSubSidebar: this.toggleSidebar }}
-                  >
-                      {this.props.children}
-                  </ToggleContext.Provider>
-              </SubSidebarContent>
-          </SubWrapper>
-      );
+        return (
+            <SubWrapper>
+                <SubSidebar
+                    isOpen={this.state.isOpen}
+                    toggleSidebar={this.toggleSidebar}
+                >
+                    {this.props.renderSidebarContent()}
+                </SubSidebar>
+                <SubSidebarContent>
+                    <ToggleContext.Provider
+                        value={{ toggleSubSidebar: this.toggleSidebar }}
+                    >
+                        {this.props.children}
+                    </ToggleContext.Provider>
+                </SubSidebarContent>
+            </SubWrapper>
+        );
     }
 
     toggleSidebar = () => this.setState(state => ({ isOpen: !state.isOpen }));

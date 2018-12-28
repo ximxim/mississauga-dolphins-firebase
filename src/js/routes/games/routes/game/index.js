@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-    Form,
     Button,
     ListGroup,
     ListGroupItem,
@@ -26,6 +25,7 @@ import {
 
 // UI COMPONENTS
 import ScoreForm from './components/ScoreForm';
+import ScoreCard from './components/ScoreCard';
 import { PlayersSuggestInput, Modal } from '../../../../components/ui';
 import { GameDetailsCard } from '../../../../components';
 import Navbar from './components/Navbar';
@@ -66,12 +66,15 @@ class Game extends Component<Props, *> {
                         <Navbar options={this.NavbarOptions()} />
                     </div>
                 </div>
-                <div className="row no-gutters">
+                <div className="row no-gutters mt-2 mr-1">
                     <div className="col-md-4">
                         <GameDetailsCard game={event} />
                     </div>
-                    <div className="col-md-8">
-                        <h2 className="text-center">Players List</h2>
+                    <div className="col-md-8 pl-2">
+                        <ScoreCard game={event} score={this.props.getScoresByGameId(event.id)} />
+                    </div>
+                    <div className="col px-1 mt-4">
+                        <h2>Players List</h2>
                         {this.renderPlayersList()}
                     </div>
                 </div>
