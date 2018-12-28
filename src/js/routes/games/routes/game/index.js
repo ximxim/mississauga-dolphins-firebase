@@ -26,6 +26,7 @@ import {
 // UI COMPONENTS
 import ScoreForm from './components/ScoreForm';
 import ScoreCard from './components/ScoreCard';
+import PlayersList from './components/PlayersList';
 import { PlayersSuggestInput, Modal } from '../../../../components/ui';
 import { GameDetailsCard } from '../../../../components';
 import Navbar from './components/Navbar';
@@ -74,8 +75,7 @@ class Game extends Component<Props, *> {
                         <GameDetailsCard game={event} />
                     </div>
                     <div className="col px-1 mt-4">
-                        <h2>Players List</h2>
-                        {this.renderPlayersList()}
+                        <PlayersList players={this.getEventPlayers()} />
                     </div>
                 </div>
                 <Modal
@@ -173,6 +173,14 @@ class Game extends Component<Props, *> {
         const selectedGame = this.props.getScoresByGameId(eventId);
         this.props.deleteGame({ id: selectedGame.id, game: selectedGame });
     };
+
+    getEventPlayers = () => {
+        const event = this.props.getEvent;
+        const playersList = this.props.players || [];
+        return event.players
+            ? _.map(event.players, id => playersList[id])
+            : null;
+    }
 
     renderPlayersList = () => {
         const event = this.props.getEvent;

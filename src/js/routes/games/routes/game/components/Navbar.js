@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 import { SubNavbar } from '../../../../../components';
 import { NavbarButton } from '../../../../../components/ui';
