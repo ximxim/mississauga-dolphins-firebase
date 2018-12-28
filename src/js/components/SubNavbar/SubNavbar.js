@@ -2,9 +2,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  Navbar,
-  Collapse,
-  Nav,
+    Navbar,
+    Collapse,
+    Nav,
 } from 'reactstrap';
 
 import { ToggleConsumer } from '../SubNav/SubNav';
@@ -20,23 +20,28 @@ type State = {
 
 class SubNavbar extends React.Component<Props, *> {
   state: State = {
-	  isOpen: false,
+      isOpen: false,
   }
 
   props: Props;
 
   render() {
-    return (
-        <Navbar color="light" light expand="md" className="shadow bg-white">
-            {this.toggleSidebar()}
-            {this.navbarToggler()}
-            <Collapse isOpen={this.state.isOpen} navbar>
-                <Nav className="ml-auto" navbar>
-                    {this.props.children}
-                </Nav>
-            </Collapse>
-        </Navbar>
-    );
+      const { children } = this.props;
+      const hasOptions = children.length > 0;
+
+      return (
+          <Navbar color="light" light expand="md" className="shadow bg-white">
+              {this.toggleSidebar()}
+              {hasOptions ? this.navbarToggler() : null}
+              {hasOptions ? (
+                  <Collapse isOpen={this.state.isOpen} navbar>
+                      <Nav className="ml-auto" navbar>
+                          {this.props.children}
+                      </Nav>
+                  </Collapse>
+              ) : null}
+          </Navbar>
+      );
   }
 
   toggleSidebar = () => (

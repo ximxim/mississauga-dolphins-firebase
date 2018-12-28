@@ -20,7 +20,8 @@ position: absolute;
 ${media.medium`
 position: relative;
 margin-left: 0px;
-`}
+`};
+z-index: 2000;
 `;
 
 export const SubToggleButton = styled.a`
