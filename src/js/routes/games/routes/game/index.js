@@ -58,7 +58,15 @@ class Game extends Component<Props, *> {
 
     render = () => {
         const event = this.props.getEvent;
-        if (!event) return null;
+        if (!event) {
+            return (
+                <div className="row no-gutters sticky-top">
+                    <div className="col">
+                        <Navbar />
+                    </div>
+                </div>
+            );
+        }
 
         return (
             <div>

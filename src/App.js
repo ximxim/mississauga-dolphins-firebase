@@ -63,10 +63,11 @@ library.add(
 );
 class App extends Component<Props, *> {
     render() {
-        console.log(library);
         let component = null;
         if (this.props.location.pathname === '/') {
-            return <Redirect to="/games" />;
+            return <Redirect to="/games/0" />;
+        } else if (this.props.location.pathname === '/games') {
+            return <Redirect to="/games/0" />;
         }
         component = (
             <div>

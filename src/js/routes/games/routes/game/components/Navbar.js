@@ -4,10 +4,14 @@ import { SubNavbar } from '../../../../../components';
 import { NavbarButton } from '../../../../../components/ui';
 
 type Props = {
-    options: Array<Object>,
+    options?: Array<Object>,
 };
 
 export default class Navbar extends Component<Props, *> {
+    static defaultProps = {
+        options: [],
+    }
+
     render = () => (
         <SubNavbar>
             {this.props.options.map((option) => {
