@@ -27,7 +27,7 @@ export default {
         bowler: '',
     },
     login: {
-        username: '',
-        password: '',
+        username: 'azim.ahmed7@gmail.com',
+        password: '826474',
     },
 };
