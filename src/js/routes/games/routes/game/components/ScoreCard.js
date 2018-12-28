@@ -68,15 +68,19 @@ export default class ScoreCard extends Component<Props, *> {
     )
 
     rendeKeyPlayers = (title, body) => (
-        <Card>
-            <CardHeader className="text-center">
-                {title}
-            </CardHeader>
-            <CardBody>
-                <CardTitle className="text-center">
-                    {body}
-                </CardTitle>
-            </CardBody>
-        </Card>
+        body
+            ? (
+                <Card>
+                    <CardHeader className="text-center">
+                        {title}
+                    </CardHeader>
+                    <CardBody>
+                        <CardTitle className="text-center">
+                            {body}
+                        </CardTitle>
+                    </CardBody>
+                </Card>
+            )
+            : null
     )
 }
