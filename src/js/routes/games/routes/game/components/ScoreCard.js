@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import {
+    Alert,
     Card,
     CardBody,
     CardTitle,
@@ -10,7 +11,6 @@ import {
 
 import { EventsType } from '../../../../../redux/modules/Events/types';
 import { Game } from '../../../../../redux/modules/Scores/types';
-import { ScoreWrapper } from './ScoreCard.styled';
 
 type Props = {
     game: EventsType,
@@ -24,28 +24,34 @@ export default class ScoreCard extends Component<Props, *> {
             <div>
                 <h2>{game.title}</h2>
                 <p>{moment(game.start_time).format('dddd, MMMM Do, YYYY [at] hh:mm a')}</p>
-                <div className="row no-gutters">
-                    <div className="col-md-6 pr-md-1">
-                        {this.renderScore(score.home)}
-                    </div>
-                    <div className="col-md-6 pl-md-1">
-                        {this.renderScore(score.visitor)}
-                    </div>
-                    <div className="col-12 mt-2">
-                        {this.rendeKeyPlayers('Striker', score.striker)}
-                    </div>
-                    <div className="col-12 mt-2">
-                        {this.rendeKeyPlayers('Non Striker', score.nonStriker)}
-                    </div>
-                    <div className="col-12 mt-2">
-                        {this.rendeKeyPlayers('Bowler', score.bowler)}
-                    </div>
-                </div>
+                {score ? this.renderScore(game, score) : this.renderEmptyState()}
             </div>
         );
     }
 
-    renderScore = score => (
+    renderEmptyState = () => <Alert color="warning">No Score, click on 'Score' button to update score</Alert>
+
+    renderScore = (game, score) => (
+        <div className="row no-gutters">
+            <div className="col-md-6 pr-md-1">
+                {this.renderScoreCard(score.home)}
+            </div>
+            <div className="col-md-6 pl-md-1">
+                {this.renderScoreCard(score.visitor)}
+            </div>
+            <div className="col-12 mt-2">
+                {this.rendeKeyPlayers('Striker', score.striker)}
+            </div>
+            <div className="col-12 mt-2">
+                {this.rendeKeyPlayers('Non Striker', score.nonStriker)}
+            </div>
+            <div className="col-12 mt-2">
+                {this.rendeKeyPlayers('Bowler', score.bowler)}
+            </div>
+        </div>
+    )
+
+    renderScoreCard = score => (
         <Card>
             <CardHeader className="text-center">
                 {score.name}

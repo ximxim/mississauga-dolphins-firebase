@@ -220,4 +220,7 @@ button {
 .card-body {
     padding: 5px;
 }
+.alert {
+    border-radius: 10px;
+}
 `;
