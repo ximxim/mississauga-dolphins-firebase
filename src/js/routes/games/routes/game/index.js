@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-    Button,
-    ListGroup,
-    ListGroupItem,
-} from 'reactstrap';
+import { Button } from 'reactstrap';
 import _ from 'lodash';
 
 // REDUX
@@ -189,41 +185,6 @@ class Game extends Component<Props, *> {
             ? _.map(event.players, id => playersList[id])
             : null;
     }
-
-    renderPlayersList = () => {
-        const event = this.props.getEvent;
-        const playersList = this.props.players || [];
-        if (!event.players) {
-            return (
-                <p className="text-center">No players added to this event</p>
-            );
-        }
-
-        return (
-            <ListGroup>
-                {_.map(event.players, (id) => {
-                    const player = playersList[id];
-                    if (!player) return null;
-
-                    return (
-                        <ListGroupItem key={player.id}>
-                            {player.FIRST_NAME}
-                            {' '}
-                            {player.LAST_NAME}
-                            <Button
-                                className="close"
-                                onClick={() => this.handleDeletePlayer(player.id)
-                                }
-                                disabled={this.props.loadingEvents}
-                            >
-                                <span aria-hidden="true">&times;</span>
-                            </Button>
-                        </ListGroupItem>
-                    );
-                })}
-            </ListGroup>
-        );
-    };
 
     renderScoreModalHeader = () => <h4>Score Card</h4>
 
