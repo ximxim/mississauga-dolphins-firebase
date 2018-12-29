@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { media } from '../../../utils/media';
 
 export const MainSidebarStyled = styled.nav`
-z-index: 3000;
+z-index: 1040;
 min-width: 200px;
 max-width: 200px;
 color: #fff;

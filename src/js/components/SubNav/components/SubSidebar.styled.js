@@ -11,7 +11,6 @@ max-height: 92.5vh;
 overflow-y: auto;
 -webkit-overflow-scrolling: touch;
 border-right: ${props => `2px solid ${props.theme.brandDark}`} 
-z-index: 2;
 margin-left: ${props => (props.isOpen ? '0px' : '-250px')};
 position: absolute;
 & img {
@@ -21,7 +20,7 @@ ${media.medium`
 position: relative;
 margin-left: 0px;
 `};
-z-index: 2000;
+z-index: 1039;
 `;
 
 export const SubToggleButton = styled.a`
