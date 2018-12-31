@@ -5,6 +5,7 @@ import FileUploader from 'react-firebase-file-uploader';
 
 import { getClient } from '../../../utils/firebase';
 import { imageAspects } from '../../../utils/imageAspects';
+import { resize } from '../../../utils/resizeImage';
 
 type Props = {
     reference?: string,
@@ -48,14 +49,25 @@ class FirebaseFileUploader extends Component<Props, State> {
     handleChange = (event) => {
         const { target: { files } } = event;
         const { aspect } = this.props;
+
         _.map(files, ((file) => {
             const URL = window.URL || window.webkitURL;
             const img = new Image();
 
-            img.onload = () => {
+            img.onload = async () => {
                 const { width, height } = img;
-                if (aspect.formula({ height, width })) this.fileUploader.startUpload(file);
-                else alert(aspect.error);
+
+                if (aspect.formula({ height, width })) {
+                    const thumbnail = await resize({
+                        file,
+                        height: 100,
+                        width: 100,
+                        filename: `${file.name}_thumbnail`,
+                    });
+
+                    this.fileUploader.startUpload(file);
+                    this.fileUploader.startUpload(thumbnail);
+                } else alert(aspect.error);
             };
             img.src = URL.createObjectURL(file);
         }));
