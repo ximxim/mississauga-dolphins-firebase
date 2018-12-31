@@ -6,4 +6,4 @@ export { default as GameCard } from './GameCard';
 export { default as PlayersSuggestInput } from './PlayersSuggestInput';
 export { default as NavbarButton } from './NavbarButton';
 export { default as Modal } from './Modal';
-export { default as FirebaseFileUploader } from './FirebaseFileUploader';
+export { default as FirebaseImageUploader } from './FirebaseImageUploader';

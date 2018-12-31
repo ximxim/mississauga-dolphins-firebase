@@ -162,7 +162,7 @@ input {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-button {
+button, .btn {
     border-width: 2px !important;
     border-radius: 10px !important;
 }

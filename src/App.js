@@ -26,6 +26,7 @@ import {
     faStopCircle,
     faUserPlus,
     faRss,
+    faFileUpload,
 } from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
@@ -60,9 +61,11 @@ library.add(
     faStopCircle,
     faUserPlus,
     faRss,
+    faFileUpload,
 );
 class App extends Component<Props, *> {
     render() {
+        console.log(library);
         let component = null;
         if (this.props.location.pathname === '/') {
             return <Redirect to="/games/menu" />;
