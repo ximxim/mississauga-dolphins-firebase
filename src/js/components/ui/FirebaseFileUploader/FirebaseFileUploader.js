@@ -1,36 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadButton';
+import _ from 'lodash';
+import FileUploader from 'react-firebase-file-uploader';
 
 import { getClient } from '../../../utils/firebase';
+import { imageAspects } from '../../../utils/imageAspects';
 
 type Props = {
-    accept?: string,
     reference?: string,
     filename: string,
-    children: Object,
+    aspect?: Object,
 };
 
-type State = {};
+type State = {
+    files: Array<Object>,
+};
 
 class FirebaseFileUploader extends Component<Props, State> {
     static defaultProps = {
-        accept: 'image/*',
         reference: 'images',
+        aspect: imageAspects.small,
     };
 
     render() {
         const firebase = getClient();
         const {
-            accept,
             reference,
-            children,
             filename,
         } = this.props;
 
         return (
-            <CustomUploadButton
-                accept={accept}
+            <FileUploader
+                accept="image/*"
                 name="events"
                 filename={filename}
                 storageRef={firebase.storage().ref(reference)}
@@ -38,15 +39,26 @@ class FirebaseFileUploader extends Component<Props, State> {
                 onUploadError={console.log}
                 onUploadSuccess={this.handleSuccess}
                 onProgress={console.log}
-            >
-                {children}
-            </CustomUploadButton>
+                onChange={this.handleChange}
+                ref={(o) => { this.fileUploader = o; }}
+            />
         );
     }
 
-    handleSuccess = async (filename, task) => {
-        const downloadLink = await task.snapshot.ref.getDownloadURL();
-        console.log(downloadLink);
+    handleChange = (event) => {
+        const { target: { files } } = event;
+        const { aspect } = this.props;
+        _.map(files, ((file) => {
+            const URL = window.URL || window.webkitURL;
+            const img = new Image();
+
+            img.onload = () => {
+                const { width, height } = img;
+                if (aspect.formula(height, width)) this.fileUploader.startUpload(file);
+                else alert(aspect.error);
+            };
+            img.src = URL.createObjectURL(file);
+        }));
     }
 }
 
