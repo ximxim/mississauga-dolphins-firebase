@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import { Game } from '../../redux/modules/Scores/types';
 import { GameCover, InfoCard } from './GameDetailsCard.styled';
+import { FirebaseFileUploader } from '../ui';
 
 type Props = {
 	game: Game,
@@ -13,7 +14,9 @@ export default class GameDetailsCard extends React.Component<Props, *> {
         const { game } = this.props;
         return (
             <div className="m-1">
-                <GameCover src={game.cover.source} alt="game cover" />
+                <FirebaseFileUploader filename={game.id} reference="events">
+                    <GameCover src={game.cover.source} alt="game cover" />
+                </FirebaseFileUploader>
                 <div className="row no-gutters mt-2">
                     <div className="col-6 pr-1">
                         <InfoCard>
