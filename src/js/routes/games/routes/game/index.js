@@ -25,7 +25,7 @@ import ScoreCard from './components/ScoreCard';
 import PlayersList from './components/PlayersList';
 import { PlayersSuggestInput, Modal } from '../../../../components/ui';
 import { GameDetailsCard } from '../../../../components';
-import Navbar from './components/Navbar';
+import Navbar from '../../components/Navbar';
 
 type Props = {
   players: Object,
@@ -54,15 +54,7 @@ class Game extends Component<Props, *> {
 
     render = () => {
         const event = this.props.getEvent;
-        if (!event) {
-            return (
-                <div className="row no-gutters sticky-top">
-                    <div className="col">
-                        <Navbar />
-                    </div>
-                </div>
-            );
-        }
+        if (!event) return null;
 
         return (
             <div>
