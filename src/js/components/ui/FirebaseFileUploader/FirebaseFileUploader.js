@@ -54,11 +54,16 @@ class FirebaseFileUploader extends Component<Props, State> {
 
             img.onload = () => {
                 const { width, height } = img;
-                if (aspect.formula(height, width)) this.fileUploader.startUpload(file);
+                if (aspect.formula({ height, width })) this.fileUploader.startUpload(file);
                 else alert(aspect.error);
             };
             img.src = URL.createObjectURL(file);
         }));
+    }
+
+    handleSuccess = async (filename, task) => {
+        const downloadURL = await task.snapshot.ref.getDownloadURL();
+        console.log(downloadURL);
     }
 }
 
