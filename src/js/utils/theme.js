@@ -256,8 +256,9 @@ label {
   margin-top: 1px;
   z-index: 99999 !important;
   background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,.1);
-  border: 1px solid #f9f9f9;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+  border: ${props => `2px solid ${props.theme.brandPrimary}`};
+  border-radius: 10px;
 }
 .rdtOpen .rdtPicker {
   display: block;
