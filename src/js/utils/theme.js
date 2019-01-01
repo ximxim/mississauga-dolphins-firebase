@@ -176,6 +176,10 @@ button, .btn {
     padding-top: 10px;
     padding-bottom: 10px;
     border-top: ${props => `1px solid ${props.theme.brandPrimary} !important`};
+    -webkit-box-shadow: 0px -2px 5px 0px rgba(175, 174, 174, 0.75);
+    -moz-box-shadow: 0px -2px 5px 0px rgba(175, 174, 174, 0.75);
+    box-shadow: 0px -2px 5px 0px rgba(175, 174, 174, 0.75);
+    z-index: 2000;
 }
 .modal-content {
     border-radius: 10px !important;
@@ -454,5 +458,9 @@ td.rdtYear:hover {
 
 .rdtTime td {
   cursor: default;
+}
+.modal-body {
+  max-height: 75vh;
+  overflow: auto;
 }
 `;

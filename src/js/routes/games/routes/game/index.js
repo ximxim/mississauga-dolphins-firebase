@@ -153,19 +153,19 @@ class Game extends Component<Props, *> {
             icon: 'list-ol',
             label: 'Score',
             key: 'score',
-            onClick: this.ScoreModal ? this.ScoreModal.toggle : null,
+            onClick: () => (this.ScoreModal ? this.ScoreModal.toggle() : null),
         },
         {
             icon: 'user-plus',
             label: 'Add Player',
             key: 'addPlayer',
-            onClick: this.AddPlayersModal ? this.AddPlayersModal.toggle : null,
+            onClick: () => (this.AddPlayersModal ? this.AddPlayersModal.toggle() : null),
         },
         {
             icon: 'pencil-alt',
             label: 'Edit Game',
             key: 'editGame',
-            onClick: this.gameEditModal ? this.gameEditModal.toggle : null,
+            onClick: () => (this.gameEditModal ? this.gameEditModal.toggle() : null),
         },
     ]);
 
