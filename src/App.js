@@ -27,6 +27,7 @@ import {
     faUserPlus,
     faRss,
     faFileUpload,
+    faListOl,
 } from '@fortawesome/free-solid-svg-icons';
 
 import withSetup from './js/redux/setup';
@@ -62,6 +63,7 @@ library.add(
     faUserPlus,
     faRss,
     faFileUpload,
+    faListOl,
 );
 class App extends Component<Props, *> {
     render() {

@@ -22,10 +22,12 @@ import {
 // UI COMPONENTS
 import ScoreForm from './components/ScoreForm';
 import ScoreCard from './components/ScoreCard';
+import GameForm from './components/GameForm';
 import PlayersList from './components/PlayersList';
 import { PlayersSuggestInput, Modal } from '../../../../components/ui';
 import { GameDetailsCard } from '../../../../components';
 import Navbar from '../../components/Navbar';
+
 
 type Props = {
   players: Object,
@@ -86,6 +88,12 @@ class Game extends Component<Props, *> {
                     footer={this.renderAddPlayersModalFooter}
                     ref={(o) => { this.AddPlayersModal = o; }}
                 />
+                <Modal
+                    header={this.renderEditGameModalHeader}
+                    body={() => this.renderEditGameModalBody(event)}
+                    footer={this.renderEditGameModalFooter}
+                    ref={(o) => { this.gameEditModal = o; }}
+                />
             </div>
         );
     }
@@ -142,7 +150,7 @@ class Game extends Component<Props, *> {
 
     NavbarOptions = () => ([
         {
-            icon: 'pencil-alt',
+            icon: 'list-ol',
             label: 'Score',
             key: 'score',
             onClick: this.ScoreModal ? this.ScoreModal.toggle : null,
@@ -151,7 +159,13 @@ class Game extends Component<Props, *> {
             icon: 'user-plus',
             label: 'Add Player',
             key: 'addPlayer',
-            onClick: this.ScoreModal ? this.AddPlayersModal.toggle : null,
+            onClick: this.AddPlayersModal ? this.AddPlayersModal.toggle : null,
+        },
+        {
+            icon: 'pencil-alt',
+            label: 'Edit Game',
+            key: 'editGame',
+            onClick: this.gameEditModal ? this.gameEditModal.toggle : null,
         },
     ]);
 
@@ -181,6 +195,8 @@ class Game extends Component<Props, *> {
     renderScoreModalHeader = () => <h4>Score Card</h4>
 
     renderAddPlayersModalHeader = () => <h4>Add Players</h4>
+
+    renderEditGameModalHeader = () => <h4>Edit Game</h4>
 
     renderScoreModalBody = event => (
         <ScoreForm
@@ -212,6 +228,10 @@ class Game extends Component<Props, *> {
         );
     }
 
+    renderEditGameModalBody = event => (
+        <GameForm game={event} ref={(o) => { this.gameForm = o; }} />
+    )
+
     addPlayer = selectedPlayer => this.setState(
         { selectedPlayer },
         this.handleAddPlayer,
@@ -227,7 +247,7 @@ class Game extends Component<Props, *> {
                         color={action.color}
                         key={action.key}
                         onClick={action.onClick}
-                        className="mx-1"
+                        className="mr-1"
                     >
                         {action.label}
                     </Button>
@@ -263,6 +283,26 @@ class Game extends Component<Props, *> {
             </div>
         );
     }
+
+    renderEditGameModalFooter = () => (
+        <div>
+            <Button
+                color="secondary"
+                className="mr-1"
+                outline
+                onClick={this.gameEditModal ? this.gameEditModal.toggle : null}
+            >
+                Cancel
+            </Button>
+            <Button
+                color="primary"
+                outline
+                onClick={() => console.log(this.gameForm.getUpdatedGame())}
+            >
+                Save
+            </Button>
+        </div>
+    )
 
     handleAddPlayer = () => {
         const eventId = this.props.match.params.id;

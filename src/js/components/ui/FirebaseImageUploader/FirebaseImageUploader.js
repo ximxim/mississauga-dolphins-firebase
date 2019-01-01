@@ -13,6 +13,7 @@ type Props = {
     filename: string,
     aspect?: Object,
     onChange?: () => void,
+    cta?: string,
 };
 
 type State = {
@@ -28,6 +29,7 @@ class FirebaseFileUploader extends Component<Props, State> {
         reference: 'images',
         aspect: imageAspects.small,
         onChange: () => {},
+        cta: 'Upload an image',
     };
 
     state = {
@@ -43,13 +45,14 @@ class FirebaseFileUploader extends Component<Props, State> {
         const {
             reference,
             filename,
+            cta,
         } = this.props;
 
         return (
             <div>
                 {this.renderThumbnail()}
                 <label className="btn btn-outline-primary d-block mt-2">
-                    Upload a file
+                    {cta}
                     <FileUploader
                         hidden
                         accept="image/*"

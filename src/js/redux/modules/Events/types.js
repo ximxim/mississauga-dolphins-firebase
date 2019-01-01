@@ -1,6 +1,7 @@
 export type EventsType = {
     cover : {
         source : string,
+        thumbnail: string,
       },
       description : string,
       division : string,

@@ -3,8 +3,6 @@ import moment from 'moment';
 
 import { Game } from '../../redux/modules/Scores/types';
 import { GameCover, InfoCard } from './GameDetailsCard.styled';
-import { FirebaseImageUploader } from '../ui';
-import { imageAspects } from '../../utils/imageAspects';
 
 type Props = {
 	game: Game,
@@ -15,12 +13,6 @@ export default class GameDetailsCard extends React.Component<Props, *> {
         const { game } = this.props;
         return (
             <div className="m-1">
-                <FirebaseImageUploader
-                    filename={game.id}
-                    reference="events"
-                    aspect={imageAspects.small}
-                    onChange={console.log}
-                />
                 <GameCover src={game.cover.source} alt="game cover" />
                 <div className="row no-gutters mt-2">
                     <div className="col-6 pr-1">
