@@ -4,6 +4,7 @@ import {
     ModalBody,
     ModalFooter,
     ModalHeader,
+    Button,
 } from 'reactstrap';
 
 type Props = {
@@ -40,7 +41,11 @@ export default class CustomModal extends Component<Props, State> {
 
     renderHeader = () => {
         const { header } = this.props;
-        return <ModalHeader toggle={this.toggle}>{header()}</ModalHeader>;
+        return (
+            <ModalHeader toggle={this.toggle}>
+                {typeof header === 'string' ? header : header()}
+            </ModalHeader>
+        );
     }
 
     renderBody = () => {
@@ -50,7 +55,31 @@ export default class CustomModal extends Component<Props, State> {
 
     renderFooter = () => {
         const { footer } = this.props;
-        return <ModalFooter>{footer()}</ModalFooter>;
+        if (typeof footer === 'function') {
+            return <ModalFooter>{footer()}</ModalFooter>;
+        } else if (Array.isArray(footer)) {
+            return (
+                <ModalFooter>
+                    {footer.map((action) => {
+                        if (action.hidden) return null;
+                        return (
+                            <Button
+                                outline
+                                color={action.color}
+                                key={action.key}
+                                onClick={action.onClick}
+                                disabled={action.disabled}
+                                className="mr-1"
+                            >
+                                {action.label}
+                            </Button>
+                        );
+                    })}
+                </ModalFooter>
+            );
+        } else {
+            return null;
+        }
     }
 
     toggle = () => this.setState(state => ({ isOpen: !state.isOpen }));

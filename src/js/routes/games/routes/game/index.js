@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'reactstrap';
 import _ from 'lodash';
 
 // REDUX
@@ -77,76 +76,26 @@ class Game extends Component<Props, *> {
                     </div>
                 </div>
                 <Modal
-                    header={this.renderScoreModalHeader}
+                    header="Score Card"
                     body={() => this.renderScoreModalBody(event)}
-                    footer={() => this.renderScoreModalFooter(event)}
+                    footer={this.scoreModalOptions()}
                     ref={(o) => { this.ScoreModal = o; }}
                 />
                 <Modal
-                    header={this.renderAddPlayersModalHeader}
+                    header="Add Players"
                     body={this.renderAddPlayersModalBody}
-                    footer={this.renderAddPlayersModalFooter}
+                    footer={this.addPlayersModalOptions()}
                     ref={(o) => { this.AddPlayersModal = o; }}
                 />
                 <Modal
-                    header={this.renderEditGameModalHeader}
+                    header="Edit Game"
                     body={() => this.renderEditGameModalBody(event)}
-                    footer={this.renderEditGameModalFooter}
+                    footer={this.gameModalOptions()}
                     ref={(o) => { this.gameEditModal = o; }}
                 />
             </div>
         );
     }
-
-    ScoreActions = () => ([
-        {
-            icon: 'play-circle',
-            label: 'Start',
-            key: 'start',
-            color: 'primary',
-            hidden: !this.gameHasNoScore(),
-            onClick: () => {
-                const score = this.ScoreForm.getScore({ active: true });
-                this.props.createGame(score);
-            },
-        },
-        {
-            icon: 'trash-alt',
-            label: 'Remove',
-            key: 'remove',
-            color: 'danger',
-            hidden: !this.gameHasScoreAndIsInactive(),
-            onClick: () => {
-                const score = this.ScoreForm.getScore();
-                this.handleDelete(score.event_id);
-                this.ScoreModal.toggle();
-            },
-        },
-        {
-            icon: 'pencil-alt',
-            label: 'Update',
-            key: 'update',
-            color: 'primary',
-            hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
-            onClick: () => {
-                const score = this.ScoreForm.getScore({ active: true });
-                this.handleUpdate(score);
-                this.ScoreModal.toggle();
-            },
-        },
-        {
-            icon: 'stop-circle',
-            label: 'Finish',
-            key: 'finish',
-            color: 'danger',
-            hidden: !this.gameIsActive(),
-            onClick: () => {
-                const score = this.ScoreForm.getScore({ active: false });
-                this.handleFinish(score.event_id);
-                this.ScoreModal.toggle();
-            },
-        },
-    ]);
 
     NavbarOptions = () => ([
         {
@@ -192,12 +141,6 @@ class Game extends Component<Props, *> {
             : null;
     }
 
-    renderScoreModalHeader = () => <h4>Score Card</h4>
-
-    renderAddPlayersModalHeader = () => <h4>Add Players</h4>
-
-    renderEditGameModalHeader = () => <h4>Edit Game</h4>
-
     renderScoreModalBody = event => (
         <ScoreForm
             players={this.props.players}
@@ -232,76 +175,95 @@ class Game extends Component<Props, *> {
         <GameForm game={event} ref={(o) => { this.gameForm = o; }} />
     )
 
+    scoreModalOptions = () => ([
+        {
+            label: 'Start',
+            key: 'start',
+            color: 'primary',
+            hidden: !this.gameHasNoScore(),
+            onClick: () => {
+                const score = this.ScoreForm.getScore({ active: true });
+                this.props.createGame(score);
+            },
+        },
+        {
+            label: 'Remove',
+            key: 'remove',
+            color: 'danger',
+            hidden: !this.gameHasScoreAndIsInactive(),
+            onClick: () => {
+                const score = this.ScoreForm.getScore();
+                this.handleDelete(score.event_id);
+                this.ScoreModal.toggle();
+            },
+        },
+        {
+            label: 'Update',
+            key: 'update',
+            color: 'primary',
+            hidden: !(this.gameHasScoreAndIsInactive() || this.gameIsActive()),
+            onClick: () => {
+                const score = this.ScoreForm.getScore({ active: true });
+                this.handleUpdate(score);
+                this.ScoreModal.toggle();
+            },
+        },
+        {
+            label: 'Finish',
+            key: 'finish',
+            color: 'danger',
+            hidden: !this.gameIsActive(),
+            onClick: () => {
+                const score = this.ScoreForm.getScore({ active: false });
+                this.handleFinish(score.event_id);
+                this.ScoreModal.toggle();
+            },
+        },
+    ]);
+
+    addPlayersModalOptions = () => {
+        const { loadingEvents } = this.props;
+        const { playerName } = this.state;
+        const disabled = !playerName || loadingEvents;
+        return [
+            {
+                label: 'Cancel',
+                key: 'cancel',
+                color: 'secondary',
+                onClick: () => {
+                    if (this.AddPlayersModal) this.AddPlayersModal.toggle();
+                },
+            },
+            {
+                label: 'Add Player',
+                key: 'addPlayer',
+                color: 'primary',
+                onClick: this.handleAddPlayer,
+                disabled,
+            },
+        ];
+    };
+
+    gameModalOptions = () => [
+        {
+            label: 'Cancel',
+            key: 'cancel',
+            color: 'secondary',
+            onClick: () => {
+                if (this.gameEditModal) this.gameEditModal.toggle();
+            },
+        },
+        {
+            label: 'Save',
+            key: 'save',
+            color: 'primary',
+            onClick: () => console.log(this.gameForm.getUpdatedGame()),
+        },
+    ];
+
     addPlayer = selectedPlayer => this.setState(
         { selectedPlayer },
         this.handleAddPlayer,
-    )
-
-    renderScoreModalFooter = () => (
-        <div>
-            {this.ScoreActions().map((action) => {
-                if (action.hidden) return null;
-                return (
-                    <Button
-                        outline
-                        color={action.color}
-                        key={action.key}
-                        onClick={action.onClick}
-                        className="mr-1"
-                    >
-                        {action.label}
-                    </Button>
-                );
-            })}
-        </div>
-    )
-
-    renderAddPlayersModalFooter = () => {
-        const { loadingEvents } = this.props;
-        const { playerName } = this.state;
-
-        return (
-            <div>
-                <Button
-                    color="secondary"
-                    outline
-                    onClick={this.AddPlayersModal ? this.AddPlayersModal.toggle : null}
-                    key="cancelAddPlayer"
-                    className="mr-1"
-                >
-                    Cancel
-                </Button>
-                <Button
-                    color="primary"
-                    outline
-                    onClick={this.handleAddPlayer}
-                    disabled={!playerName || loadingEvents}
-                    key="addPlayer"
-                >
-                    Add Player
-                </Button>
-            </div>
-        );
-    }
-
-    renderEditGameModalFooter = () => (
-        <div>
-            <Button
-                color="secondary"
-                className="mr-1"
-                outline
-                onClick={this.gameEditModal ? this.gameEditModal.toggle : null}
-            >
-                Cancel
-            </Button>
-            <Button
-                color="primary"
-                outline
-                onClick={() => console.log(this.gameForm.getUpdatedGame())}
-            >
-                Save
-            </Button>
-        </div>
     )
 
     handleAddPlayer = () => {
