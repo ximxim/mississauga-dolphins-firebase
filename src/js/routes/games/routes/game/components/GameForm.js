@@ -4,6 +4,7 @@ import {
     FormGroup,
     Input,
     Label,
+    FormText,
 } from 'reactstrap';
 
 import { FirebaseImageUploader, DateTimePicker } from '../../../../../components/ui';
@@ -13,6 +14,7 @@ import { EventsType } from '../../../../../redux/modules/Events/types';
 
 type Props = {
     game: EventsType,
+    onChange: () => void,
 };
 
 type State = {
@@ -36,9 +38,9 @@ export default class GameForm extends Component<Props, State> {
                 {this.renderImageUpload()}
                 {this.renderTitleField()}
                 {this.renderStartTime()}
+                {this.renderPlaceField()}
                 {this.renderDivisionField()}
                 {this.renderDescriptionField()}
-                {this.renderPlaceField()}
                 {this.renderMatchNoField()}
                 {this.renderRoundTypeField()}
             </Form>
@@ -62,20 +64,24 @@ export default class GameForm extends Component<Props, State> {
                             ...state.value,
                             title,
                         },
-                    }));
+                    }), this.handleChange);
                 }}
             />
+            <FormText>Example: Mississauga Dolphins vs. Ghaznavi</FormText>
         </FormGroup>
     );
 
     renderImageUpload = () => {
         const { game } = this.props;
+        const cover = this.state.value.cover.source;
+        const cta = cover ? 'Change Cover Photo' : 'Upload a Cover Photo';
         return (
             <FirebaseImageUploader
                 filename={game.id}
-                cta="Upload a Cover Photo"
+                cta={cta}
                 reference="events"
                 aspect={imageAspects.small}
+                preview={cover}
                 onChange={val => this.setState(state => (
                     {
                         value: {
@@ -83,7 +89,7 @@ export default class GameForm extends Component<Props, State> {
                             cover: val,
                         },
                     }
-                ))}
+                ), this.handleChange)}
             />
         );
     }
@@ -98,7 +104,7 @@ export default class GameForm extends Component<Props, State> {
                         start_time: val,
                     },
                 }
-            ))}
+            ), this.handleChange)}
         />
     );
 
@@ -122,9 +128,10 @@ export default class GameForm extends Component<Props, State> {
                                 name,
                             },
                         },
-                    }));
+                    }), this.handleChange);
                 }}
             />
+            <FormText>Enter name of the place where this game will be played</FormText>
         </FormGroup>
     );
 
@@ -145,9 +152,10 @@ export default class GameForm extends Component<Props, State> {
                             ...state.value,
                             division,
                         },
-                    }));
+                    }), this.handleChange);
                 }}
             />
+            <FormText>Example: 1st Division - CN Pro</FormText>
         </FormGroup>
     );
 
@@ -169,9 +177,10 @@ export default class GameForm extends Component<Props, State> {
                             ...state.value,
                             description,
                         },
-                    }));
+                    }), this.handleChange);
                 }}
             />
+            <FormText>Example: additional information that users will see</FormText>
         </FormGroup>
     );
 
@@ -186,15 +195,16 @@ export default class GameForm extends Component<Props, State> {
                 className="has-input input-sm"
                 placeholder="Enter Match Number"
                 onChange={(event) => {
-                    const match_no = event.target.value;
+                    const { value } = event.target;
                     this.setState(state => ({
                         value: {
                             ...state.value,
-                            match_no,
+                            match_no: value,
                         },
-                    }));
+                    }), this.handleChange);
                 }}
             />
+            <FormText>Example: 452</FormText>
         </FormGroup>
     );
 
@@ -209,17 +219,33 @@ export default class GameForm extends Component<Props, State> {
                 className="has-input input-sm"
                 placeholder="Enter Round Type"
                 onChange={(event) => {
-                    const round_type = event.target.value;
+                    const { value } = event.target;
                     this.setState(state => ({
                         value: {
                             ...state.value,
-                            round_type,
+                            round_type: value,
                         },
-                    }));
+                    }), this.handleChange);
                 }}
             />
+            <FormText>Example: Preliminary</FormText>
         </FormGroup>
     );
 
     getUpdatedGame = () => this.state.value;
+
+    handleChange = () => {
+        const { value } = this.state;
+        const valid = this.checkFormValidation();
+        this.props.onChange({ valid, value });
+    }
+
+    checkFormValidation = () => {
+        const { value } = this.state;
+
+        return ((value.cover.source !== '' && value.cover.source !== undefined)
+        && (value.title !== '' && value.title !== undefined)
+        && (value.place.name !== '' && value.place.name !== undefined)
+        && (value.start_time !== '' && value.start_time !== undefined));
+    }
 }

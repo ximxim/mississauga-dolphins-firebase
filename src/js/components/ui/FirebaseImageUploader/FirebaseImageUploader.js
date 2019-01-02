@@ -14,6 +14,7 @@ type Props = {
     aspect?: Object,
     onChange?: () => void,
     cta?: string,
+    preview? : string,
 };
 
 type State = {
@@ -30,6 +31,7 @@ class FirebaseFileUploader extends Component<Props, State> {
         aspect: imageAspects.small,
         onChange: () => {},
         cta: 'Upload an image',
+        preview: null,
     };
 
     state = {
@@ -72,10 +74,14 @@ class FirebaseFileUploader extends Component<Props, State> {
 
     renderThumbnail = () => {
         const { value: { thumbnail }, uploading } = this.state;
+        const { preview } = this.props;
         let source = '/img/upload-image.jpg';
         let alt = 'Select an image';
 
-        if (uploading) {
+        if (preview && !uploading) {
+            source = preview;
+            alt = 'thumbnail';
+        } else if (uploading) {
             source = '/img/loading.gif';
             alt = 'loading';
         } else if (thumbnail) {

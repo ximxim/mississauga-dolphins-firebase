@@ -47,7 +47,7 @@ export default class DateTimePicker extends Component<Props, State> {
     }
 
     onChange = (val) => {
-        const value = val.format('YYYY-MM-DD[T]HH:mm:ss.SSSZZ');
+        const value = val.format('LLL');
         this.setState({ value: val });
         this.props.onChange(value);
     }

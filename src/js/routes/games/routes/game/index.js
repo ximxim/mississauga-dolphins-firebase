@@ -16,6 +16,7 @@ import {
 import {
     addPlayer,
     deletePlayer,
+    editEvent,
 } from '../../../../redux/modules/Events';
 
 // UI COMPONENTS
@@ -27,10 +28,15 @@ import { PlayersSuggestInput, Modal } from '../../../../components/ui';
 import { GameDetailsCard } from '../../../../components';
 import Navbar from '../../components/Navbar';
 
+// TYPES
+import { EventsType } from '../../../../redux/modules/Events/types';
+import { Player } from '../../../../redux/modules/Players/types';
+import GameTypes from '../../../../redux/modules/Scores/types';
+
 
 type Props = {
-  players: Object,
-  getEvent: Object,
+  players: Array<Player>,
+  getEvent: () => EventsType,
   loadingEvents: Boolean,
   loadingScores: Boolean,
   match: {
@@ -38,19 +44,33 @@ type Props = {
       id: string,
     },
   },
-  getScoresByGameId: (string) => void,
+  getScoresByGameId: (string) => GameTypes.Game,
   createGame: () => void,
   updateGame: () => void,
   finishGame: () => void,
   deleteGame: () => void,
   addPlayer: () => void,
+  editEvent: () => void,
   deletePlayer: () => void,
 };
 
-class Game extends Component<Props, *> {
+type State = {
+    playerName: string,
+    selectedPlayer: number,
+    gameEditForm: {
+        valid: Boolean,
+        value: EventsType,
+    }
+}
+
+class Game extends Component<Props, State> {
     state = {
         playerName: '',
         selectedPlayer: -1,
+        gameEditForm: {
+            valid: false,
+            value: null,
+        },
     };
 
     render = () => {
@@ -172,7 +192,11 @@ class Game extends Component<Props, *> {
     }
 
     renderEditGameModalBody = event => (
-        <GameForm game={event} ref={(o) => { this.gameForm = o; }} />
+        <GameForm
+            game={event}
+            ref={(o) => { this.gameForm = o; }}
+            onChange={state => this.setState({ gameEditForm: state })}
+        />
     )
 
     scoreModalOptions = () => ([
@@ -244,22 +268,30 @@ class Game extends Component<Props, *> {
         ];
     };
 
-    gameModalOptions = () => [
-        {
-            label: 'Cancel',
-            key: 'cancel',
-            color: 'secondary',
-            onClick: () => {
-                if (this.gameEditModal) this.gameEditModal.toggle();
+    gameModalOptions = () => {
+        const { gameEditForm: { valid } } = this.state;
+        const disabled = !valid;
+        return [
+            {
+                label: 'Cancel',
+                key: 'cancel',
+                color: 'secondary',
+                onClick: () => {
+                    if (this.gameEditModal) this.gameEditModal.toggle();
+                },
             },
-        },
-        {
-            label: 'Save',
-            key: 'save',
-            color: 'primary',
-            onClick: () => console.log(this.gameForm.getUpdatedGame()),
-        },
-    ];
+            {
+                label: 'Save',
+                key: 'save',
+                color: 'primary',
+                disabled,
+                onClick: () => {
+                    this.props.editEvent(this.gameForm.getUpdatedGame());
+                    if (this.gameEditModal) this.gameEditModal.toggle();
+                },
+            },
+        ];
+    };
 
     addPlayer = selectedPlayer => this.setState(
         { selectedPlayer },
@@ -306,6 +338,7 @@ const mapDispatchToProps = {
     deleteGame,
     addPlayer,
     deletePlayer,
+    editEvent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
