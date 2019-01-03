@@ -115,6 +115,7 @@ class SidebarContent extends React.Component<Props, State> {
           return (
               <ul className="list-unstyled pt-2">
                   {_.map(gameEvents, (event) => {
+                      if (!event) return null;
                       const { pathname } = this.props.location;
                       const split = pathname.split('/');
                       const selected = split.length > 0

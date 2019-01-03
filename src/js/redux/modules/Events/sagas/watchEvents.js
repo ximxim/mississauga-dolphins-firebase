@@ -4,6 +4,7 @@ import watchEventsRequest from './watchEventsRequest';
 import watchAddPlayer from './watchAddPlayer';
 import watchDeletePlayer from './watchDeletePlayer';
 import watchEditEvent from './watchEditEvent';
+import watchDeleteEvent from './watchDeleteEvent';
 
 function* rootSaga() {
     yield all([
@@ -11,6 +12,7 @@ function* rootSaga() {
         fork(watchAddPlayer),
         fork(watchDeletePlayer),
         fork(watchEditEvent),
+        fork(watchDeleteEvent),
     ]);
 }
 

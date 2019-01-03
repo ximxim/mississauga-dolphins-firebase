@@ -1,4 +1,9 @@
-import { call, takeEvery, put, select } from 'redux-saga/effects';
+import {
+    call,
+    takeEvery,
+    put,
+    select,
+} from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import { getClient } from '../../../../utils/firebase';
@@ -8,7 +13,7 @@ import { getEventPlayers } from '../../../selectors';
 function addPlayer({ players, id }) {
     const fClient = getClient();
     const ref = fClient.database().ref(`/Events/${id}`);
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         ref.update({ players }, res => resolve(res));
     });
 }

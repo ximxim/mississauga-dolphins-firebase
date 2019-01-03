@@ -29,7 +29,6 @@ class Games extends Component<Props, State> {
             <div className="row no-gutters">
                 <div className="col">
                     <SubNav renderSidebarContent={this.renderSidebarContent}>
-                        <Route path={`${this.props.match.path}/menu`} component={GamesMenu} />
                         <Route path={`${this.props.match.path}/:id`} component={Game} />
                     </SubNav>
                 </div>

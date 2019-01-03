@@ -13,6 +13,9 @@ export const DELETE_PLAYER_FAILURE = 'DELETE_PLAYER_FAILURE';
 export const EDIT_EVENT = 'EDIT_EVENT';
 export const EDIT_EVENT_SUCCESS = 'EDIT_EVENT_SUCCESS';
 export const EDIT_EVENT_FAILURE = 'EDIT_EVENT_FAILURE';
+export const DELETE_EVENT = 'DELETE_EVENT';
+export const DELETE_EVENT_SUCCESS = 'DELETE_EVENT_SUCCESS';
+export const DELETE_EVENT_FAILURE = 'DELETE_EVENT_FAILURE';
 
 const initialState = {
     loading: false,
@@ -146,6 +149,29 @@ export default function reducer(state = initialState, action) {
             error: action.payload.error,
         };
     }
+    case DELETE_EVENT: {
+        return {
+            ...state,
+            loading: true,
+        };
+    }
+    case DELETE_EVENT_SUCCESS: {
+        return {
+            ...state,
+            loading: false,
+            items: {
+                ...state.items,
+                ...delete state.items[action.payload],
+            },
+        };
+    }
+    case DELETE_EVENT_FAILURE: {
+        return {
+            ...state,
+            loading: false,
+            error: action.payload,
+        };
+    }
     default:
         return state;
     }
@@ -231,6 +257,27 @@ export function editEventSuccess(payload) {
 export function editEventFailure(error) {
     return {
         type: EDIT_EVENT_FAILURE,
+        error,
+    };
+}
+
+export function deleteEvent(payload) {
+    return {
+        type: DELETE_EVENT,
+        payload,
+    };
+}
+
+export function deleteEventSuccess(payload) {
+    return {
+        type: DELETE_EVENT_SUCCESS,
+        payload,
+    };
+}
+
+export function deleteEventFailure(error) {
+    return {
+        type: DELETE_EVENT_FAILURE,
         error,
     };
 }
