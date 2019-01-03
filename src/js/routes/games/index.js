@@ -9,7 +9,6 @@ import requiresAuth from '../../utils/requiresAuth';
 import SidebarContent from './components/SidebarContent';
 import SubNav from '../../components/SubNav';
 import Game from './routes/game';
-import GamesMenu from './routes/gamesMenu';
 
 type Props = {
 	history: Array<Object>,
