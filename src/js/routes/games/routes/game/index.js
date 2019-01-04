@@ -61,20 +61,12 @@ type Props = {
 type State = {
     playerName: string,
     selectedPlayer: number,
-    gameEditForm: {
-        valid: Boolean,
-        value: EventsType,
-    }
 }
 
 class Game extends Component<Props, State> {
     state = {
         playerName: '',
         selectedPlayer: -1,
-        gameEditForm: {
-            valid: false,
-            value: null,
-        },
     };
 
     render = () => {
@@ -199,7 +191,7 @@ class Game extends Component<Props, State> {
         <GameForm
             game={event}
             ref={(o) => { this.gameForm = o; }}
-            onChange={state => this.setState({ gameEditForm: state })}
+            editEvent={this.props.editEvent}
         />
     )
 
@@ -273,8 +265,7 @@ class Game extends Component<Props, State> {
     };
 
     renderGameModalFooter = (event) => {
-        const { gameEditForm: { valid } } = this.state;
-
+        const { loadingEvents } = this.props;
         return (
             <div className="d-flex justify-content-between w-100">
                 <div>
@@ -299,13 +290,12 @@ class Game extends Component<Props, State> {
                     <Button
                         outline
                         color="primary"
-                        disabled={!valid}
-                        onClick={() => {
-                            this.props.editEvent(this.gameForm.getUpdatedGame());
-                            if (this.gameEditModal) this.gameEditModal.toggle();
-                        }}
+                        disabled={loadingEvents}
+                        type="submit"
+                        value="submit"
+                        form="game-form"
                     >
-                        Save
+                        {loadingEvents ? 'Saving' : 'Save'}
                     </Button>
                 </div>
             </div>

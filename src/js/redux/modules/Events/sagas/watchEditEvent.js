@@ -12,8 +12,8 @@ function editEvent(event) {
     });
 }
 
-export function* handleEditEvent({ payload }) {
-    const event = payload;
+export function* handleEditEvent({ payload: { values, callback } }) {
+    const event = values;
     const response = yield call(editEvent, event);
     if (response instanceof Error) {
         yield put(eventsModule.editEventFailure(response));
@@ -22,6 +22,7 @@ export function* handleEditEvent({ payload }) {
         yield put(eventsModule.editEventSuccess(event));
         toast.success('Successfully updated game event information');
     }
+    callback();
 }
 
 export default function* watchAddPlayer() {

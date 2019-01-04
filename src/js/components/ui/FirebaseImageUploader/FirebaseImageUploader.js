@@ -15,6 +15,7 @@ type Props = {
     onChange?: () => void,
     cta?: string,
     preview? : string,
+    name: string,
 };
 
 type State = {
@@ -48,6 +49,7 @@ class FirebaseFileUploader extends Component<Props, State> {
             reference,
             filename,
             cta,
+            name,
         } = this.props;
 
         return (
@@ -58,7 +60,7 @@ class FirebaseFileUploader extends Component<Props, State> {
                     <FileUploader
                         hidden
                         accept="image/*"
-                        name="events"
+                        name={name}
                         filename={filename}
                         storageRef={firebase.storage().ref(reference)}
                         onUploadStart={this.handleStart}
@@ -146,7 +148,7 @@ class FirebaseFileUploader extends Component<Props, State> {
         const { source, thumbnail } = this.state.value;
         if (source && thumbnail) {
             this.setState({ uploading: false });
-            this.props.onChange(this.state.value);
+            this.props.onChange('cover', this.state.value, true);
         }
     }
 }
