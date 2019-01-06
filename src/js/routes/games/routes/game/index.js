@@ -35,6 +35,7 @@ import GamesMenu from '../gamesMenu';
 import { EventsType } from '../../../../redux/modules/Events/types';
 import { Player } from '../../../../redux/modules/Players/types';
 import GameTypes from '../../../../redux/modules/Scores/types';
+import { match } from '../../../../types/router';
 
 
 type Props = {
@@ -42,11 +43,7 @@ type Props = {
   getEvent: () => EventsType,
   loadingEvents: Boolean,
   loadingScores: Boolean,
-  match: {
-    params: {
-      id: string,
-    },
-  },
+  match: match,
   getScoresByGameId: (string) => GameTypes.Game,
   createGame: () => void,
   updateGame: () => void,
