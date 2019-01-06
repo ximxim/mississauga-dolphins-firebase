@@ -18,13 +18,13 @@ function deleteEvent(eventId) {
     return ref.remove();
 }
 
-export function* handleDeleteEvent({ payload }) {
-    const eventId = payload;
+export function* handleDeleteEvent(action) {
+    const eventId = action.payload;
     const game = yield select(getScoresByGameId, eventId);
-    yield put(scoreModule.deleteGame({ id: game.id, game }));
+    if (game) { yield put(scoreModule.deleteGame({ id: game.id, game, skipBreakLink: true })); }
     yield call(deleteEvent, eventId);
     yield put(eventsModule.deleteEventSuccess(eventId));
-    yield put(history.push('/games/menu'));
+    yield call(() => history.push('/games/menu'));
     toast.success('Successfully deleted game event');
 }
 
