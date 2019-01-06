@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import {
-    Form,
-    FormGroup,
-    Input,
-    Label,
-    FormText,
-    FormFeedback,
-} from 'reactstrap';
+import { Form } from 'reactstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { FirebaseImageUploader, DateTimePicker } from '../../../../../components/ui';
+import {
+    FirebaseImageUploader,
+    DateTimePicker,
+    TextInput,
+    TextArea,
+} from '../../../../../components/ui';
 import { imageAspects } from '../../../../../utils/imageAspects';
 
 import { EventsType } from '../../../../../redux/modules/Events/types';
 
 type Props = {
     game: EventsType,
-    editEvent: (EventsType) => void,
+    editEvent: (event: EventsType) => void,
 };
 
 export default class GameForm extends Component<Props, *> {
@@ -61,27 +59,22 @@ export default class GameForm extends Component<Props, *> {
     );
 
     renderTitleField = props => (
-        <FormGroup className="has-wrapper my-1">
-            <Label for="title">Title</Label>
-            <Input
-                type="text"
-                value={props.values.title}
-                name="title"
-                id="title"
-                className="has-input input-sm"
-                placeholder="Home vs Visitor team"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                invalid={props.errors.title && props.touched.title}
-            />
-            <FormFeedback>{props.errors.title}</FormFeedback>
-            <FormText>Example: Mississauga Dolphins vs. Ghaznavi</FormText>
-        </FormGroup>
+        <TextInput
+            label="Title"
+            value={props.values.title}
+            name="title"
+            placeholder="Home vs Visitor team"
+            onChange={props.handleChange}
+            onBlur={props.handleBlur}
+            error={props.errors.title}
+            touched={props.touched.title}
+            helpText="Example: Mississauga Dolphins vs. Ghaznavi"
+        />
     );
 
     renderImageUpload = (props) => {
         const { game } = this.props;
-        const cover = props.values.cover.source;
+        const cover = props.values.cover.thumbnail || props.values.cover.source;
         const cta = cover ? 'Change Cover Photo' : 'Upload a Cover Photo';
         return (
             <FirebaseImageUploader
@@ -105,92 +98,68 @@ export default class GameForm extends Component<Props, *> {
     );
 
     renderPlaceField = props => (
-        <FormGroup className="has-wrapper my-1">
-            <Label for="place">Place</Label>
-            <Input
-                type="text"
-                value={props.values.place.name}
-                name="place.name"
-                id="place"
-                className="has-input input-sm"
-                placeholder="Enter Place"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                invalid={props.errors.place && props.touched.place}
-            />
-            <FormFeedback>{props.errors.place && props.errors.place.name}</FormFeedback>
-            <FormText>Enter name of the place where this game will be played</FormText>
-        </FormGroup>
+        <TextInput
+            label="Place"
+            value={props.values.place.name}
+            name="place.name"
+            placeholder="Enter Place"
+            onChange={props.handleChange}
+            onBlur={props.handleBlur}
+            error={props.errors.place && props.errors.place.name}
+            touched={props.touched.place}
+            helpText="Enter name of the place where this game will be played"
+        />
     );
 
     renderDivisionField = props => (
-        <FormGroup className="has-wrapper my-1">
-            <Label for="division">Division</Label>
-            <Input
-                type="text"
-                value={props.values.division}
-                name="division"
-                id="division"
-                className="has-input input-sm"
-                placeholder="Enter Division"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-            />
-            <FormText>Example: 1st Division - CN Pro</FormText>
-        </FormGroup>
+        <TextInput
+            label="Division"
+            value={props.values.division}
+            name="division"
+            placeholder="Enter Division"
+            onChange={props.handleChange}
+            onBlur={props.handleBlur}
+            touched={props.touched.division}
+            helpText="Example: 1st Division - CN Pro"
+        />
     );
 
     renderDescriptionField = props => (
-        <FormGroup className="has-wrapper my-1">
-            <Label for="description">Description</Label>
-            <Input
-                type="textarea"
-                rows="5"
-                value={props.values.description}
-                name="description"
-                id="description"
-                className="has-input input-sm"
-                placeholder="Enter Description"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                invalid={props.errors.description && props.touched.description}
-            />
-            <FormFeedback>{props.errors.description}</FormFeedback>
-            <FormText>Example: additional information that users will see</FormText>
-        </FormGroup>
+        <TextArea
+            label="Description"
+            value={props.values.description}
+            name="description"
+            placeholder="Enter Description"
+            onChange={props.handleChange}
+            onBlur={props.handleBlur}
+            touched={props.touched.description}
+            helpText="Example: additional information that users will see"
+        />
     );
 
     renderMatchNoField = props => (
-        <FormGroup className="has-wrapper my-1">
-            <Label for="matchno">Match No.</Label>
-            <Input
-                type="text"
-                value={props.values.match_no}
-                name="match_no"
-                id="matchno"
-                className="has-input input-sm"
-                placeholder="Enter Match Number"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-            />
-            <FormText>Example: 452</FormText>
-        </FormGroup>
+        <TextInput
+            label="Match No."
+            value={props.values.match_no}
+            name="match_no"
+            placeholder="Enter Match Number"
+            onChange={props.handleChange}
+            onBlur={props.handleBlur}
+            touched={props.touched.match_no}
+            helpText="Example: 452"
+        />
     );
 
     renderRoundTypeField = props => (
-        <FormGroup className="has-wrapper my-1">
-            <Label for="roundtype">Round Type</Label>
-            <Input
-                type="text"
-                value={props.values.round_type}
-                name="round_type"
-                id="roundtype"
-                className="has-input input-sm"
-                placeholder="Enter Round Type"
-                onChange={props.handleChange}
-                onBlur={props.onBlur}
-            />
-            <FormText>Example: Preliminary</FormText>
-        </FormGroup>
+        <TextInput
+            label="Round Type"
+            value={props.values.round_type}
+            name="round_type"
+            placeholder="Enter Round Type"
+            onChange={props.handleChange}
+            onBlur={props.handleBlur}
+            touched={props.touched.round_type}
+            helpText="Example: Preliminary"
+        />
     );
 }
