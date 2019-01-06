@@ -70,7 +70,7 @@ class SidebarContent extends React.Component<Props, State> {
     }
 
   renderSearchBar = () => (
-      <div className="border-bottom">
+      <div className="border-bottom bg-white">
           <SearchBar
               onChange={this.handleSearchChange}
               placeholder="Search Games..."
