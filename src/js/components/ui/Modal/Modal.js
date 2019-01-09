@@ -69,6 +69,8 @@ export default class CustomModal extends Component<Props, State> {
                                 key={action.key}
                                 onClick={action.onClick}
                                 disabled={action.disabled}
+                                type={action.type}
+                                form={action.form}
                                 className="mr-1"
                             >
                                 {action.label}

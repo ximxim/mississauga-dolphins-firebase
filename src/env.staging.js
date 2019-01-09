@@ -26,6 +26,20 @@ export default {
         nonStriker: '',
         bowler: '',
     },
+    newGameEvent: {
+        title: '',
+        division: '',
+        cover: {
+            source: '',
+            thumbnail: '',
+        },
+        game: true,
+        place: {
+            name: '',
+        },
+        match_no: '',
+        round_type: '',
+    },
     login: {
         username: 'azim.ahmed7@gmail.com',
         password: '826474',

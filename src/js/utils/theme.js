@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { getPortPromise } from 'portfinder';
 
 export default {
     brandPrimary: '#05301d',
@@ -463,5 +464,18 @@ td.rdtYear:hover {
 .modal-body {
   max-height: 75vh;
   overflow: auto;
+}
+.border-top-2 {
+  border-top-width: 2px !important;
+  border-top-style: solid !important;
+}
+.border-dark {
+  border-color: ${props => `${props.theme.brandDark} !important`};
+}
+.button.bg-primary:hover {
+  background-color: ${props => `${props.theme.brandPrimary} !important`};
+}
+.button.bg-primary:focus {
+  background-color: ${props => `${props.theme.brandPrimary} !important`};
 }
 `;

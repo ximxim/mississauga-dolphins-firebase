@@ -34,7 +34,7 @@ class SearchBar extends React.Component<Props, *> {
           <FormGroup className="mb-0" style={wrapperStyle}>
               <Label className="d-none" for="search" style={labelStyle}>Search</Label>
               <Input
-                  className="rounded-0 px-3 py-1 border-0"
+                  className="rounded-0 px-3 py-1 border-0 form-control-sm"
                   style={inputStyle}
                   type="search"
                   name="search"

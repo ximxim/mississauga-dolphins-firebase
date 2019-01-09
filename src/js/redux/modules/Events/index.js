@@ -16,6 +16,9 @@ export const EDIT_EVENT_FAILURE = 'EDIT_EVENT_FAILURE';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const DELETE_EVENT_SUCCESS = 'DELETE_EVENT_SUCCESS';
 export const DELETE_EVENT_FAILURE = 'DELETE_EVENT_FAILURE';
+export const ADD_GAME_EVENT = 'ADD_GAME_EVENT';
+export const ADD_GAME_EVENT_SUCCESS = 'ADD_GAME_EVENT_SUCCESS';
+export const ADD_GAME_EVENT_FAILURE = 'ADD_GAME_EVENT_FAILURE';
 
 const initialState = {
     loading: false,
@@ -172,6 +175,32 @@ export default function reducer(state = initialState, action) {
             error: action.payload,
         };
     }
+    case ADD_GAME_EVENT: {
+        return {
+            ...state,
+            loading: true,
+
+        };
+    }
+    case ADD_GAME_EVENT_SUCCESS: {
+        return {
+            ...state,
+            loading: false,
+            items: {
+                ...state.items,
+                [action.payload.id]: {
+                    ...action.payload,
+                },
+            },
+        };
+    }
+    case ADD_GAME_EVENT_FAILURE: {
+        return {
+            ...state,
+            loading: false,
+            error: action.payload,
+        };
+    }
     default:
         return state;
     }
@@ -278,6 +307,27 @@ export function deleteEventSuccess(payload) {
 export function deleteEventFailure(error) {
     return {
         type: DELETE_EVENT_FAILURE,
+        error,
+    };
+}
+
+export function addGameEvent(payload) {
+    return {
+        type: ADD_GAME_EVENT,
+        payload,
+    };
+}
+
+export function addGameEventSuccess(payload) {
+    return {
+        type: ADD_GAME_EVENT_SUCCESS,
+        payload,
+    };
+}
+
+export function addGameEventFailure(error) {
+    return {
+        type: ADD_GAME_EVENT_FAILURE,
         error,
     };
 }

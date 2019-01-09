@@ -24,9 +24,9 @@ import {
 // UI COMPONENTS
 import ScoreForm from './components/ScoreForm';
 import ScoreCard from './components/ScoreCard';
-import GameForm from './components/GameForm';
 import PlayersList from './components/PlayersList';
 import { PlayersSuggestInput, Modal } from '../../../../components/ui';
+import { GameEventForm } from '../../../../components/forms';
 import { GameDetailsCard } from '../../../../components';
 import Navbar from '../../components/Navbar';
 import GamesMenu from '../gamesMenu';
@@ -185,10 +185,9 @@ class Game extends Component<Props, State> {
     }
 
     renderEditGameModalBody = event => (
-        <GameForm
+        <GameEventForm
             game={event}
-            ref={(o) => { this.gameForm = o; }}
-            editEvent={this.props.editEvent}
+            action={this.props.editEvent}
         />
     )
 

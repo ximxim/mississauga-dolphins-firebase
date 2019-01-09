@@ -2,37 +2,43 @@ import React, { Component } from 'react';
 import { Form } from 'reactstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import moment from 'moment';
 
 import {
     FirebaseImageUploader,
     DateTimePicker,
     TextInput,
     TextArea,
-} from '../../../../../components/ui';
-import { imageAspects } from '../../../../../utils/imageAspects';
-
-import { EventsType } from '../../../../../redux/modules/Events/types';
+} from '../../ui';
+import { imageAspects } from '../../../utils/imageAspects';
+import { EventsType } from '../../../redux/modules/Events/types';
+import ENV from '../../../../env';
 
 type Props = {
-    game: EventsType,
-    editEvent: (event: EventsType) => void,
+    game?: EventsType,
+    action: () => void,
 };
 
 export default class GameForm extends Component<Props, *> {
+    static defaultProps ={
+        game: ENV.newGameEvent,
+    };
+
     render() {
-        const { game, editEvent } = this.props;
-        if (!game) return null;
+        const { game, action } = this.props;
         return (
             <Formik
                 initialValues={game}
                 onSubmit={(values, { setSubmitting }) => {
-                    editEvent({ values, callback: () => setSubmitting(false) });
+                    values.id = values.id || `${values.match_no}x${moment().format('MMMM[-]Do[-]YYYY')}`;
+                    action({ values, callback: () => setSubmitting(false) });
                 }}
                 validationSchema={Yup.object().shape({
                     cover: Yup.object().shape({
                         source: Yup.string().required('Required'),
                     }),
                     title: Yup.string().required('Required'),
+                    match_no: Yup.string().required('Required'),
                     start_time: Yup.string().required('Required'),
                     description: Yup.string().required('Required'),
                     place: Yup.object().shape({
@@ -105,8 +111,8 @@ export default class GameForm extends Component<Props, *> {
             placeholder="Enter Place"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            error={props.errors.place && props.errors.place.name}
-            touched={props.touched.place}
+            error={(props.errors.place) ? props.errors.place.name : null}
+            touched={(props.touched.place) ? props.touched.place.name : null}
             helpText="Enter name of the place where this game will be played"
         />
     );
@@ -146,6 +152,7 @@ export default class GameForm extends Component<Props, *> {
             onChange={props.handleChange}
             onBlur={props.handleBlur}
             touched={props.touched.match_no}
+            error={props.errors.match_no}
             helpText="Example: 452"
         />
     );

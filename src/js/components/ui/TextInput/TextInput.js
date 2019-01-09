@@ -45,7 +45,7 @@ export default class TextInput extends Component<Props, *> {
                     placeholder={placeholder}
                     onChange={onChange}
                     onBlur={onBlur}
-                    invalid={error && touched}
+                    invalid={!!error}
                 />
                 {this.renderFormFeedback(error)}
                 {this.renderFormText(helpText)}

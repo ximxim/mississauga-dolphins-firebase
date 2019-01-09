@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
 // UI COMPONENTS
@@ -65,6 +66,12 @@ class SidebarContent extends React.Component<Props, State> {
         return (
             <div>
                 <div className="sticky-top shadow">
+                    <Link
+                        to="/games/menu"
+                        className="button d-block bg-primary text-white text-center p-1 border-top-2 border-dark"
+                    >
+                        Games Menu
+                    </Link>
                     {this.renderSearchBar()}
                     {this.renderFilter()}
                 </div>
