@@ -60,7 +60,7 @@ class SidebarContent extends React.Component<Props, State> {
                 <div className="sticky-top shadow">
                     <Link
                         to="/games/menu"
-                        className="button d-block bg-primary text-white text-center p-1 border-top-2 border-dark"
+                        className="button d-block bg-primary text-white text-center p-1 border-top-2 border-dark heading"
                     >
                         Games Menu
                     </Link>
