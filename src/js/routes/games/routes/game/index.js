@@ -85,7 +85,10 @@ class Game extends Component<Props, State> {
                         <GameDetailsCard game={event} />
                     </div>
                     <div className="col px-1 mt-4">
-                        <PlayersList players={this.getEventPlayers()} />
+                        <PlayersList
+                            players={this.getEventPlayers()}
+                            deletePlayer={this.handleDeletePlayer}
+                        />
                     </div>
                 </div>
                 <Modal

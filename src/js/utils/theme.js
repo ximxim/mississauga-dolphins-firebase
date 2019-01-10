@@ -478,4 +478,10 @@ td.rdtYear:hover {
 .button.bg-primary:focus {
   background-color: ${props => `${props.theme.brandPrimary} !important`};
 }
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+}
 `;

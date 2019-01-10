@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { PlayerAvatar } from './PlayersList.styled';
 import { Player } from '../../../../../redux/modules/Players/types';
+import { deletePlayer } from '../../../../../redux/modules/Events';
 
 type Props = {
     players: Array<Player>,
+    deletePlayer: () => void,
 };
 
 export default class PlayersList extends Component<Props, *> {
@@ -33,6 +36,12 @@ export default class PlayersList extends Component<Props, *> {
                         </h6>
                         <p className="mb-0 fs-1">{player.ROLE}</p>
                     </div>
+                    <a
+                        onClick={() => this.props.deletePlayer(player.id)}
+                        className="close-button"
+                    >
+                        <FontAwesomeIcon icon="window-close" />
+                    </a>
                 </div>
             </div>
         )
