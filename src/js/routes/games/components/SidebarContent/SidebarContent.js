@@ -20,9 +20,6 @@ import {
 } from '../../../../redux/selectors';
 import { location } from '../../../../types/router';
 
-// STYLES
-// import { GameCard } from './SidebarContent.styled';
-
 type Props = {
   loadingScores: Boolean,
   loadingEvents: Boolean,
@@ -45,20 +42,15 @@ type State = {
 
 class SidebarContent extends React.Component<Props, State> {
     state: State = {
-        filter: 'active',
+        filter: 'all',
         search: '',
         sort: {
-            ascending: true,
-            option: 'start_time',
+            ascending: false,
+            option: 'scored',
         },
     }
 
     props: Props;
-
-    componentDidMount() {
-        const url = this.props.location.pathname.split('/');
-        if (url.length === 3 && url[2].toLowerCase() !== 'menu') this.setState({ filter: 'all', search: url[2] });
-    }
 
     render() {
         const { loadingScores, loadingEvents } = this.props;
@@ -114,8 +106,9 @@ class SidebarContent extends React.Component<Props, State> {
       <div className="pt-2 text-center">
           <SortControl
               onChange={this.handleSortChange}
-              option="start_time"
+              defaultValue={this.state.sort}
               options={[
+                  { key: 'scored', value: 'Scored' },
                   { key: 'title', value: 'Title' },
                   { key: 'description', value: 'Description' },
                   { key: 'start_time', value: 'Start time' },
@@ -138,6 +131,7 @@ class SidebarContent extends React.Component<Props, State> {
                           : false;
                       return (
                           <GameCard
+                              id={event.id}
                               event={event}
                               key={event.id}
                               selected={selected}
@@ -185,7 +179,11 @@ class SidebarContent extends React.Component<Props, State> {
           gameEvents = allGameEvents;
       }
 
-      // SORT
+      gameEvents = gameEvents.map(game => ({
+          ...game,
+          scored: !!game.game_id,
+      }));
+
       gameEvents = _.sortBy(gameEvents, [sort.option]);
       gameEvents = sort.ascending ? gameEvents : gameEvents.reverse();
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _ from 'lodash';
 
 import { Dropdown } from '..';
 
@@ -15,61 +14,61 @@ type Props = {
     key: string,
     value: string,
   },
-  option?: string,
+  defaultValue?: Object,
 };
 
 class SortControl extends React.Component<Props, State> {
   static defaultProps = {
-    option: '',
+      defaultValue: { option: '', ascending: true },
   }
 
   state: State = {
-    ascending: true,
-    option: this.props.option,
+      ascending: this.props.defaultValue.ascending,
+      option: this.props.defaultValue.option,
   }
 
   props: Props;
 
   render() {
-    return (
-        <div>
-            {this.renderIcon()}
-            <p className="d-inline mb-0">sort by</p>
-            {this.renderDropdown()}
-        </div>
-    );
+      return (
+          <div>
+              {this.renderIcon()}
+              <p className="d-inline mb-0">sort by</p>
+              {this.renderDropdown()}
+          </div>
+      );
   }
 
   renderIcon = () => {
-    const { ascending } = this.state;
-    const icon = ascending ? 'sort-alpha-down' : 'sort-alpha-up';
-    return (
-        <button
-          type="button"
-          className="bg-transparent border-0 d-inline"
-          onClick={this.toggleDirection}
-        >
-            <FontAwesomeIcon icon={icon} />
-        </button>
-    );
+      const { ascending } = this.state;
+      const icon = ascending ? 'sort-alpha-down' : 'sort-alpha-up';
+      return (
+          <button
+              type="button"
+              className="bg-transparent border-0 d-inline"
+              onClick={this.toggleDirection}
+          >
+              <FontAwesomeIcon icon={icon} />
+          </button>
+      );
   }
 
   renderDropdown = () => (
       <Dropdown
-        value={this.state.option}
-        options={this.props.options}
-        onChange={this.handleOptionChange}
+          value={this.state.option}
+          options={this.props.options}
+          onChange={this.handleOptionChange}
       />
   )
 
   handleOptionChange = ({ selectedKey }) => this.setState(
-    { option: selectedKey },
-    this.handleChange,
+      { option: selectedKey },
+      this.handleChange,
   );
 
   toggleDirection = () => this.setState(
-    state => ({ ascending: !state.ascending }),
-    this.handleChange,
+      state => ({ ascending: !state.ascending }),
+      this.handleChange,
   );
 
   handleChange = () => this.props.onChange(this.state);

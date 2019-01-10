@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { PlayerAvatar } from './PlayersList.styled';
 import { Player } from '../../../../../redux/modules/Players/types';
-import { deletePlayer } from '../../../../../redux/modules/Events';
 
 type Props = {
     players: Array<Player>,
