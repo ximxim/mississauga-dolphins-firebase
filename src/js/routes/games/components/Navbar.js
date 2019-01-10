@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { SubNavbar } from '../../../../../components';
-import { NavbarButton } from '../../../../../components/ui';
+import { SubNavbar } from '../../../components';
+import { NavbarButton } from '../../../components/ui';
 
 type Props = {
     options?: Array<Object>,

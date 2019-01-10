@@ -17,7 +17,9 @@ function breakEventLink({ game }) {
 }
 
 export function* handleDeleteGame({ payload }) {
-    yield call(breakEventLink, payload);
+    if (!payload.skipBreakLink) {
+        yield call(breakEventLink, payload);
+    }
     yield call(deleteGame, payload);
     yield put(scoresModule.deleteGameSuccess(payload));
     toast.success('Successfully deleted game');

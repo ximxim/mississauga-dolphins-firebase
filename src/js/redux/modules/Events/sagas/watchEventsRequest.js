@@ -7,9 +7,7 @@ import * as eventsModule from '../index';
 function getGames() {
     const fClient = getClient();
     const ref = fClient.database().ref('/Events');
-    return new Promise(resolve =>
-        ref.once('value', snapshot =>
-            resolve(snapshot.val()), error => resolve(error)));
+    return new Promise(resolve => ref.once('value', snapshot => resolve(snapshot.val()), error => resolve(error)));
 }
 
 export function* handleRequest() {

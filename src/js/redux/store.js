@@ -1,5 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'remote-redux-devtools';
+import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import reducers from './reducers';
@@ -10,21 +9,21 @@ import * as firebase from '../utils/firebase';
 let store = {};
 
 export default function configureStore() {
-  firebase.initialize();
-  const sagaMiddleware = createSagaMiddleware();
+    firebase.initialize();
+    const sagaMiddleware = createSagaMiddleware();
 
-  const composeEnhancers = composeWithDevTools({
-    name: 'mississauga-dolphins-admin',
-    hostname: 'localhost',
-    port: 5678,
-  });
-  store = createStore(reducers, composeEnhancers(applyMiddleware(sagaMiddleware, promise)));
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    store = createStore(
+        reducers,
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+        composeEnhancers(applyMiddleware(sagaMiddleware, promise)),
+    );
 
-  sagaMiddleware.run(rootSaga);
+    sagaMiddleware.run(rootSaga);
 
-  return store;
+    return store;
 }
 
 export function getStore() {
-  return store;
+    return store;
 }

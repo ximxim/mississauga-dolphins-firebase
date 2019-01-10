@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
 // UI COMPONENTS
@@ -17,9 +18,7 @@ import {
     getUpcomingGameEvents,
     getAllGameEvents,
 } from '../../../../redux/selectors';
-
-// STYLES
-// import { GameCard } from './SidebarContent.styled';
+import { location } from '../../../../types/router';
 
 type Props = {
   loadingScores: Boolean,
@@ -28,6 +27,7 @@ type Props = {
   upcomingGameEvents: {},
   pastGameEvents: {},
   allGameEvents: {},
+  location: location,
   location: { pathname: string, },
 };
 
@@ -42,11 +42,11 @@ type State = {
 
 class SidebarContent extends React.Component<Props, State> {
     state: State = {
-        filter: 'active',
-        search: null,
+        filter: 'all',
+        search: '',
         sort: {
-            ascending: true,
-            option: 'start_time',
+            ascending: false,
+            option: 'scored',
         },
     }
 
@@ -54,26 +54,33 @@ class SidebarContent extends React.Component<Props, State> {
 
     render() {
         const { loadingScores, loadingEvents } = this.props;
-        if (loadingEvents || loadingScores) {
-            return <p className="text-center">loading</p>;
-        }
+
         return (
             <div>
                 <div className="sticky-top shadow">
+                    <Link
+                        to="/games/menu"
+                        className="button d-block bg-primary text-white text-center p-1 border-top-2 border-dark heading"
+                    >
+                        Games Menu
+                    </Link>
                     {this.renderSearchBar()}
                     {this.renderFilter()}
                 </div>
                 {this.renderSort()}
-                {this.renderGameCards(this.getGames())}
+                {loadingEvents || loadingScores
+                    ? <p className="text-center">loading...</p>
+                    : this.renderGameCards(this.getGames())}
             </div>
         );
     }
 
   renderSearchBar = () => (
-      <div className="border-bottom">
+      <div className="border-bottom bg-white">
           <SearchBar
               onChange={this.handleSearchChange}
               placeholder="Search Games..."
+              value={this.state.search}
           />
       </div>
   )
@@ -99,8 +106,9 @@ class SidebarContent extends React.Component<Props, State> {
       <div className="pt-2 text-center">
           <SortControl
               onChange={this.handleSortChange}
-              option="start_time"
+              defaultValue={this.state.sort}
               options={[
+                  { key: 'scored', value: 'Scored' },
                   { key: 'title', value: 'Title' },
                   { key: 'description', value: 'Description' },
                   { key: 'start_time', value: 'Start time' },
@@ -115,6 +123,7 @@ class SidebarContent extends React.Component<Props, State> {
           return (
               <ul className="list-unstyled pt-2">
                   {_.map(gameEvents, (event) => {
+                      if (!event) return null;
                       const { pathname } = this.props.location;
                       const split = pathname.split('/');
                       const selected = split.length > 0
@@ -122,6 +131,7 @@ class SidebarContent extends React.Component<Props, State> {
                           : false;
                       return (
                           <GameCard
+                              id={event.id}
                               event={event}
                               key={event.id}
                               selected={selected}
@@ -143,9 +153,7 @@ class SidebarContent extends React.Component<Props, State> {
       { sort: { option, ascending } },
   );
 
-  handleSearchChange = ({ value }) => this.setState(
-      { search: value },
-  );
+  handleSearchChange = search => this.setState({ search });
 
   getGames = () => {
       const { filter, sort, search } = this.state;
@@ -158,19 +166,24 @@ class SidebarContent extends React.Component<Props, State> {
       let gameEvents = [];
 
       // FILTER
-      if (filter === 'active' && activeGameEvents.length > 0) {
+      if (filter === 'active') {
           gameEvents = activeGameEvents;
       }
-      if (filter === 'upcoming' && upcomingGameEvents.length > 0) {
+      if (filter === 'upcoming') {
           gameEvents = upcomingGameEvents;
       }
-      if (filter === 'past' && pastGameEvents.length > 0) {
+      if (filter === 'past') {
           gameEvents = pastGameEvents;
       }
-      if (filter === 'all' && allGameEvents.length > 0) {
+      if (filter === 'all') {
           gameEvents = allGameEvents;
       }
-      // SORT
+
+      gameEvents = gameEvents.map(game => ({
+          ...game,
+          scored: !!game.game_id,
+      }));
+
       gameEvents = _.sortBy(gameEvents, [sort.option]);
       gameEvents = sort.ascending ? gameEvents : gameEvents.reverse();
 
@@ -178,7 +191,8 @@ class SidebarContent extends React.Component<Props, State> {
       if (search) {
           gameEvents = _.filter(
               gameEvents,
-              event => event.title.toLowerCase().includes(search.toLowerCase()),
+              event => event.title.toLowerCase().includes(search.toLowerCase())
+              || event.id.toLowerCase().includes(search.toLowerCase()),
           );
       }
       return gameEvents;
