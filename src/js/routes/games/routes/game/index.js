@@ -286,9 +286,8 @@ class Game extends Component<Props, State> {
                     <Button
                         outline
                         color="primary"
-                        disabled={loadingEvents}
                         type="submit"
-                        value="submit"
+                        key="submit"
                         form="game-form"
                     >
                         {loadingEvents ? 'Saving' : 'Save'}

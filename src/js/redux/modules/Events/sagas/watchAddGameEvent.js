@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 
 import { getClient } from '../../../../utils/firebase';
 import * as eventsModule from '../index';
+import { history } from '../../../setup';
 
 function addGameEvent(event) {
     const fClient = getClient();
@@ -19,8 +20,9 @@ export function* handleAddGameEvent({ payload: { values, callback } }) {
         yield put(eventsModule.addGameEventFailure(response));
         toast.error('Unable to add game event. Try again later.');
     } else {
-        yield put(eventsModule.addGameEventSuccess(event));
         toast.success('Successfully added game event.');
+        yield put(eventsModule.addGameEventSuccess(event));
+        yield call(history.push(`/games/${event.id}`));
     }
     callback();
 }

@@ -16,6 +16,7 @@ type Props = {
     cta?: string,
     preview? : string,
     name: string,
+    error: string,
 };
 
 type State = {
@@ -24,6 +25,7 @@ type State = {
         thumbnail: string,
     },
     uploading: Boolean,
+    newUpload: null,
 };
 
 class FirebaseFileUploader extends Component<Props, State> {
@@ -50,6 +52,7 @@ class FirebaseFileUploader extends Component<Props, State> {
             filename,
             cta,
             name,
+            error,
         } = this.props;
 
         return (
@@ -62,6 +65,7 @@ class FirebaseFileUploader extends Component<Props, State> {
                         accept="image/*"
                         name={name}
                         filename={filename}
+                        randomizeFilename={false}
                         storageRef={firebase.storage().ref(reference)}
                         onUploadStart={this.handleStart}
                         onUploadError={this.handleError}
@@ -70,17 +74,21 @@ class FirebaseFileUploader extends Component<Props, State> {
                         ref={(o) => { this.fileUploader = o; }}
                     />
                 </label>
+                {error && <p className="text-danger fs-2 pt-1 mb-0">Required</p>}
             </div>
         );
     }
 
     renderThumbnail = () => {
-        const { value: { thumbnail }, uploading } = this.state;
+        const { value: { thumbnail }, uploading, newUpload } = this.state;
         const { preview } = this.props;
         let source = '/img/upload-image.jpg';
         let alt = 'Select an image';
 
-        if (preview && !uploading) {
+        if (newUpload && !uploading) {
+            source = newUpload;
+            alt = 'new image';
+        } else if (preview && !uploading) {
             source = preview;
             alt = 'thumbnail';
         } else if (uploading) {
@@ -116,9 +124,26 @@ class FirebaseFileUploader extends Component<Props, State> {
                         width: aspect.thumbnail.width,
                         filename: `${file.name}_thumbnail`,
                     });
-
-                    this.fileUploader.startUpload(file);
-                    this.fileUploader.startUpload(thumbnail);
+                    this.setState({
+                        value: {
+                            source: filename => new Promise((resolve) => {
+                                const source = filename
+                                    ? new File([file], filename, { type: file.type })
+                                    : file;
+                                this.fileUploader.startUpload(source);
+                                this.sourceHandler = resolve;
+                            }),
+                            thumbnail: filename => new Promise((resolve) => {
+                                const newThumb = filename
+                                    ? new File([thumbnail], `${filename}_thumbnail`, { type: file.type })
+                                    : thumbnail;
+                                this.fileUploader.startUpload(newThumb);
+                                this.thumbHandler = resolve;
+                            }),
+                        },
+                        newUpload: img.src,
+                    });
+                    this.props.onChange(this.state.value);
                 } else toast.error(aspect.error);
             };
             img.src = URL.createObjectURL(file);
@@ -126,30 +151,11 @@ class FirebaseFileUploader extends Component<Props, State> {
     }
 
     handleSuccess = async (filename, task) => {
+        this.setState({ uploading: false });
         const downloadURL = await task.snapshot.ref.getDownloadURL();
         if (filename.indexOf('_thumbnail') > -1) {
-            this.setState(state => ({
-                value: {
-                    ...state.value,
-                    thumbnail: downloadURL,
-                },
-            }), this.checkIfDone);
-        } else {
-            this.setState(state => ({
-                value: {
-                    ...state.value,
-                    source: downloadURL,
-                },
-            }), this.checkIfDone);
-        }
-    }
-
-    checkIfDone = () => {
-        const { source, thumbnail } = this.state.value;
-        if (source && thumbnail) {
-            this.setState({ uploading: false });
-            this.props.onChange('cover', this.state.value, true);
-        }
+            this.thumbHandler(downloadURL);
+        } else this.sourceHandler(downloadURL);
     }
 }
 

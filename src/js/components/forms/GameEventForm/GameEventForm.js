@@ -29,9 +29,26 @@ export default class GameForm extends Component<Props, *> {
         return (
             <Formik
                 initialValues={game}
-                onSubmit={(values, { setSubmitting }) => {
-                    values.id = values.id || `${values.match_no}x${moment().format('MMMM[-]Do[-]YYYY')}`;
-                    action({ values, callback: () => setSubmitting(false) });
+                onSubmit={async (values, { setSubmitting }) => {
+                    const newEventId = `${values.match_no}x${moment().format('MMMM[-]Do[-]YYYY')}`;
+                    const source = typeof values.cover.source === 'string'
+                        ? values.cover.source
+                        : await values.cover.source(values.id);
+                    const thumbnail = typeof values.cover.thumbnail === 'string'
+                        ? values.cover.thumbnail
+                        : await values.cover.thumbnail(values.id);
+
+                    action({
+                        values: {
+                            ...values,
+                            id: values.id || newEventId,
+                            cover: {
+                                source,
+                                thumbnail,
+                            },
+                        },
+                        callback: () => setSubmitting(false),
+                    });
                 }}
                 validationSchema={Yup.object().shape({
                     cover: Yup.object().shape({
@@ -90,7 +107,8 @@ export default class GameForm extends Component<Props, *> {
                 aspect={imageAspects.small}
                 preview={cover}
                 name="cover"
-                onChange={props.setFieldValue}
+                error={(props.errors.cover) ? props.errors.cover.source : null}
+                onChange={val => props.setFieldValue('cover', val, true)}
             />
         );
     }
