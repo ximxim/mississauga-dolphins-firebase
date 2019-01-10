@@ -153,7 +153,7 @@ class SidebarContent extends React.Component<Props, State> {
       { sort: { option, ascending } },
   );
 
-  handleSearchChange = e => this.setState({ search: e.target.value });
+  handleSearchChange = search => this.setState({ search });
 
   getGames = () => {
       const { filter, sort, search } = this.state;

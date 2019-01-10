@@ -28,10 +28,8 @@ export default {
     },
     newGameEvent: {
         cover: {
-            // source: 'https://firebasestorage.googleapis.com/v0/b/mississauga-dolphins.appspot.com/o/events%2F452x47.jpg?alt=media&token=8fe48f25-c251-417a-96b1-4c44ef86f0e8',
-            // thumbnail: 'https://firebasestorage.googleapis.com/v0/b/mississauga-dolphins.appspot.com/o/events%2F452x47.jpg_thumbnail?alt=media&token=5eef048f-6819-4177-811b-280b3cd2b45e',
-            source: '',
-            thumbnail: '',
+            source: 'https://firebasestorage.googleapis.com/v0/b/mississauga-dolphins.appspot.com/o/events%2F452x47.jpg?alt=media&token=8fe48f25-c251-417a-96b1-4c44ef86f0e8',
+            thumbnail: 'https://firebasestorage.googleapis.com/v0/b/mississauga-dolphins.appspot.com/o/events%2F452x47.jpg_thumbnail?alt=media&token=5eef048f-6819-4177-811b-280b3cd2b45e',
         },
         description: 'Match No: 452\nDivision: 1st Division - CN Pro\nRound type: Preliminary',
         division: '100',
