@@ -156,6 +156,7 @@ export default class GameForm extends Component<Props, *> {
             placeholder="Enter Description"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
+            error={props.errors.description}
             touched={props.touched.description}
             helpText="Example: additional information that users will see"
         />
