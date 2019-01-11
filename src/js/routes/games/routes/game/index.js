@@ -282,8 +282,7 @@ class Game extends Component<Props, State> {
                         outline
                         color="secondary"
                         className="mr-1"
-                        onClick={() => ((this.gameEditModal)
-                            ? this.gameEditModal.toggle : null)}
+                        onClick={() => ((this.gameEditModal) && this.gameEditModal.toggle())}
                     >
                         Cancel
                     </Button>
