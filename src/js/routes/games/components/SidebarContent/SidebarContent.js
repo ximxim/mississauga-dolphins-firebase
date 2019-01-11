@@ -17,6 +17,7 @@ import {
     getPastGameEvents,
     getUpcomingGameEvents,
     getAllGameEvents,
+    getScoresByGameId,
 } from '../../../../redux/selectors';
 import { location } from '../../../../types/router';
 
@@ -27,6 +28,7 @@ type Props = {
   upcomingGameEvents: {},
   pastGameEvents: {},
   allGameEvents: {},
+  scoresByGameId: () => {},
   location: location,
   location: { pathname: string, },
 };
@@ -195,6 +197,17 @@ class SidebarContent extends React.Component<Props, State> {
               || event.id.toLowerCase().includes(search.toLowerCase()),
           );
       }
+
+      gameEvents = _.map(gameEvents, (game) => {
+          if (!game.game_id) return game;
+
+          const score = this.props.scoresByGameId(game.id);
+          return {
+              ...game,
+              score,
+          };
+      });
+
       return gameEvents;
   }
 }
@@ -206,6 +219,7 @@ const mapStateToProps = state => ({
     upcomingGameEvents: getUpcomingGameEvents(state),
     pastGameEvents: getPastGameEvents(state),
     allGameEvents: getAllGameEvents(state),
+    scoresByGameId: id => getScoresByGameId(state, id),
 });
 
 export default connect(mapStateToProps)(SidebarContent);
