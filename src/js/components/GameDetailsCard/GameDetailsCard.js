@@ -34,7 +34,7 @@ export default class GameDetailsCard extends React.Component<Props, *> {
     renderInfoItem = (heading, value) => {
         const parClass = classnames({
             'mb-1': true,
-            'text-cutoff': !this.state.show,
+            'text-cutoff': heading === 'Description:' && !this.state.show,
         });
 
         return (
