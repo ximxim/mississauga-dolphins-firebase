@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Button } from 'reactstrap';
+import { toast } from 'react-toastify';
 
 // REDUX
 import {
@@ -309,8 +310,12 @@ class Game extends Component<Props, State> {
         const eventId = this.props.match.params.id;
         const playerId = this.state.selectedPlayer;
 
-        this.props.addPlayer({ eventId, playerId });
-        this.setState({ selectedPlayer: '', playerName: '' });
+        if (playerId > -1) {
+            this.props.addPlayer({ eventId, playerId });
+            this.setState({ selectedPlayer: '', playerName: '' });
+        } else {
+            toast.error('Tried to add player that doesn\'t exist');
+        }
     };
 
     handleDeletePlayer = (playerId) => {
