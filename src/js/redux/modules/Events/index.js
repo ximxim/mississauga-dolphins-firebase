@@ -98,7 +98,7 @@ export default function reducer(state = initialState, action) {
         return {
             ...state,
             loading: false,
-            error: action.payload.error,
+            error: action.payload,
         };
     }
     case DELETE_PLAYER: {

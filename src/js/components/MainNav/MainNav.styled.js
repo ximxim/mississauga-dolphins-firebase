@@ -5,6 +5,7 @@ width: 100%;
 min-height: 100vh;
 transition: all 0.3s;
 max-height: 100vh;
+-webkit-overflow-scrolling: touch;
 `;
 
 export const Wrapper = styled.div`

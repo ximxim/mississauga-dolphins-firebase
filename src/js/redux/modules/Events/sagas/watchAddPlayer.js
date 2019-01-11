@@ -34,6 +34,7 @@ export function* handleAddPlayer({ payload }) {
             toast.success('Successfully added a player');
         }
     } else {
+        yield put(eventsModule.addPlayerFailure());
         toast.info('This player is already added');
     }
 }

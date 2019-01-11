@@ -464,6 +464,7 @@ td.rdtYear:hover {
 .modal-body {
   max-height: 75vh;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .border-top-2 {
   border-top-width: 2px !important;
