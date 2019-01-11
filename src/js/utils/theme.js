@@ -484,4 +484,13 @@ td.rdtYear:hover {
   right: 20px;
   cursor: pointer;
 }
+.text-cutoff {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 25px;
+  max-height: 80px;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 `;
