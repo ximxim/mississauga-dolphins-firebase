@@ -490,7 +490,7 @@ td.rdtYear:hover {
   display: -webkit-box;
   line-height: 25px;
   max-height: 80px;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 }
 `;
