@@ -96,12 +96,10 @@ export default class GameForm extends Component<Props, *> {
     );
 
     renderImageUpload = (props) => {
-        const { game } = this.props;
         const cover = props.values.cover.thumbnail || props.values.cover.source;
         const cta = cover ? 'Change Cover Photo' : 'Upload a Cover Photo';
         return (
             <FirebaseImageUploader
-                filename={game.id}
                 cta={cta}
                 reference="events"
                 aspect={imageAspects.small}

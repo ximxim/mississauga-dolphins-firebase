@@ -10,7 +10,6 @@ import { Preview } from './FirebaseImageUploader.styled';
 
 type Props = {
     reference?: string,
-    filename: string,
     aspect?: Object,
     onChange?: () => void,
     cta?: string,
@@ -49,7 +48,6 @@ class FirebaseFileUploader extends Component<Props, State> {
         const firebase = getClient();
         const {
             reference,
-            filename,
             cta,
             name,
             error,
@@ -64,7 +62,6 @@ class FirebaseFileUploader extends Component<Props, State> {
                         hidden
                         accept="image/*"
                         name={name}
-                        filename={filename}
                         randomizeFilename={false}
                         storageRef={firebase.storage().ref(reference)}
                         onUploadStart={this.handleStart}
@@ -153,7 +150,9 @@ class FirebaseFileUploader extends Component<Props, State> {
     handleSuccess = async (filename, task) => {
         this.setState({ uploading: false });
         const downloadURL = await task.snapshot.ref.getDownloadURL();
+        console.log(filename);
         if (filename.indexOf('_thumbnail') > -1) {
+            console.log('is a thumbnail');
             this.thumbHandler(downloadURL);
         } else this.sourceHandler(downloadURL);
     }
