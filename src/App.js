@@ -32,6 +32,7 @@ import {
 
 import withSetup from './js/redux/setup';
 import games from './js/routes/games';
+import players from './js/routes/players';
 import theme, { GlobalStyle } from './js/utils/theme';
 
 type Props = {
@@ -70,13 +71,12 @@ class App extends Component<Props, *> {
         let component = null;
         if (this.props.location.pathname === '/') {
             return <Redirect to="/games/menu" />;
-        } else if (this.props.location.pathname === '/games') {
-            return <Redirect to="/games/menu" />;
         }
         component = (
             <div>
                 <React.Fragment>
                     <Route path="/games" component={games} />
+                    <Route path="/players" component={players} />
                 </React.Fragment>
                 <ToastContainer />
                 <GlobalStyle />
