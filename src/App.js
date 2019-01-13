@@ -32,6 +32,7 @@ import {
     faEdit,
 } from '@fortawesome/free-solid-svg-icons';
 
+import 'react-table/react-table.css';
 import withSetup from './js/redux/setup';
 import games from './js/routes/games';
 import players from './js/routes/players';

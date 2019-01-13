@@ -114,7 +114,7 @@ export default class GameForm extends Component<Props, *> {
     renderStartTime = props => (
         <DateTimePicker
             defaultValue={props.values.start_time}
-            onChange={props.handleChange}
+            onChange={val => props.setFieldValue('start_time', val, true)}
             onBlur={props.handleBlur}
         />
     );

@@ -6593,6 +6593,12 @@ react-slider@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/react-slider/-/react-slider-0.9.0.tgz#584ae63325be115581fc08bf7753adb8e4d4a0b1"
 
+react-table@^6.8.6:
+  version "6.8.6"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.8.6.tgz#a0ad8b4839319052d5befc012603fb161e52ede3"
+  dependencies:
+    classnames "^2.2.5"
+
 react-text-collapse@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/react-text-collapse/-/react-text-collapse-0.5.2.tgz#caf48593899b565f03acb7832c7de0efeec89bde"
