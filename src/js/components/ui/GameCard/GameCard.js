@@ -31,7 +31,7 @@ class GameCard extends React.Component<Props, *> {
             : null;
         return (
             <Card
-                className="border-top px-1 py-2"
+                className="border-top px-1 py-2 list-unstyled"
                 key={event.id}
                 selected={selected}
             >

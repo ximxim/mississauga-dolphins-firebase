@@ -63,6 +63,10 @@ export type Player = {
         ST: number,
         WK_CTS: number,
         id:number,
+        avatar: {
+			source: string,
+			thumbnail: string,
+		},
 }
 
 export type Players = {

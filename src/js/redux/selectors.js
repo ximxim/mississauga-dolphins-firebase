@@ -49,5 +49,10 @@ export const getAllGameEvents = memoizeOne(
 );
 
 export const getPlayerGamesById = memoizeOne(
-    (state, id) => _.filter(state.events.items, event => _.indexOf(event.players, id) > -1),
+    (state, id) => _.filter(state.events.items, event => _.indexOf(event.players, _.parseInt(id)) > -1),
 );
+
+export const getPlayerById = memoizeOne((state, id) => (
+    state.players.items.length > 0
+        ? state.players.items[id]
+        : null));

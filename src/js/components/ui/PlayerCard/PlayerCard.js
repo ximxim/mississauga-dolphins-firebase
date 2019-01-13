@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from 'reactstrap';
 
-import { DateTime } from '..';
 import { Card } from './PlayerCard.styled';
 
 import { Player } from '../../../redux/modules/Players/types';

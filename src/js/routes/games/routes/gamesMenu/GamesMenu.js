@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addGameEvent } from '../../../../redux/modules/Events';
 import { Modal } from '../../../../components/ui';
 import { GameEventForm } from '../../../../components/forms';
-import Navbar from '../../components/Navbar';
+import { SubNavbar } from '../../../../components';
 import { MenuImage } from './GamesMenu.styled';
 
 type Props = {
@@ -17,7 +17,7 @@ class GamesMenu extends Component<Props, State> {
     render() {
         return (
             <div>
-                <Navbar options={this.NavbarOptions()} />
+                <SubNavbar options={this.NavbarOptions()} />
                 <div className="m-2">
                     <h3 className="text-center">Games Menu</h3>
                     <p className="text-center">

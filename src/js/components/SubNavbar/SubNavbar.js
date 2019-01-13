@@ -9,39 +9,54 @@ import {
 
 import { ToggleConsumer } from '../SubNav/SubNav';
 import { SubToggleButton, SubToggleLabel } from './SubNavbar.styled';
+import { NavbarButton } from '../ui';
 
 type Props = {
-	children: Object,
+    children: Object,
+    options?: Array<Object>,
 }
 
 type State = {
 	isOpen: Boolean,
 }
 
-class SubNavbar extends React.Component<Props, *> {
-  state: State = {
-      isOpen: false,
-  }
+class SubNavbar extends React.Component<Props, State> {
+    static defaultProps = {
+        options: [],
+    }
 
-  props: Props;
+    state = {
+        isOpen: false,
+    }
 
-  render() {
-      const { children } = this.props;
-      const hasOptions = children.length > 0;
+    render() {
+        return (
+            <Navbar color="light" light expand="md" className="shadow bg-white">
+                {this.toggleSidebar()}
+                {this.navbarToggler()}
+                <Collapse isOpen={this.state.isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                        {this.renderOptions()}
+                    </Nav>
+                </Collapse>
+            </Navbar>
+        );
+    }
 
-      return (
-          <Navbar color="light" light expand="md" className="shadow bg-white">
-              {this.toggleSidebar()}
-              {hasOptions ? this.navbarToggler() : null}
-              {hasOptions ? (
-                  <Collapse isOpen={this.state.isOpen} navbar>
-                      <Nav className="ml-auto" navbar>
-                          {this.props.children}
-                      </Nav>
-                  </Collapse>
-              ) : null}
-          </Navbar>
-      );
+  renderOptions = () => {
+      const { children, options } = this.props;
+      if (children) return children;
+      return options.map((option) => {
+          if (option.hidden) return null;
+          return (
+              <NavbarButton
+                  icon={option.icon}
+                  label={option.label}
+                  key={option.key}
+                  onClick={option.onClick}
+              />
+          );
+      });
   }
 
   toggleSidebar = () => (
