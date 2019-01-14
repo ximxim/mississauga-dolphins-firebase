@@ -5,11 +5,15 @@ import { Route } from 'react-router-dom';
 import requiresAuth from '../../utils/requiresAuth';
 
 // UI COMPONENTS
-import SidebarContent from './components/SidebarContent';
+import PlayerSidebarContent from './components/PlayerSidebarContent';
 import SubNav from '../../components/SubNav';
-import Game from './routes/game';
+import Player from './routes/player';
+
+// TYPES
+import { match } from '../../types/router';
 
 type Props = {
+    match: match,
 	events: {
 		items: Array<Object>,
 	},
@@ -18,22 +22,24 @@ type Props = {
 	},
 }
 
-type State = {}
+type State = {};
 
-class Games extends Component<Props, State> {
+class Players extends Component<Props, State> {
+    state = {};
+
     render() {
         return (
             <div className="row no-gutters">
                 <div className="col">
                     <SubNav renderSidebarContent={this.renderSidebarContent}>
-                        <Route path={`${this.props.match.path}/:id`} component={Game} />
+                        <Route path={`${this.props.match.path}/:id`} component={Player} />
                     </SubNav>
                 </div>
             </div>
         );
     }
 
-	renderSidebarContent = () => <SidebarContent {...this.props} />;
+    renderSidebarContent = () => <PlayerSidebarContent {...this.props} />;
 }
 
-export default requiresAuth(Games);
+export default requiresAuth(Players);

@@ -28,8 +28,7 @@ import ScoreCard from './components/ScoreCard';
 import PlayersList from './components/PlayersList';
 import { PlayersSuggestInput, Modal } from '../../../../components/ui';
 import { GameEventForm } from '../../../../components/forms';
-import { GameDetailsCard } from '../../../../components';
-import Navbar from '../../components/Navbar';
+import { GameDetailsCard, SubNavbar } from '../../../../components';
 import GamesMenu from '../gamesMenu';
 
 // TYPES
@@ -75,7 +74,7 @@ class Game extends Component<Props, State> {
             <div>
                 <div className="row no-gutters sticky-top">
                     <div className="col">
-                        <Navbar options={this.NavbarOptions()} />
+                        <SubNavbar options={this.NavbarOptions()} />
                     </div>
                 </div>
                 <div className="row no-gutters mt-2 mr-1">

@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { getPortPromise } from 'portfinder';
 
 export default {
     brandPrimary: '#05301d',
@@ -493,5 +492,26 @@ td.rdtYear:hover {
   max-height: 80px;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
+}
+.rt-th {
+  color: ${props => props.theme.white}
+  background-color: ${props => props.theme.brandPrimary}
+}
+.rt-th:first-child {
+  border-top-left-radius: 10px;
+}
+.rt-th:last-child {
+  border-top-right-radius: 10px;
+}
+.ReactTable {
+  border: 0px;
+}
+.ReactTable .rt-thead .rt-th.-sort-asc, .ReactTable .rt-thead .rt-td.-sort-asc {
+  -webkit-box-shadow: inset 0 3px 0 0 rgba(255,255,255,0.6);
+  box-shadow: inset 0 3px 0 0 rgba(255,255,255,0.6);
+}
+.ReactTable .rt-thead .rt-th.-sort-desc, .ReactTable .rt-thead .rt-td.-sort-desc {
+  -webkit-box-shadow: inset 0 -3px 0 0 rgba(255,255,255,0.6);
+  box-shadow: inset 0 -3px 0 0 rgba(255,255,255,0.6);
 }
 `;
