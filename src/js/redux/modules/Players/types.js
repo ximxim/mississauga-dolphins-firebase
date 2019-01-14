@@ -34,27 +34,6 @@ export type Player = {
           MTCHS:number,
         },
         GIVEN: number,
-        GRAVATAR: {
-          currentLocation: string,
-          displayName: string,
-          hash: string,
-          id: string,
-          name: {
-            familyName: string,
-            formatted: string,
-            givenName: string,
-          },
-          photos: [
-            {
-              type: string,
-              value: string,
-            }
-          ],
-          preferredUsername: string,
-          profileUrl: string,
-          requestHash: string,
-          thumbnailUrl: string,
-        },
         HONOR: string,
         LAST_NAME: string,
         LAST_PLAYED: string,
