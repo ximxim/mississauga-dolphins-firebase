@@ -14,6 +14,7 @@ import PlayerDetails from './component/PlayerDetails';
 import PlayerStatistics from './component/PlayerStatistics';
 import PlayerGames from './component/PlayerGames';
 import { PlayerForm } from '../../../../components/forms';
+import PlayersMenu from '../playersMenu';
 
 // TYPES
 import { EventsType } from '../../../../redux/modules/Events/types';
@@ -30,7 +31,7 @@ type Props = {
 class Player extends Component<Props, *> {
     render() {
         const { player, games } = this.props;
-        if (!player) return null;
+        if (!player) return <PlayersMenu />;
         return (
             <div>
                 <div className="row no-gutters sticky-top">
