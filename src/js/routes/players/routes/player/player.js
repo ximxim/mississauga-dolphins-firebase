@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'reactstrap';
+import { Button, Alert } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // REDUX
 import { editPlayer, deletePlayer } from '../../../../redux/modules/Players';
@@ -38,6 +39,7 @@ class Player extends Component<Props, *> {
                     </div>
                 </div>
                 <div className="row no-gutters">
+                    {this.renderAlert(player)}
                     <div className="col-md-4">
                         <PlayerDetails player={player} />
                     </div>
@@ -54,6 +56,20 @@ class Player extends Component<Props, *> {
                     footer={() => this.renderEditPlayerModalFooter(player)}
                     ref={(o) => { this.editPlayerModal = o; }}
                 />
+            </div>
+        );
+    }
+
+    renderAlert = (player) => {
+        if (!player.inactive) return null;
+        return (
+            <div className="col-12 p-2">
+                <Alert color="warning">
+                    <FontAwesomeIcon icon="exclamation-triangle" />
+                    <span className="ml-1">
+                        This player is no longer active with the team.
+                    </span>
+                </Alert>
             </div>
         );
     }

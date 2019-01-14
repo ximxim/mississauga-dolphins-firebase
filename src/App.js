@@ -30,6 +30,7 @@ import {
     faListOl,
     faUserEdit,
     faEdit,
+    faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
 
 import 'react-table/react-table.css';
@@ -70,6 +71,7 @@ library.add(
     faListOl,
     faUserEdit,
     faEdit,
+    faExclamationTriangle,
 );
 
 class App extends Component<Props, *> {
