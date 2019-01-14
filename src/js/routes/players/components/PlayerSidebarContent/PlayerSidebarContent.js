@@ -89,6 +89,7 @@ class PlayersSidebarContent extends Component<Props, State> {
                     { value: 'Middle Orders', key: 'middle_order' },
                     { value: 'Openers', key: 'opener' },
                     { value: 'Wicket Keepers', key: 'wicket_keeper' },
+                    { value: 'Deleted', key: 'deleted' },
                 ]}
             />
         </div>
@@ -152,7 +153,9 @@ class PlayersSidebarContent extends Component<Props, State> {
 
         // FILTER
         if (filter === 'all') {
-            players = items;
+            players = _.filter(items, player => !player.inactive);
+        } else if (filter === 'deleted') {
+            players = _.filter(items, player => player.inactive);
         } else {
             players = _.filter(items, player => _.snakeCase(player.ROLE) === filter);
         }
