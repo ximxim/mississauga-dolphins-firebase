@@ -13,7 +13,7 @@ import { getPlayerById, getPlayerGamesById } from '../../../../redux/selectors';
 import PlayerDetails from './component/PlayerDetails';
 import PlayerStatistics from './component/PlayerStatistics';
 import PlayerGames from './component/PlayerGames';
-import { PlayerForm } from '../../../../components/forms';
+import { PlayerForm, PlayerStatisticsForm } from '../../../../components/forms';
 import PlayersMenu from '../playersMenu';
 
 // TYPES
@@ -57,6 +57,12 @@ class Player extends Component<Props, *> {
                     footer={() => this.renderEditPlayerModalFooter(player)}
                     ref={(o) => { this.editPlayerModal = o; }}
                 />
+                <Modal
+                    header="Edit Player Statistics"
+                    body={this.renderEditPlayerStatisticsBody}
+                    footer={this.editPlayerStatisticsOptions()}
+                    ref={(o) => { this.editPlayerStatisticsModal = o; }}
+                />
             </div>
         );
     }
@@ -77,6 +83,13 @@ class Player extends Component<Props, *> {
 
     renderEditPlayerBody = () => (
         <PlayerForm
+            player={this.props.player}
+            action={this.props.editPlayer}
+        />
+    );
+
+    renderEditPlayerStatisticsBody = () => (
+        <PlayerStatisticsForm
             player={this.props.player}
             action={this.props.editPlayer}
         />
@@ -118,11 +131,30 @@ class Player extends Component<Props, *> {
         );
     }
 
+    editPlayerStatisticsOptions = () => ([
+        {
+            label: 'Cancel',
+            key: 'cancel',
+            color: 'secondary',
+            onClick: () => this.editPlayerStatisticsModal
+            && this.editPlayerStatisticsModal.toggle(),
+        },
+        {
+            label: 'Save',
+            key: 'save',
+            color: 'primary',
+            type: 'submit',
+            form: 'player-statistics-form',
+        },
+    ]);
+
     NavbarOptions = () => ([
         {
             icon: 'edit',
             label: 'Edit Statistics',
             key: 'edit-statistics',
+            onClick: () => this.editPlayerStatisticsModal
+            && this.editPlayerStatisticsModal.toggle(),
         },
         {
             icon: 'user-edit',
