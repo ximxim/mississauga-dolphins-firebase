@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {
     Card,
     CardBody,
-    CardTitle,
+    CardSubtitle,
     CardHeader,
     CardImg,
     CardFooter,
@@ -33,6 +33,7 @@ class Sponsors extends Component<Props, State> {
                 <div className="col-12 p-2">
                     <h2>Sponsors</h2>
                     <div className="row no-gutters">
+                        {this.renderNewItemOption()}
                         {this.renderSponsors()}
                     </div>
                 </div>
@@ -40,13 +41,32 @@ class Sponsors extends Component<Props, State> {
         );
     }
 
+    renderNewItemOption = () => (
+        <div className="col-md-3 p-1">
+            <Card className="h-100">
+                <CardHeader className="text-center">
+                    New Sponsor
+                </CardHeader>
+                <CardBody className="bg-primary">
+                    <CardImg className="rounded" top width="100%" src="/img/sponsors.jpg" alt="add-sponsor" />
+                    <CardImg className="pt-3 w-50 d-block m-auto" src="/img/logo.png" alt="logo" />
+                </CardBody>
+                <CardFooter>
+                    <Button outline color="primary" className="btn-block">
+                        Add Sponsor
+                    </Button>
+                </CardFooter>
+            </Card>
+        </div>
+    );
+
     renderSponsors = () => {
         const { items } = this.props.sponsors;
         return _.map(items, (sponsor, index) => this.renderSponsorCard(sponsor, index));
     }
 
     renderSponsorCard = (sponsor, index) => (
-        <div className="col-md-4 p-1" key={index}>
+        <div className="col-md-3 p-1" key={index}>
             <Card className="h-100">
                 <CardHeader className="text-center">
                     <a
@@ -59,10 +79,10 @@ class Sponsors extends Component<Props, State> {
                     </a>
                 </CardHeader>
                 <CardBody>
-                    <CardImg top width="100%" src={sponsor.IMAGE} alt="sponsor" />
-                    <CardTitle className="text-center my-3">
+                    <CardImg className="rounded" top width="100%" src={sponsor.IMAGE} alt="sponsor" />
+                    <CardSubtitle className="text-left my-3 body-font">
                         {sponsor.TAG_LINE}
-                    </CardTitle>
+                    </CardSubtitle>
                 </CardBody>
                 <CardFooter>
                     <Button outline color="primary" className="btn-block">
