@@ -37,6 +37,7 @@ import 'react-table/react-table.css';
 import withSetup from './js/redux/setup';
 import games from './js/routes/games';
 import players from './js/routes/players';
+import sponsors from './js/routes/sponsors';
 import theme, { GlobalStyle } from './js/utils/theme';
 
 type Props = {
@@ -85,6 +86,7 @@ class App extends Component<Props, *> {
                 <React.Fragment>
                     <Route path="/games" component={games} />
                     <Route path="/players" component={players} />
+                    <Route path="/sponsors" component={sponsors} />
                 </React.Fragment>
                 <ToastContainer />
                 <GlobalStyle />
