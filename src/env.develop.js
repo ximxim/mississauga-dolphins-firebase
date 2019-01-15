@@ -92,6 +92,13 @@ export default {
             thumbnail: '',
         },
     },
+    newSponsor: {
+        ID: null,
+        IMAGE: '',
+        NAME: 'Google',
+        TAG_LINE: 'Amazing company to work for',
+        WEBSITE: 'https://google.ca',
+    },
     login: {
         username: 'azim.ahmed7@gmail.com',
         password: '826474',

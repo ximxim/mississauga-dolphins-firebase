@@ -11,23 +11,38 @@ import {
     Button,
 } from 'reactstrap';
 
-import { requestSponsors } from '../../redux/modules/Sponsors';
-import { Sponsors as SponsorsType } from '../../redux/modules/Sponsors/types';
+import { SponsorForm } from '../../components/forms';
+import {
+    requestSponsors,
+    addSponsor,
+    editSponsor,
+} from '../../redux/modules/Sponsors';
+import { Sponsors as SponsorsType, Sponsor } from '../../redux/modules/Sponsors/types';
 import requiresAuth from '../../utils/requiresAuth';
+import { Modal } from '../../components/ui';
 
 type Props = {
     sponsors: SponsorsType,
+    editSponsor: () => void,
+    addSponsor: () => void,
     requestSponsors: () => void,
 };
 
-type State = {};
+type State = {
+    selectedSponsor: Sponsor,
+};
 
 class Sponsors extends Component<Props, State> {
+    state = {
+        selectedSponsor: {},
+    };
+
     componentDidMount() {
         this.props.requestSponsors();
     }
 
     render() {
+        const { selectedSponsor } = this.state;
         return (
             <div className="row no-gutters">
                 <div className="col-12 p-2">
@@ -37,6 +52,18 @@ class Sponsors extends Component<Props, State> {
                         {this.renderSponsors()}
                     </div>
                 </div>
+                <Modal
+                    header="Add Sponsor"
+                    body={this.renderAddSponsorBody}
+                    footer={this.addSponsorOptions()}
+                    ref={(o) => { this.addSponsorModal = o; }}
+                />
+                <Modal
+                    header="Edit Sponsor"
+                    body={() => this.renderEditSponsorBody(selectedSponsor)}
+                    footer={this.renderEditSponsorFooter}
+                    ref={(o) => { this.editSponsorModal = o; }}
+                />
             </div>
         );
     }
@@ -52,7 +79,12 @@ class Sponsors extends Component<Props, State> {
                     <CardImg className="pt-3 w-50 d-block m-auto" src="/img/logo.png" alt="logo" />
                 </CardBody>
                 <CardFooter>
-                    <Button outline color="primary" className="btn-block">
+                    <Button
+                        outline
+                        color="primary"
+                        className="btn-block"
+                        onClick={() => this.addSponsorModal && this.addSponsorModal.toggle()}
+                    >
                         Add Sponsor
                     </Button>
                 </CardFooter>
@@ -85,13 +117,82 @@ class Sponsors extends Component<Props, State> {
                     </CardSubtitle>
                 </CardBody>
                 <CardFooter>
-                    <Button outline color="primary" className="btn-block">
+                    <Button
+                        outline
+                        color="primary"
+                        className="btn-block"
+                        onClick={() => this.handleSponsorEdit(sponsor)}
+                    >
                         Edit Sponsor
                     </Button>
                 </CardFooter>
             </Card>
         </div>
     )
+
+    renderAddSponsorBody = () => (
+        <SponsorForm action={this.props.addSponsor} />
+    );
+
+    renderEditSponsorBody = sponsor => (
+        <SponsorForm
+            action={this.props.editSponsor}
+            sponsor={sponsor}
+        />
+    );
+
+    addSponsorOptions = () => ([
+        {
+            label: 'Cancel',
+            key: 'cancel',
+            color: 'secondary',
+            onClick: () => this.addSponsorModal && this.addSponsorModal.toggle(),
+        },
+        {
+            label: 'Submit',
+            key: 'submit',
+            color: 'primary',
+            type: 'submit',
+            form: 'sponsor-form',
+        },
+    ]);
+
+    renderEditSponsorFooter = () => (
+        <div className="d-flex justify-content-between w-100">
+            <div>
+                <Button
+                    outline
+                    color="danger"
+                >
+                    Delete
+                </Button>
+            </div>
+            <div>
+                <Button
+                    outline
+                    color="secondary"
+                    className="mr-1"
+                    onClick={() => this.editSponsorModal && this.editSponsorModal.toggle()}
+                >
+                    Cancel
+                </Button>
+                <Button
+                    outline
+                    color="primary"
+                    type="submit"
+                    key="submit"
+                    form="sponsor-form"
+                >
+                    {this.props.sponsors.loading ? 'Saving' : 'Save'}
+                </Button>
+            </div>
+        </div>
+    )
+
+    handleSponsorEdit = (sponsor) => {
+        this.setState({ selectedSponsor: sponsor });
+        if (this.editSponsorModal) this.editSponsorModal.toggle();
+    }
 }
 
 const mapStateToProps = state => ({
@@ -100,6 +201,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     requestSponsors,
+    addSponsor,
+    editSponsor,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(requiresAuth(Sponsors));

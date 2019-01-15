@@ -3,6 +3,7 @@ export type Sponsor = {
     NAME: string,
     TAG_LINE: string,
     WEBSITE: string,
+    ID: number,
 };
 
 export type Sponsors = {
