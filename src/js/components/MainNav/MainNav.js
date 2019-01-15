@@ -35,7 +35,7 @@ class MainNav extends React.Component<Props, State> {
                     featureFlags={this.props.admin.Sidebar}
                     signOut={this.props.signOut}
                 />
-                <div className="row no-gutters">
+                <div className="row no-gutters w-100">
                     <div className="col">
                         <Navbar
                             toggleSidebar={this.toggleSidebar}
