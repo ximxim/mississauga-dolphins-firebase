@@ -71,6 +71,7 @@ class MainSidebar extends React.Component<Props, State> {
             title: 'Sponsors',
             hidden: !this.props.featureFlags.sponsors,
             key: 'sponsors',
+            route: '/sponsors',
         }),
         <Divider key="divider1" />,
         this.renderListItem({

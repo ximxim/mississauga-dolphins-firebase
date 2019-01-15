@@ -17,6 +17,10 @@ body {
     font-family: ${props => props.theme.bodyFont};
 }
 
+.body-font {
+  font-family: ${props => `${props.theme.bodyFont} !important`};
+}
+
 .padder {
     padding: 10px;
 }
@@ -513,5 +517,9 @@ td.rdtYear:hover {
 .ReactTable .rt-thead .rt-th.-sort-desc, .ReactTable .rt-thead .rt-td.-sort-desc {
   -webkit-box-shadow: inset 0 -3px 0 0 rgba(255,255,255,0.6);
   box-shadow: inset 0 -3px 0 0 rgba(255,255,255,0.6);
+}
+.card-footer {
+  background-color: ${props => props.theme.white};
+  border-top: ${props => `2px solid ${props.theme.brandPrimary}`}
 }
 `;
