@@ -16,6 +16,7 @@ import {
     requestSponsors,
     addSponsor,
     editSponsor,
+    deleteSponsor,
 } from '../../redux/modules/Sponsors';
 import { Sponsors as SponsorsType, Sponsor } from '../../redux/modules/Sponsors/types';
 import requiresAuth from '../../utils/requiresAuth';
@@ -25,6 +26,7 @@ type Props = {
     sponsors: SponsorsType,
     editSponsor: () => void,
     addSponsor: () => void,
+    deleteSponsor: () => void,
     requestSponsors: () => void,
 };
 
@@ -163,6 +165,7 @@ class Sponsors extends Component<Props, State> {
                 <Button
                     outline
                     color="danger"
+                    onClick={this.handleDelete}
                 >
                     Delete
                 </Button>
@@ -193,6 +196,13 @@ class Sponsors extends Component<Props, State> {
         this.setState({ selectedSponsor: sponsor });
         if (this.editSponsorModal) this.editSponsorModal.toggle();
     }
+
+    handleDelete = () => {
+        const { selectedSponsor } = this.state;
+        this.props.deleteSponsor(selectedSponsor);
+        this.setState({ selectedSponsor: {} });
+        if (this.editSponsorModal) this.editSponsorModal.toggle();
+    }
 }
 
 const mapStateToProps = state => ({
@@ -203,6 +213,7 @@ const mapDispatchToProps = {
     requestSponsors,
     addSponsor,
     editSponsor,
+    deleteSponsor,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(requiresAuth(Sponsors));

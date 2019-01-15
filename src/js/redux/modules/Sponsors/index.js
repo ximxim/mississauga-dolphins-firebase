@@ -31,7 +31,7 @@ export default function reducer(state = initialState, action) {
         return {
             ...state,
             loading: false,
-            items: action.payload,
+            items: action.payload.filter(sponsor => sponsor !== null),
         };
     }
     case REQUEST_SPONSORS_FAILURE: {
@@ -81,6 +81,28 @@ export default function reducer(state = initialState, action) {
         };
     }
     case EDIT_SPONSOR_FAILURE: {
+        return {
+            ...state,
+            loading: false,
+            error: action.payload,
+        };
+    }
+    case DELETE_SPONSOR: {
+        return {
+            ...state,
+            loading: true,
+        };
+    }
+    case DELETE_SPONSOR_SUCCESS: {
+        return {
+            ...state,
+            loading: false,
+            items: state.items.filter(
+                sponsor => (sponsor.ID !== action.payload.ID),
+            ),
+        };
+    }
+    case DELETE_SPONSOR_FAILURE: {
         return {
             ...state,
             loading: false,
@@ -151,6 +173,27 @@ export function editSponsorSuccess(payload) {
 export function editSponsorFailure(payload) {
     return {
         type: EDIT_SPONSOR_FAILURE,
+        payload,
+    };
+}
+
+export function deleteSponsor(payload) {
+    return {
+        type: DELETE_SPONSOR,
+        payload,
+    };
+}
+
+export function deleteSponsorSuccess(payload) {
+    return {
+        type: DELETE_SPONSOR_SUCCESS,
+        payload,
+    };
+}
+
+export function deleteSponsorFailure(payload) {
+    return {
+        type: DELETE_SPONSOR_FAILURE,
         payload,
     };
 }
