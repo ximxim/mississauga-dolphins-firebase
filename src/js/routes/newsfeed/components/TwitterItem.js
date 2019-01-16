@@ -13,11 +13,12 @@ import { Feed } from '../../../redux/modules/NewsFeed/types';
 
 type Props = {
     item: Feed,
+    renderVisibilityButton: () => Object,
 }
 
 export default class TwitterItem extends Component<Props> {
     render() {
-        const { item } = this.props;
+        const { item, renderVisibilityButton } = this.props;
         return (
             <div className="shadow p-2 border-twitter">
                 {this.renderAvatar(item)}
@@ -25,6 +26,7 @@ export default class TwitterItem extends Component<Props> {
                 {this.renderPhoto(item)}
                 {this.renderItemMeta(item)}
                 {this.renderDate(item)}
+                {renderVisibilityButton(item)}
             </div>
         );
     }
@@ -65,7 +67,7 @@ export default class TwitterItem extends Component<Props> {
         const cheers = item.applause ? item.applause : 0;
         const views = item.views ? item.views : 0;
         return (
-            <p className="text-bold">
+            <p className="text-bold mb-1">
                 {`${humanize(cheers)} cheers, ${humanize(views)} views`}
             </p>
         );

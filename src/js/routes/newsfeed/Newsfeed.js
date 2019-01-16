@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Button } from 'reactstrap';
 
-import { requestFeed } from '../../redux/modules/NewsFeed';
+import { requestFeed, updateItem } from '../../redux/modules/NewsFeed';
 import TwitterItem from './components/TwitterItem';
 import FacebookItem from './components/FacebookItem';
 import InstagramItem from './components/InstagramItem';
@@ -13,6 +13,7 @@ import { Newsfeed as NewsfeedType } from '../../redux/modules/NewsFeed/types';
 type Props = {
     newsfeed: NewsfeedType,
     requestFeed: () => void,
+    updateItem: () => void,
 };
 
 class Newsfeed extends Component<Props, *> {
@@ -54,15 +55,53 @@ class Newsfeed extends Component<Props, *> {
 
     renderNewsFeedItem = (item) => {
         if (item.twitter) {
-            return <TwitterItem item={item} />;
+            return (
+                <TwitterItem
+                    item={item}
+                    renderVisibilityButton={this.renderVisibilityButton}
+                />
+            );
         } else if (item.facebook) {
-            return <FacebookItem item={item} />;
+            return (
+                <FacebookItem
+                    item={item}
+                    renderVisibilityButton={this.renderVisibilityButton}
+                />
+            );
         } else if (item.instagram) {
-            return <InstagramItem item={item} />;
+            return (
+                <InstagramItem
+                    item={item}
+                    renderVisibilityButton={this.renderVisibilityButton}
+                />
+            );
         } else {
             return null;
         }
     }
+
+    renderVisibilityButton = (item) => {
+        const { newsfeed: { loading } } = this.props;
+        const cta = item.hidden ? 'Show Item' : 'Hide Item';
+        return (
+            <Button
+                block
+                outline
+                disabled={loading}
+                onClick={() => this.handleVisibilityUpdate(item, !item.hidden)}
+                color="primary"
+                className="mt-2"
+            >
+                {cta}
+            </Button>
+
+        );
+    }
+
+    handleVisibilityUpdate = (item, visibility) => this.props.updateItem({
+        ...item,
+        hidden: visibility,
+    });
 }
 
 const mapStateToProps = state => ({
@@ -71,6 +110,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     requestFeed,
+    updateItem,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(requireAuth(Newsfeed));
