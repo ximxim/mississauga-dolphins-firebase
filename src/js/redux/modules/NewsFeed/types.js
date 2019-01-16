@@ -21,6 +21,21 @@ export type Feed = {
     start_time: string,
     end_time: string,
     place: Object,
+    videos: {
+        standard_resolution: {
+            url: string,
+        },
+    },
+    images: {
+        standard_resolution: {
+            url: string,
+        },
+    },
+    carousel_media: Array<Object>,
+    likes: {
+        count: string,
+    },
+    type: string,
 }
 
 export type Newsfeed = {
