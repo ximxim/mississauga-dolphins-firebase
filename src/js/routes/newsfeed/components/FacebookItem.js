@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import _ from 'lodash';
+import { Carousel } from 'react-responsive-carousel';
 
 // UI COMPONENTS
 import { renderImage, renderThumbnail, renderVideo } from './Media';
@@ -70,10 +71,7 @@ export default class FacebookItem extends Component<Props> {
                     return renderImage({ src, key: item.id });
                 }
                 if (attachment.type === 'album' || attachment.type === 'new_album') {
-                    return null;
-                    // <CardItem key={attachment.type} noPadding>
-                    // {this.renderCarousel(item.id, attachment.subattachments.data)}
-                    // </CardItem>
+                    return this.renderCarousel(item.id, attachment.subattachments.data);
                 }
                 if (attachment.type.indexOf('video') > -1) {
                     return renderVideo({ src: item.source, key: item.id });
@@ -87,4 +85,25 @@ export default class FacebookItem extends Component<Props> {
     renderItemMeta = item => (<p>Item meta</p>);
 
     renderDate = item => (<p>Date</p>);
+
+    renderCarousel = (id, media) => (
+        <Carousel>
+            {_.map(media, (m) => {
+                const { src } = m.media.image;
+                if (m.type === 'video') {
+                    return renderVideo({ src });
+                }
+
+                if (m.type === 'photo') {
+                    return (
+                        <div>
+                            <img src={src} alt="carousel" />
+                        </div>
+                    );
+                }
+
+                return null;
+            })}
+        </Carousel>
+    )
 }

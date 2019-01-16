@@ -35,6 +35,7 @@ import {
 
 import 'react-table/react-table.css';
 import 'video-react/dist/video-react.css';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import withSetup from './js/redux/setup';
 import newsfeed from './js/routes/newsfeed';
 import games from './js/routes/games';
