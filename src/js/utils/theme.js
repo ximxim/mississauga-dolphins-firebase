@@ -8,6 +8,7 @@ export default {
     selection: '#9dccb6',
     bodyFont: 'Comfortaa',
     headingFont: 'Laila',
+    note: '#565555',
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -521,5 +522,10 @@ td.rdtYear:hover {
 .card-footer {
   background-color: ${props => props.theme.white};
   border-top: ${props => `2px solid ${props.theme.brandPrimary}`}
+}
+.note {
+  font-size: 12px;
+  color: ${props => props.theme.note}
+  margin: 0px !important;
 }
 `;
