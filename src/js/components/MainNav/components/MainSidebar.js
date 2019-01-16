@@ -59,6 +59,7 @@ class MainSidebar extends React.Component<Props, State> {
             title: 'Games',
             hidden: !this.props.featureFlags.games,
             key: 'games',
+            route: '/games/menu',
         }),
         this.renderListItem({
             icon: 'users',
