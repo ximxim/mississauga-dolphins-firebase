@@ -6,6 +6,7 @@ import watchPlayers from './modules/Players/sagas/watchPlayers';
 import watchAuthUser from './modules/AuthUser/sagas/watchAuthUser';
 import watchMeta from './modules/Meta/sagas/watchMeta';
 import watchSponsors from './modules/Sponsors/sagas/watchSponsors';
+import watchNewsFeed from './modules/NewsFeed/sagas/watchNewsFeed';
 
 function* rootSaga() {
     yield all([
@@ -15,6 +16,7 @@ function* rootSaga() {
         fork(watchPlayers),
         fork(watchMeta),
         fork(watchSponsors),
+        fork(watchNewsFeed),
     ]);
 }
 
