@@ -82,9 +82,23 @@ export default class FacebookItem extends Component<Props> {
         return null;
     };
 
-    renderItemMeta = item => (<p>Item meta</p>);
+    renderItemMeta = (item) => {
+        const cheers = item.applause ? item.applause : 0;
+        const views = item.views ? item.views : 0;
+        return (
+            <p className="text-bold">
+                {`${humanize(cheers)} cheers, ${humanize(views)} views`}
+            </p>
+        );
+    };
 
-    renderDate = item => (<p>Date</p>);
+    renderDate = item => (
+        <div>
+            <p className="note">
+                {moment(item.date).fromNow().toUpperCase()}
+            </p>
+        </div>
+    );
 
     renderCarousel = (id, media) => (
         <Carousel>
