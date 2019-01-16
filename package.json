@@ -35,6 +35,7 @@
         "redux-saga": "^0.16.0",
         "styled-components": "^4.1.1",
         "toastify": "^1.0.12",
+        "video-react": "^0.13.2",
         "yup": "^0.26.6"
     },
     "devDependencies": {

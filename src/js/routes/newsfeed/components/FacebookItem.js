@@ -3,7 +3,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 // UI COMPONENTS
-import { renderImage, renderThumbnail } from './Media';
+import { renderImage, renderThumbnail, renderVideo } from './Media';
 import { LongTextCollapser } from '../../../components/ui';
 
 // UTILS
@@ -76,19 +76,7 @@ export default class FacebookItem extends Component<Props> {
                     // </CardItem>
                 }
                 if (attachment.type.indexOf('video') > -1) {
-                    return null;
-                    // <CardItem key={item.source} noPadding>
-                    //     {renderVideo({
-                    //         uri: item.source,
-                    //         height: getHeight(dimensions, 'video'),
-                    //         onPress: toggleAudio,
-                    //         shouldPlay: item.isOnScreen,
-                    //         opacityAnimate: this.state.opacityAnimation,
-                    //         onProgress: this.handleVideoProgress,
-                    //         videoPositionInMinutes: this.state.videoPositionInMinutes,
-                    //         isMuted,
-                    //     })}
-                    // </CardItem>
+                    return renderVideo({ src: item.source, key: item.id });
                 }
                 return null;
             });

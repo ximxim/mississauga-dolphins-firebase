@@ -34,6 +34,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import 'react-table/react-table.css';
+import 'video-react/dist/video-react.css';
 import withSetup from './js/redux/setup';
 import newsfeed from './js/routes/newsfeed';
 import games from './js/routes/games';
