@@ -12,6 +12,15 @@ export type Feed = {
         screen_name: string,
         profile_image_url_https: string,
     },
+    attachments: {
+        data: Array<Object>,
+        subattachments: {
+            data: Array<Object>,
+        },
+    },
+    start_time: string,
+    end_time: string,
+    place: Object,
 }
 
 export type Newsfeed = {

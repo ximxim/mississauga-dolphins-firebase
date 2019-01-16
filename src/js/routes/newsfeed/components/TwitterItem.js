@@ -30,7 +30,7 @@ export default class TwitterItem extends Component<Props> {
     }
 
     renderAvatar = item => (
-        <div className="d-flex">
+        <div className="d-flex mb-2">
             <div>
                 {renderThumbnail({
                     src: item.user.profile_image_url_https,
@@ -43,13 +43,96 @@ export default class TwitterItem extends Component<Props> {
                 </p>
             </div>
         </div>
-    ) ;
+    );
 
-    renderTweet = item => (<p>tweet</p>) ;
+    renderTweet = (item) => {
+        let tweet = item.title !== 'Untitled' ? <span>{item.title}</span> : null;
+        tweet = item.entities ? this.renderWithEntities(item) : tweet;
+        return <p>{tweet}</p>;
+    }
 
-    renderPhoto = item => (<p>photo</p>) ;
+    renderPhoto = (item) => {
+        if (item.entities) {
+            return _.map(item.entities.media, media => renderImage({
+                src: media.media_url,
+                key: media.media_url,
+            }));
+        }
+        return null;
+    }
 
-    renderItemMeta = item => (<p>meta</p>) ;
+    renderItemMeta = (item) => {
+        const cheers = item.applause ? item.applause : 0;
+        const views = item.views ? item.views : 0;
+        return (
+            <p className="text-bold">
+                {`${humanize(cheers)} cheers, ${humanize(views)} views`}
+            </p>
+        );
+    };
 
-    renderDate = item => (<p>date</p>) ;
+    renderDate = item => (
+        <div>
+            <p className="note">
+                {moment(item.date).fromNow().toUpperCase()}
+            </p>
+        </div>
+    );
+
+    renderWithEntities = (item) => {
+        let tweet = item.title;
+
+        if (item.entities.urls) {
+            item.entities.urls.map((link) => {
+                const beginning = item.title.substr(
+                    0,
+                    item.title.indexOf(link.url),
+                );
+                const ending = item.title.substr(
+                    item.title.indexOf(link.url) + link.url.length,
+                    item.title.length,
+                );
+                const linkText = (
+                    <a
+                        href={link.expanded_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {link.url}
+                    </a>
+                );
+
+                tweet = (
+                    <span>
+                        {beginning}
+                        {linkText}
+                        {ending}
+                    </span>
+                );
+                return null;
+            });
+        }
+
+        if (item.entities) {
+            if (item.entities.media) {
+                item.entities.media.map((media) => {
+                    if (tweet.length > media.indices[1]) {
+                        const beginning = tweet.substr(0, media.indices[0]);
+                        const ending = tweet.substr(
+                            media.indices[1],
+                            tweet.length,
+                        );
+                        tweet = (
+                            <span>
+                                {beginning}
+                                {ending}
+                            </span>
+                        );
+                    }
+                    return null;
+                });
+            }
+        }
+        return <span>{tweet}</span>;
+    }
 }

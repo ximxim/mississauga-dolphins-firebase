@@ -528,4 +528,7 @@ td.rdtYear:hover {
   color: ${props => props.theme.note}
   margin: 0px !important;
 }
+.text-bold {
+  font-weight: 600;
+}
 `;
