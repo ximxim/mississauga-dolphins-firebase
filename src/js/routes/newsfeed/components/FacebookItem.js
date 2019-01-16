@@ -21,7 +21,7 @@ export default class FacebookItem extends Component<Props> {
     render() {
         const { item } = this.props;
         return (
-            <div>
+            <div className="shadow p-2 border-facebook">
                 {this.renderAvatar(item)}
                 {this.renderTitle(item)}
                 {this.renderAttachments(item)}

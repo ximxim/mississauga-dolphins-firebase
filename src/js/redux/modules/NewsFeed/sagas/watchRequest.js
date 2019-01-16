@@ -4,6 +4,7 @@ import {
     put,
     select,
 } from 'redux-saga/effects';
+import _ from 'lodash';
 import { toast } from 'react-toastify';
 
 import { getClient } from '../../../../utils/firebase';
@@ -11,7 +12,8 @@ import * as newsFeedModule from '../index';
 
 function getNewsFeed(currentAmount) {
     const fClient = getClient();
-    const amount = currentAmount ? currentAmount + 20 : 20;
+    const page = 21;
+    const amount = currentAmount ? currentAmount + page : page;
     return new Promise(resolve => fClient.database().ref('NewsFeed/')
         .orderByChild('date')
         .limitToLast(amount)
@@ -23,7 +25,7 @@ function getNewsFeed(currentAmount) {
 }
 
 export function* handleRequest() {
-    const feedCount = yield select(state => state.newsfeed.feed.length);
+    const feedCount = yield select(state => _.size(state.newsfeed.feed));
     const response = yield call(getNewsFeed, feedCount);
     if (response.code) {
         yield put(newsFeedModule.requestFeedFailure(response));

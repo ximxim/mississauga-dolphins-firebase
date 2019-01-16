@@ -21,7 +21,7 @@ export default class InstagramItem extends Component<Props> {
     render() {
         const { item } = this.props;
         return (
-            <div>
+            <div className="shadow p-2 border-instagram">
                 {this.renderAvatar(item)}
                 {this.renderAttachments(item)}
                 {this.renderTitle(item)}

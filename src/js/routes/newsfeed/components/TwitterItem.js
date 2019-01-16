@@ -19,7 +19,7 @@ export default class TwitterItem extends Component<Props> {
     render() {
         const { item } = this.props;
         return (
-            <div key={item.key}>
+            <div className="shadow p-2 border-twitter">
                 {this.renderAvatar(item)}
                 {this.renderTweet(item)}
                 {this.renderPhoto(item)}

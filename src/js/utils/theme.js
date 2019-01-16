@@ -9,6 +9,9 @@ export default {
     bodyFont: 'Comfortaa',
     headingFont: 'Laila',
     note: '#565555',
+    twitter: '#50ABF1',
+    instagram: '#C536A4',
+    facebook: '#3A559F',
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -530,5 +533,17 @@ td.rdtYear:hover {
 }
 .text-bold {
   font-weight: 600;
+}
+.border-facebook {
+  border-radius: 15px;
+  border: ${props => `2px solid ${props.theme.facebook}`}
+}
+.border-instagram {
+  border-radius: 15px;
+  border: ${props => `2px solid ${props.theme.instagram}`}
+}
+.border-twitter {
+  border-radius: 15px;
+  border: ${props => `2px solid ${props.theme.twitter}`}
 }
 `;
