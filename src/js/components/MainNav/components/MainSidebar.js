@@ -52,12 +52,14 @@ class MainSidebar extends React.Component<Props, State> {
             title: 'News feed',
             hidden: !this.props.featureFlags.newsfeed,
             key: 'newsfeed',
+            route: '/newsfeed',
         }),
         this.renderListItem({
             icon: 'headset',
             title: 'Games',
             hidden: !this.props.featureFlags.games,
             key: 'games',
+            route: '/games/menu',
         }),
         this.renderListItem({
             icon: 'users',

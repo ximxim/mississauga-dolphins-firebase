@@ -6,6 +6,7 @@ import players from './modules/Players';
 import authUser from './modules/AuthUser';
 import meta from './modules/Meta';
 import sponsors from './modules/Sponsors';
+import newsfeed from './modules/NewsFeed';
 
 export default combineReducers({
     authUser,
@@ -14,4 +15,5 @@ export default combineReducers({
     players,
     meta,
     sponsors,
+    newsfeed,
 });

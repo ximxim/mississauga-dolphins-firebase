@@ -8,6 +8,10 @@ export default {
     selection: '#9dccb6',
     bodyFont: 'Comfortaa',
     headingFont: 'Laila',
+    note: '#565555',
+    twitter: '#50ABF1',
+    instagram: '#C536A4',
+    facebook: '#3A559F',
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -521,5 +525,25 @@ td.rdtYear:hover {
 .card-footer {
   background-color: ${props => props.theme.white};
   border-top: ${props => `2px solid ${props.theme.brandPrimary}`}
+}
+.note {
+  font-size: 12px;
+  color: ${props => props.theme.note}
+  margin: 0px !important;
+}
+.text-bold {
+  font-weight: 600;
+}
+.border-facebook {
+  border-radius: 15px;
+  border: ${props => `2px solid ${props.theme.facebook}`}
+}
+.border-instagram {
+  border-radius: 15px;
+  border: ${props => `2px solid ${props.theme.instagram}`}
+}
+.border-twitter {
+  border-radius: 15px;
+  border: ${props => `2px solid ${props.theme.twitter}`}
 }
 `;

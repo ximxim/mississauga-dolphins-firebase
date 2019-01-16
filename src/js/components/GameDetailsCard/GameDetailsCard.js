@@ -3,16 +3,13 @@ import classnames from 'classnames';
 
 import { Game } from '../../redux/modules/Scores/types';
 import { GameCover } from './GameDetailsCard.styled';
+import { LongTextCollapser } from '../ui';
 
 type Props = {
 	game: Game,
 };
 
 export default class GameDetailsCard extends React.Component<Props, *> {
-    state = {
-        show: false,
-    };
-
     render() {
         const { game } = this.props;
         return (
@@ -32,18 +29,21 @@ export default class GameDetailsCard extends React.Component<Props, *> {
     }
 
     renderInfoItem = (heading, value) => {
-        const parClass = classnames({
-            'mb-1': true,
-            'text-cutoff': heading === 'Description:' && !this.state.show,
-        });
-
+        if (heading === 'Description:') {
+            return (
+                <LongTextCollapser>
+                    <div className="mb-1">
+                        <span className="heading">{heading}</span>
+                        <span className="ml-1">{value}</span>
+                    </div>
+                </LongTextCollapser>
+            );
+        }
         return (
-            <div className={parClass} onClick={this.toggleShow}>
+            <div className="mb-1">
                 <span className="heading">{heading}</span>
                 <span className="ml-1">{value}</span>
             </div>
         );
     }
-
-    toggleShow = () => this.setState(state => ({ show: !state.show }))
 }
