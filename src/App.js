@@ -35,6 +35,7 @@ import {
 
 import 'react-table/react-table.css';
 import withSetup from './js/redux/setup';
+import newsfeed from './js/routes/newsfeed';
 import games from './js/routes/games';
 import players from './js/routes/players';
 import sponsors from './js/routes/sponsors';
@@ -79,11 +80,12 @@ class App extends Component<Props, *> {
     render() {
         let component = null;
         if (this.props.location.pathname === '/') {
-            return <Redirect to="/games/menu" />;
+            return <Redirect to="/newsfeed" />;
         }
         component = (
             <div>
                 <React.Fragment>
+                    <Route path="/newsfeed" component={newsfeed} />
                     <Route path="/games" component={games} />
                     <Route path="/players" component={players} />
                     <Route path="/sponsors" component={sponsors} />
