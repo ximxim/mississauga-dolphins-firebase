@@ -11,3 +11,4 @@ export { default as FirebaseImageUploader } from './FirebaseImageUploader';
 export { default as DateTimePicker } from './DateTimePicker';
 export { default as TextInput } from './TextInput';
 export { default as TextArea } from './TextArea';
+export { default as LongTextCollapser } from './LongTextCollapser';
