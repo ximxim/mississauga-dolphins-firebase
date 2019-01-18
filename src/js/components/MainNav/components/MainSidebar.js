@@ -12,6 +12,7 @@ import {
     MainToggleButton,
 } from './MainSidebar.styled';
 import { Sidebar as SidebarTypes } from '../../../redux/modules/Meta/types';
+import { Modal } from '../../ui';
 
 type Props = {
     isOpen: Boolean,
@@ -36,15 +37,41 @@ class MainSidebar extends React.Component<Props, State> {
                     </MainToggleButton>
                 </div>
                 <BrandLogoWrapper className="pt-3 pb-2 mb-2 bg-dark">
-
                     <BrandLogo src="/img/logo.png" className="p-2" alt="Mississauga Dolphins Logo" />
                 </BrandLogoWrapper>
                 <ul className="list-unstyled">
                     {this.renderSidebarOptions()}
                 </ul>
+                <Modal
+                    header="Club Information"
+                    body={this.renderClubInfoBody}
+                    footer={this.clubInformationOptions()}
+                    ref={(o) => { this.clubInformationModal = o; }}
+                />
             </MainSidebarStyled>
         );
     }
+
+    renderClubInfoBody = () => (
+        <p>something</p>
+    );
+
+    clubInformationOptions = () => [
+        {
+            label: 'Cancel',
+            key: 'cancel',
+            color: 'secondary',
+            onClick: () => this.clubInformationModal
+            && this.clubInformationModal.toggle(),
+        },
+        {
+            label: 'Save',
+            key: 'save',
+            color: 'primary',
+            form: 'club-information',
+            type: 'submit',
+        },
+    ];
 
     renderSidebarOptions = () => [
         this.renderListItem({
@@ -77,6 +104,13 @@ class MainSidebar extends React.Component<Props, State> {
         }),
         <Divider key="divider1" />,
         this.renderListItem({
+            icon: 'info-circle',
+            title: 'Club Info',
+            key: 'club-info',
+            onClick: () => this.clubInformationModal
+            && this.clubInformationModal.toggle(),
+        }),
+        this.renderListItem({
             icon: 'cogs',
             title: 'Settings',
             hidden: !this.props.featureFlags.settings,
@@ -95,12 +129,25 @@ class MainSidebar extends React.Component<Props, State> {
         icon, title, hidden, onClick, key, route,
     }) => {
         if (hidden) return null;
-        return (
-            <MainSidebarListItem className="p-3" key={key}>
-                <Link to={route || '/'} onClick={onClick}>
+        let comp;
+        if (route) {
+            comp = (
+                <Link to={route} onClick={onClick}>
                     <FontAwesomeIcon icon={icon} className="mr-2" />
                     <span>{title}</span>
                 </Link>
+            );
+        } else {
+            comp = (
+                <a onClick={onClick}>
+                    <FontAwesomeIcon icon={icon} className="mr-2" />
+                    <span>{title}</span>
+                </a>
+            );
+        }
+        return (
+            <MainSidebarListItem className="p-3" key={key}>
+                {comp}
             </MainSidebarListItem>
         );
     }
