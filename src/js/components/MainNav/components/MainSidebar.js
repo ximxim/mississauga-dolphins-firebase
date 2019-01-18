@@ -2,6 +2,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import {
     MainSidebarStyled,
@@ -12,13 +13,18 @@ import {
     MainToggleButton,
 } from './MainSidebar.styled';
 import { Sidebar as SidebarTypes } from '../../../redux/modules/Meta/types';
+import { update } from '../../../redux/modules/ClubInformation';
+import { ClubInformation } from '../../../redux/modules/ClubInformation/types';
 import { Modal } from '../../ui';
+import { ClubInformationForm } from '../../forms';
 
 type Props = {
+    clubInformation: ClubInformation,
     isOpen: Boolean,
     toggleSidebar: () => void,
     featureFlags: SidebarTypes,
     signOut: () => void,
+    update: () => void,
 };
 
 type State = {};
@@ -53,7 +59,10 @@ class MainSidebar extends React.Component<Props, State> {
     }
 
     renderClubInfoBody = () => (
-        <p>something</p>
+        <ClubInformationForm
+            action={this.props.update}
+            information={this.props.clubInformation.information}
+        />
     );
 
     clubInformationOptions = () => [
@@ -153,4 +162,12 @@ class MainSidebar extends React.Component<Props, State> {
     }
 }
 
-export default MainSidebar;
+const mapStateToProps = state => ({
+    clubInformation: state.clubInformation,
+});
+
+const mapDispatchToProps = {
+    update,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainSidebar);

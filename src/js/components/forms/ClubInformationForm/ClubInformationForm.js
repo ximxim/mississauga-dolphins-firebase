@@ -4,19 +4,19 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { TextInput } from '../../ui';
-import { Player } from '../../../redux/modules/Players/types';
+import { Information } from '../../../redux/modules/ClubInformation/types';
 
 type Props = {
-    player: Player,
+    information: Information,
     action: () => void;
 };
 
 export default class PlayerForm extends Component<Props, *> {
     render() {
-        const { player, action } = this.props;
+        const { information, action } = this.props;
         return (
             <Formik
-                initialValues={player}
+                initialValues={information}
                 onSubmit={async (values, { setSubmitting }) => {
                     action({
                         values,
@@ -24,25 +24,14 @@ export default class PlayerForm extends Component<Props, *> {
                     });
                 }}
                 validationSchema={Yup.object().shape({
-                    GENERAL: Yup.object().shape({
-                        MTCHS: Yup.number().integer('Please provide a number'),
-                    }),
-                    BOWLING: Yup.object().shape({
-                        WKTS: Yup.number().integer('Please provide a number'),
-                        OVERS: Yup.number().integer('Please provide a number'),
-                        MDNS: Yup.number().integer('Please provide a number'),
-                    }),
-                    BATTING: Yup.object().shape({
-                        RUNS: Yup.number().integer('Please provide a number'),
-                        NO: Yup.number().integer('Please provide a number'),
-                        INNINGS: Yup.number().integer('Please provide a number'),
-                        HIGHEST: Yup.number().integer('Please provide a number'),
-                        AVG: Yup.number().integer('Please provide a number'),
-                        '6s': Yup.number().integer('Please provide a number'),
-                        '50s': Yup.number().integer('Please provide a number'),
-                        '4s': Yup.number().integer('Please provide a number'),
-                        '100s': Yup.number().integer('Please provide a number'),
-                    }),
+                    EMAIL: Yup.string().email(),
+                    FACEBOOK: Yup.string().url(),
+                    INSTAGRAM: Yup.string().url(),
+                    NAME: Yup.string(),
+                    PHONE: Yup.string(),
+                    TWITTER: Yup.string().url(),
+                    WEBSITE: Yup.string().url(),
+                    YOUTUBE: Yup.string().url(),
                 })}
             >
                 {props => this.renderForm(props)}
@@ -51,189 +40,119 @@ export default class PlayerForm extends Component<Props, *> {
     }
 
     renderForm = props => (
-        <Form id="player-statistics-form" onSubmit={props.handleSubmit}>
-            {this.renderMatchesField(props)}
-            {this.renderOversField(props)}
-            {this.renderWicketsField(props)}
-            {this.renderMaidenField(props)}
-            {this.renderRunsField(props)}
-            {this.renderNoField(props)}
-            {this.renderInningsField(props)}
-            {this.renderHighestField(props)}
-            {this.renderAverageField(props)}
-            {this.render6sField(props)}
-            {this.render50sField(props)}
-            {this.render4sField(props)}
-            {this.render100sField(props)}
+        <Form id="club-information" onSubmit={props.handleSubmit}>
+            {this.renderNameField(props)}
+            {this.renderEmailField(props)}
+            {this.renderPhoneField(props)}
+            {this.renderWebsiteField(props)}
+            {this.renderFacebookField(props)}
+            {this.renderInstagramField(props)}
+            {this.renderTwitterField(props)}
+            {this.renderYoutubeField(props)}
         </Form>
     );
 
-    renderMatchesField = props => (
+    renderNameField = props => (
         <TextInput
-            value={props.values.GENERAL.MTCHS}
-            label="Matches"
-            name="GENERAL.MTCHS"
-            placeholder="Enter Total Matches"
+            value={props.values.NAME}
+            label="Name"
+            name="NAME"
+            placeholder="Enter Club Name"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            error={props.errors.GENERAL ? props.errors.GENERAL.MTCHS : false}
-            touched={props.touched.GENERAL ? props.touched.GENERAL.MTCHS : false}
+            error={props.errors.NAME}
+            touched={props.touched.NAME}
         />
     );
 
-    renderOversField = props => (
+    renderEmailField = props => (
         <TextInput
-            value={props.values.BOWLING.OVERS}
-            label="Overs"
-            name="BOWLING.OVERS"
-            placeholder="Enter Total Overs"
+            value={props.values.EMAIL}
+            label="Email"
+            name="EMAIL"
+            placeholder="Enter Club Email"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            error={props.errors.BOWLING ? props.errors.BOWLING.OVERS : false}
-            touched={props.touched.BOWLING ? props.touched.BOWLING.OVERS : false}
+            error={props.errors.EMAIL}
+            touched={props.touched.EMAIL}
         />
     );
 
-    renderWicketsField = props => (
+    renderPhoneField = props => (
         <TextInput
-            value={props.values.BOWLING.WKTS}
-            label="Wickets"
-            name="BOWLING.WKTS"
-            placeholder="Enter Total Wickets"
+            value={props.values.PHONE}
+            label="Phone"
+            name="PHONE"
+            placeholder="Enter Club Phone"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            error={props.errors.BOWLING ? props.errors.BOWLING.WKTS : false}
-            touched={props.touched.BOWLING ? props.touched.BOWLING.WKTS : false}
+            error={props.errors.PHONE}
+            touched={props.touched.PHONE}
         />
     );
 
-    renderMaidenField = props => (
+    renderWebsiteField = props => (
         <TextInput
-            value={props.values.BOWLING.MDNS}
-            label="Maidens"
-            name="BOWLING.MDNS"
-            placeholder="Enter Maiden"
+            value={props.values.WEBSITE}
+            label="Website"
+            name="WEBSITE"
+            placeholder="Enter Club Website"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            error={props.errors.BOWLING ? props.errors.BOWLING.MDNS : false}
-            touched={props.touched.BOWLING ? props.touched.BOWLING.MDNS : false}
+            error={props.errors.WEBSITE}
+            touched={props.touched.WEBSITE}
         />
     );
 
-    renderRunsField = props => (
+    renderFacebookField = props => (
         <TextInput
-            value={props.values.BATTING.RUNS}
-            label="Runs"
-            name="BATTING.RUNS"
-            placeholder="Enter Total Runs"
+            value={props.values.FACEBOOK}
+            label="Facebook"
+            name="FACEBOOK"
+            placeholder="Enter Club Facebook Page"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            error={props.errors.BATTING ? props.errors.BATTING.RUNS : false}
-            touched={props.touched.BATTING ? props.touched.BATTING.RUNS : false}
+            error={props.errors.FACEBOOK}
+            touched={props.touched.FACEBOOK}
         />
     );
 
-    renderNoField = props => (
+    renderInstagramField = props => (
         <TextInput
-            value={props.values.BATTING.NO}
-            label="Nos"
-            name="BATTING.NO"
-            placeholder="Enter Total Nos"
+            value={props.values.INSTAGRAM}
+            label="Instagram"
+            name="INSTAGRAM"
+            placeholder="Enter Club Instagram Page"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            error={props.errors.BATTING ? props.errors.BATTING.NO : false}
-            touched={props.touched.BATTING ? props.touched.BATTING.NO : false}
+            error={props.errors.INSTAGRAM}
+            touched={props.touched.INSTAGRAM}
         />
     );
 
-    renderInningsField = props => (
+    renderTwitterField = props => (
         <TextInput
-            value={props.values.BATTING.INNINGS}
-            label="Innings"
-            name="BATTING.INNINGS"
-            placeholder="Enter Total Innings"
+            value={props.values.TWITTER}
+            label="Twitter"
+            name="TWITTER"
+            placeholder="Enter Club Twitter Page"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            error={props.errors.BATTING ? props.errors.BATTING.INNINGS : false}
-            touched={props.touched.BATTING ? props.touched.BATTING.INNINGS : false}
+            error={props.errors.TWITTER}
+            touched={props.touched.TWITTER}
         />
     );
 
-    renderHighestField = props => (
+    renderYoutubeField = props => (
         <TextInput
-            value={props.values.BATTING.HIGHEST}
-            label="Highest"
-            name="BATTING.HIGHEST"
-            placeholder="Enter Highest"
+            value={props.values.YOUTUBE}
+            label="Youtube"
+            name="YOUTUBE"
+            placeholder="Enter Club Twitter Page"
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            error={props.errors.BATTING ? props.errors.BATTING.HIGHEST : false}
-            touched={props.touched.BATTING ? props.touched.BATTING.HIGHEST : false}
-        />
-    );
-
-    renderAverageField = props => (
-        <TextInput
-            value={props.values.BATTING.AVG}
-            label="Average"
-            name="BATTING.AVG"
-            placeholder="Enter Average"
-            onChange={props.handleChange}
-            onBlur={props.handleBlur}
-            error={props.errors.BATTING ? props.errors.BATTING.AVG : false}
-            touched={props.touched.BATTING ? props.touched.BATTING.AVG : false}
-        />
-    );
-
-    render6sField = props => (
-        <TextInput
-            value={props.values.BATTING['6s']}
-            label="6s"
-            name="BATTING['6s']"
-            placeholder="Enter Total 6s"
-            onChange={props.handleChange}
-            onBlur={props.handleBlur}
-            error={props.errors.BATTING ? props.errors.BATTING['6s'] : false}
-            touched={props.touched.BATTING ? props.touched.BATTING['6s'] : false}
-        />
-    );
-
-    render50sField = props => (
-        <TextInput
-            value={props.values.BATTING['50s']}
-            label="50s"
-            name="BATTING['50s']"
-            placeholder="Enter Total 50s"
-            onChange={props.handleChange}
-            onBlur={props.handleBlur}
-            error={props.errors.BATTING ? props.errors.BATTING['50s'] : false}
-            touched={props.touched.BATTING ? props.touched.BATTING['50s'] : false}
-        />
-    );
-
-    render4sField = props => (
-        <TextInput
-            value={props.values.BATTING['4s']}
-            label="4s"
-            name="BATTING['4s']"
-            placeholder="Enter Total 4s"
-            onChange={props.handleChange}
-            onBlur={props.handleBlur}
-            error={props.errors.BATTING ? props.errors.BATTING['4s'] : false}
-            touched={props.touched.BATTING ? props.touched.BATTING['4s'] : false}
-        />
-    );
-
-    render100sField = props => (
-        <TextInput
-            value={props.values.BATTING['100s']}
-            label="100s"
-            name="BATTING['100s']"
-            placeholder="Enter Total 100s"
-            onChange={props.handleChange}
-            onBlur={props.handleBlur}
-            error={props.errors.BATTING ? props.errors.BATTING['100s'] : false}
-            touched={props.touched.BATTING ? props.touched.BATTING['100s'] : false}
+            error={props.errors.TWITTER}
+            touched={props.touched.TWITTER}
         />
     );
 }
