@@ -49,7 +49,7 @@ class Newsfeed extends Component<Props, *> {
         const ascendingFeed = _.sortBy(feed, ['date']);
         const descendingFeed = ascendingFeed.reverse();
         return _.map(descendingFeed, item => (
-            <div className="col-md-4 p-1 border-0">
+            <div className="col-md-4 p-1 border-0" key={item.id}>
                 {this.renderNewsFeedItem(item)}
             </div>
         ));

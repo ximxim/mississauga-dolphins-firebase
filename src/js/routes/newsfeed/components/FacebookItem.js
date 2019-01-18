@@ -103,16 +103,16 @@ export default class FacebookItem extends Component<Props> {
     );
 
     renderCarousel = (id, media) => (
-        <Carousel>
-            {_.map(media, (m) => {
+        <Carousel key={id}>
+            {_.map(media, (m, i) => {
                 const { src } = m.media.image;
                 if (m.type === 'video') {
-                    return renderVideo({ src });
+                    return renderVideo({ src, key: i });
                 }
 
                 if (m.type === 'photo') {
                     return (
-                        <div>
+                        <div key={i}>
                             <img src={src} alt="carousel" />
                         </div>
                     );
