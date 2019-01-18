@@ -7,6 +7,7 @@ import authUser from './modules/AuthUser';
 import meta from './modules/Meta';
 import sponsors from './modules/Sponsors';
 import newsfeed from './modules/NewsFeed';
+import clubInformation from './modules/ClubInformation';
 
 export default combineReducers({
     authUser,
@@ -16,4 +17,5 @@ export default combineReducers({
     meta,
     sponsors,
     newsfeed,
+    clubInformation,
 });

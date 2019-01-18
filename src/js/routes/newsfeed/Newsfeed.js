@@ -20,10 +20,12 @@ class Newsfeed extends Component<Props, *> {
     render() {
         const { newsfeed: { loading } } = this.props;
         return (
-            <div>
-                <h2 className="p-2">Newsfeed</h2>
-                <div className="card-columns p-2 pr-3 mr-5">
-                    {this.renderNewsFeed()}
+            <div className="container-fluid">
+                <div className="row no-gutters">
+                    <h2 className="p-2">Newsfeed</h2>
+                    <div className="row no-gutters">
+                        {this.renderNewsFeed()}
+                    </div>
                 </div>
                 <div className="row no-gutters">
                     <div className="col-md-4 offset-md-4 mb-4">
@@ -47,7 +49,7 @@ class Newsfeed extends Component<Props, *> {
         const ascendingFeed = _.sortBy(feed, ['date']);
         const descendingFeed = ascendingFeed.reverse();
         return _.map(descendingFeed, item => (
-            <div className="card border-0">
+            <div className="col-md-4 p-1 border-0" key={item.id}>
                 {this.renderNewsFeedItem(item)}
             </div>
         ));

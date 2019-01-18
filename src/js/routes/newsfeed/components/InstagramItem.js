@@ -94,7 +94,7 @@ export default class InstagramItem extends Component<Props> {
 
     renderCarousel = (id, media) => (
         <Carousel>
-            {_.map(media, (m) => {
+            {_.map(media, (m, i) => {
                 if (m.type === 'video') {
                     const src = m.video.standard_resolution.url;
                     return renderVideo({ src });
@@ -103,7 +103,7 @@ export default class InstagramItem extends Component<Props> {
                 if (m.type === 'image') {
                     const src = m.images.standard_resolution.url;
                     return (
-                        <div>
+                        <div key={i}>
                             <img src={src} alt="carousel" />
                         </div>
                     );
