@@ -23,7 +23,7 @@ class Newsfeed extends Component<Props, *> {
             <div className="container-fluid">
                 <div className="row no-gutters">
                     <h2 className="p-2">Newsfeed</h2>
-                    <div className="row no-gutters">
+                    <div className="row no-gutters w-100">
                         {this.renderNewsFeed()}
                     </div>
                 </div>
