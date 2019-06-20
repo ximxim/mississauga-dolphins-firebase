@@ -49,6 +49,9 @@ FirebaseRequests.prototype.getNewsFeedItemById = async(id => {
 
 FirebaseRequests.prototype.updateItemById = async((reference, id, item) => {
     if (reference && id && item) {
+        _.map(item, (key, i) => { 
+            if (item[i] === undefined) item[i] = '';
+        });
         ref.child(reference)
             .child(id)
             .update(item);
