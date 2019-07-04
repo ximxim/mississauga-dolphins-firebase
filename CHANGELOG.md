@@ -1,6 +1,6 @@
 # Change Log
 
-## [v3.0.0](https://github.com/ximxim/mississauga-dolphins-firebase/tree/v3.0.0) (2019-07-04)
+## [v3.0.0](https://github.com/ximxim/mississauga-dolphins-firebase/releases/tag/v3.0.0) (2019-07-04)
 **Closed issues:**
 
 - Add an option to score based on players [\#78](https://github.com/ximxim/mississauga-dolphins-firebase/issues/78)
