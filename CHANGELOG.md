@@ -1,6 +1,7 @@
 # Change Log
 
-## [3.0.0](https://github.com/ximxim/mississauga-dolphins-firebase/tree/3.0.0) (2019-07-03)
+## [Unreleased](https://github.com/ximxim/mississauga-dolphins-firebase/tree/HEAD)
+
 **Fixed bugs:**
 
 - Add an option to score based on players [\#78](https://github.com/ximxim/mississauga-dolphins-firebase/issues/78)
@@ -71,26 +72,6 @@
 - Figure out pagination [\#3](https://github.com/ximxim/mississauga-dolphins-firebase/issues/3)
 - Bring in data from Instagram [\#2](https://github.com/ximxim/mississauga-dolphins-firebase/issues/2)
 - Bring in data from Facebook [\#1](https://github.com/ximxim/mississauga-dolphins-firebase/issues/1)
-
-**Merged pull requests:**
-
-- Club information [\#82](https://github.com/ximxim/mississauga-dolphins-firebase/pull/82) ([ximxim](https://github.com/ximxim))
-- Newsfeed [\#81](https://github.com/ximxim/mississauga-dolphins-firebase/pull/81) ([ximxim](https://github.com/ximxim))
-- Crud sponsors [\#80](https://github.com/ximxim/mississauga-dolphins-firebase/pull/80) ([ximxim](https://github.com/ximxim))
-- Players crud [\#79](https://github.com/ximxim/mississauga-dolphins-firebase/pull/79) ([ximxim](https://github.com/ximxim))
-- Game crud options [\#69](https://github.com/ximxim/mississauga-dolphins-firebase/pull/69) ([ximxim](https://github.com/ximxim))
-- Redesign [\#62](https://github.com/ximxim/mississauga-dolphins-firebase/pull/62) ([ximxim](https://github.com/ximxim))
-- added dev instance of all the functions [\#54](https://github.com/ximxim/mississauga-dolphins-firebase/pull/54) ([ximxim](https://github.com/ximxim))
-- Refactor/arrange functions [\#52](https://github.com/ximxim/mississauga-dolphins-firebase/pull/52) ([ximxim](https://github.com/ximxim))
-- Develop [\#46](https://github.com/ximxim/mississauga-dolphins-firebase/pull/46) ([ximxim](https://github.com/ximxim))
-- Removing develop branch [\#45](https://github.com/ximxim/mississauga-dolphins-firebase/pull/45) ([ximxim](https://github.com/ximxim))
-- recently added posts get a hide button [\#32](https://github.com/ximxim/mississauga-dolphins-firebase/pull/32) ([ximxim](https://github.com/ximxim))
-- Refactor/24 update [\#27](https://github.com/ximxim/mississauga-dolphins-firebase/pull/27) ([ximxim](https://github.com/ximxim))
-- adjusted firebase data to match criteria from front end [\#11](https://github.com/ximxim/mississauga-dolphins-firebase/pull/11) ([ximxim](https://github.com/ximxim))
-- Feature/2 instagram integration [\#10](https://github.com/ximxim/mississauga-dolphins-firebase/pull/10) ([ximxim](https://github.com/ximxim))
-- Feature/1 facebook inategration [\#9](https://github.com/ximxim/mississauga-dolphins-firebase/pull/9) ([ximxim](https://github.com/ximxim))
-- Refactor/async twitter [\#8](https://github.com/ximxim/mississauga-dolphins-firebase/pull/8) ([ximxim](https://github.com/ximxim))
-- Feature/write firebase [\#6](https://github.com/ximxim/mississauga-dolphins-firebase/pull/6) ([ximxim](https://github.com/ximxim))
 
 
 
