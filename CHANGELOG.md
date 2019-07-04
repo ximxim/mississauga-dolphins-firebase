@@ -1,9 +1,12 @@
 # Change Log
 
 ## [v3.0.0](https://github.com/ximxim/mississauga-dolphins-firebase/tree/v3.0.0) (2019-07-04)
-**Closed issues:**
+**Fixed bugs:**
 
 - Add an option to score based on players [\#78](https://github.com/ximxim/mississauga-dolphins-firebase/issues/78)
+
+**Closed issues:**
+
 - Create modal form to submit player's statistics [\#77](https://github.com/ximxim/mississauga-dolphins-firebase/issues/77)
 - Add helper option in player sidebar [\#76](https://github.com/ximxim/mississauga-dolphins-firebase/issues/76)
 - Create delete player option [\#75](https://github.com/ximxim/mississauga-dolphins-firebase/issues/75)
