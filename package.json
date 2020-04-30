@@ -12,7 +12,7 @@
         "firebase": "^5.1.0",
         "formik": "^1.4.1",
         "history": "^4.7.2",
-        "jquery": "^3.3.1",
+        "jquery": "^3.5.0",
         "lodash": "^4.17.10",
         "memoize-one": "^4.0.3",
         "moment": "^2.23.0",
